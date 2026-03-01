@@ -47,10 +47,13 @@ const projects = [
 
 export default function ProjectsGridSection() {
     return (
-        <section className="section-pad" aria-label="Client projects">
+        <section className="section-pad relative overflow-hidden bg-[#03142A]" aria-label="Client projects">
+            {/* Subtle top separator glow */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent z-10" />
+
             <div className="container-opmw">
                 {/* Header */}
-                <motion.div
+                <motion.header
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-100px' }}
@@ -58,12 +61,12 @@ export default function ProjectsGridSection() {
                     className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14"
                 >
                     <div>
-                        <div className="section-label mb-5">Case Studies</div>
+                        <div className="section-label mb-5">Our Success Stories</div>
                         <h2
                             className="font-display font-bold leading-tight"
                             style={{ fontSize: 'clamp(1.75rem, 3.5vw, 3rem)', color: '#F0F0F5' }}
                         >
-                            Proven Enterprise Outcomes
+                            Great Results for Our Clients
                         </h2>
                     </div>
                     <Link
@@ -71,14 +74,14 @@ export default function ProjectsGridSection() {
                         className="inline-flex items-center gap-2 text-sm font-semibold flex-shrink-0 transition-colors duration-200"
                         style={{ color: '#9F6EFF' }}
                     >
-                        All Case Studies <ArrowRight size={14} />
+                        See All Stories <ArrowRight size={14} />
                     </Link>
-                </motion.div>
+                </motion.header>
 
                 {/* Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {projects.map((proj, i) => (
-                        <motion.div
+                        <motion.article
                             key={proj.id}
                             initial={{ opacity: 0, y: 24 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -134,7 +137,7 @@ export default function ProjectsGridSection() {
                             <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
                                 <ExternalLink size={16} style={{ color: '#9F6EFF' }} />
                             </div>
-                        </motion.div>
+                        </motion.article>
                     ))}
                 </div>
             </div>

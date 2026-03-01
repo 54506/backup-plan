@@ -1,186 +1,245 @@
 import { useRef, useEffect } from 'react'
+import { motion, useMotionValue, useSpring, useTransform, animate } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { ArrowRight, Sparkles, Shield, Zap, Globe } from 'lucide-react'
-import StarfieldBackground from '@/animations/StarfieldBackground'
+import { Zap, Shield, Maximize, Activity, ArrowRight, Globe, Cpu } from 'lucide-react'
 
-const badges = [
-    { icon: Shield, label: 'SOC 2 Compliant' },
-    { icon: Zap, label: '99.9% Uptime SLA' },
-    { icon: Globe, label: 'Global Operations' },
-]
-
-const stats = [
-    { value: '500+', label: 'Enterprise Clients' },
-    { value: '12+', label: 'Global Locations' },
-    { value: '98%', label: 'Client Retention' },
-    { value: '$2B+', label: 'Revenue Managed' },
+const capabilities = [
+    {
+        icon: <Zap size={22} />,
+        label: 'Smart Analytics',
+        desc: 'Understand your business with smart data.'
+    },
+    {
+        icon: <Shield size={22} />,
+        label: 'Safe and Secure',
+        desc: 'We keep your data safe and private.'
+    },
+    {
+        icon: <Maximize size={22} />,
+        label: 'Ready to Grow',
+        desc: 'Built to grow as your business gets bigger.'
+    },
+    {
+        icon: <Activity size={22} />,
+        label: 'Smart Workflows',
+        desc: 'Save time with automated tasks.'
+    },
 ]
 
 export default function HeroSection() {
+    const containerRef = useRef(null)
+
+    // Mouse tracking for Parallax and Glow
+    const mouseX = useMotionValue(0)
+    const mouseY = useMotionValue(0)
+
+    // Smooth springs for fluid motion
+    const springX = useSpring(mouseX, { stiffness: 60, damping: 25 })
+    const springY = useSpring(mouseY, { stiffness: 60, damping: 25 })
+
+    // Parallax transforms with diverse depths for "Floating Modules"
+    const depth1X = useTransform(springX, (v) => v * 35) // Deep layer
+    const depth1Y = useTransform(springY, (v) => v * 35)
+
+    const depth2X = useTransform(springX, (v) => v * 20) // Mid layer
+    const depth2Y = useTransform(springY, (v) => v * 20)
+
+    const depth3X = useTransform(springX, (v) => v * 10) // Shallow layer
+    const depth3Y = useTransform(springY, (v) => v * 10)
+
+    const gridX = useTransform(springX, (v) => v * -12)
+    const gridY = useTransform(springY, (v) => v * -12)
+
+    // Glow position relative to mouse
+    const glowX = useSpring(mouseX, { stiffness: 40, damping: 20 })
+    const glowY = useSpring(mouseY, { stiffness: 40, damping: 20 })
+
+    const handleMouseMove = (e) => {
+        if (!containerRef.current) return
+        const rect = containerRef.current.getBoundingClientRect()
+        const x = (e.clientX - rect.left) / rect.width - 0.5
+        const y = (e.clientY - rect.top) / rect.height - 0.5
+        mouseX.set(x)
+        mouseY.set(y)
+    }
+
+    const handleMouseLeave = () => {
+        mouseX.set(0)
+        mouseY.set(0)
+    }
+
     return (
         <section
-            className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
-            style={{
-                background: 'linear-gradient(160deg, #0B0B0F 0%, #0D0718 35%, #150D2E 60%, #0B0B0F 100%)',
-            }}
-            aria-label="Hero section"
+            ref={containerRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="relative flex flex-col justify-center overflow-x-hidden"
+            aria-label="Enterprise Operating Platform"
         >
-            {/* Starfield Canvas */}
-            <StarfieldBackground />
-
-            {/* Deep violet radial glow — center */}
-            <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                    background: 'radial-gradient(ellipse 70% 55% at 50% 50%, rgba(92,47,191,0.18) 0%, rgba(124,58,237,0.06) 50%, transparent 80%)',
-                }}
-            />
-
-            {/* Bottom fade */}
-            <div
-                className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
-                style={{
-                    background: 'linear-gradient(to top, #0B0B0F 0%, transparent 100%)',
-                }}
-            />
-
-            {/* Content */}
-            <div className="container-opmw relative z-10 text-center pt-24 pb-16 md:pt-32 md:pb-24">
-                {/* Top badge */}
-                <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex justify-center mb-8"
-                >
-                    <div
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold"
-                        style={{
-                            background: 'rgba(124,58,237,0.12)',
-                            border: '1px solid rgba(124,58,237,0.3)',
-                            color: '#9F6EFF',
-                            boxShadow: '0 0 20px rgba(124,58,237,0.15)',
-                        }}
-                    >
-                        <Sparkles size={12} />
-                        Introducing OPMW Enterprise Platform 2.0
-                        <span
-                            className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ml-1"
-                            style={{ background: 'rgba(124,58,237,0.3)', color: '#C4A7FF' }}
-                        >
-                            NEW
-                        </span>
-                    </div>
-                </motion.div>
-
-                {/* Main Headline */}
-                <motion.h1
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="font-display font-bold leading-tight tracking-tight mb-6"
-                    style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', color: '#F0F0F5' }}
-                >
-                    Integrated Execution.
-                    <br />
-                    <span className="text-gradient glow-text-md">Unified Growth.</span>
-                </motion.h1>
-
-                {/* Sub headline */}
-                <motion.p
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-lg md:text-xl max-w-2xl mx-auto mb-4 leading-relaxed"
-                    style={{ color: '#7A7A8A' }}
-                >
-                    OPMW is a unified enterprise operating system spanning{' '}
-                    <span style={{ color: '#A0A0B0' }}>BPO</span>,{' '}
-                    <span style={{ color: '#A0A0B0' }}>Voice Operations</span>,{' '}
-                    <span style={{ color: '#A0A0B0' }}>Web Development</span>, and{' '}
-                    <span style={{ color: '#A0A0B0' }}>HRMS SaaS</span> —
-                    engineered for enterprises that operate at scale.
-                </motion.p>
-
-                {/* CTA Buttons */}
-                <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-10 mb-16"
-                >
-                    <Link to="/contact" className="btn-primary text-base px-7 py-3.5">
-                        Schedule Demo
-                        <ArrowRight size={16} />
-                    </Link>
-                    <Link to="/hrms" className="btn-secondary text-base px-7 py-3.5">
-                        Explore HRMS Platform
-                    </Link>
-                </motion.div>
-
-                {/* Trust badges */}
-                <motion.div
+            {/* ── Background Video Section ── */}
+            <div className="absolute inset-0 z-0 bg-[#03142A] overflow-hidden pointer-events-none">
+                <motion.video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                    className="flex flex-wrap items-center justify-center gap-6 mb-16"
+                    animate={{ opacity: 0.65 }}
+                    transition={{ duration: 1.5 }}
+                    className="absolute w-full h-full object-cover"
                 >
-                    {badges.map(({ icon: Icon, label }) => (
-                        <div key={label} className="flex items-center gap-2">
-                            <Icon size={14} style={{ color: '#5B2FBF' }} />
-                            <span className="text-xs font-medium" style={{ color: '#606070' }}>{label}</span>
-                        </div>
-                    ))}
-                </motion.div>
+                    <source src="/hero-bg.mp4" type="video/mp4" />
+                    <source src="https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F0ce2fc9e-85dd-4123-9161-648980795295_seed1814303338.mp4" type="video/mp4" />
+                </motion.video>
 
-                {/* Stats Strip */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.6 }}
-                    className="grid grid-cols-2 md:grid-cols-4 gap-px max-w-3xl mx-auto rounded-2xl overflow-hidden"
+                {/* Visual Overlay */}
+                <div
+                    className="absolute inset-0"
                     style={{
-                        background: 'rgba(255,255,255,0.04)',
-                        border: '1px solid rgba(255,255,255,0.07)',
+                        background: 'linear-gradient(105deg, rgba(3,20,42,0.95) 0%, rgba(3,20,42,0.6) 55%, rgba(3,20,42,0.1) 100%)'
                     }}
-                >
-                    {stats.map(({ value, label }) => (
-                        <div
-                            key={label}
-                            className="flex flex-col items-center py-6 px-4"
-                            style={{ background: 'rgba(11,11,15,0.60)' }}
-                        >
-                            <span
-                                className="font-display font-bold mb-1"
-                                style={{
-                                    fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-                                    color: '#F0F0F5',
-                                }}
-                            >
-                                {value}
-                            </span>
-                            <span className="text-xs text-center" style={{ color: '#5A5A6A' }}>{label}</span>
-                        </div>
-                    ))}
-                </motion.div>
+                />
             </div>
 
-            {/* Scroll indicator */}
+            {/* Mouse-Follow Glow Light */}
             <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2 }}
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
-            >
-                <span className="text-xs tracking-widest uppercase" style={{ color: '#3A3A4E' }}>Scroll</span>
-                <motion.div
-                    animate={{ y: [0, 6, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                    className="w-px h-8"
-                    style={{ background: 'linear-gradient(to bottom, rgba(124,58,237,0.5), transparent)' }}
-                />
-            </motion.div>
+                className="absolute hidden lg:block pointer-events-none z-1 w-[600px] h-[600px] rounded-full"
+                style={{
+                    left: '50%',
+                    top: '50%',
+                    x: useTransform(glowX, (v) => `${(v + 0.5) * 100}%`),
+                    y: useTransform(glowY, (v) => `${(v + 0.5) * 100}%`),
+                    translateX: '-50%',
+                    translateY: '-50%',
+                    background: 'radial-gradient(circle, rgba(47,128,237,0.1) 0%, transparent 70%)',
+                    filter: 'blur(80px)',
+                }}
+            />
+
+            {/* ── Dynamic Grid System ── */}
+            <motion.div
+                className="absolute inset-0 z-[1] pointer-events-none opacity-25"
+                style={{
+                    x: gridX, y: gridY,
+                    backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0)',
+                    backgroundSize: '40px 40px'
+                }}
+                animate={{
+                    opacity: [0.15, 0.25, 0.15]
+                }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            />
+
+            {/* Top Noise Overlay */}
+            <div className="noise-overlay z-1" />
+
+            <div className="container-opmw relative z-20 pt-24 pb-6">
+                <div className="grid lg:grid-cols-12 gap-12 items-center">
+
+                    {/* Left & Main Content: Integrated Statistics */}
+                    <div className="lg:col-span-8 flex flex-col items-start text-left max-w-2xl">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded text-xs font-bold tracking-widest uppercase border"
+                            style={{
+                                color: '#9FB3D1',
+                                borderColor: 'rgba(255,255,255,0.08)',
+                                backgroundColor: 'rgba(8,30,58,0.4)',
+                                backdropFilter: 'blur(8px)'
+                            }}
+                        >
+                            <Cpu size={14} className="text-[#2F80ED]" /> Business Support Platform
+                        </motion.div>
+
+                        <motion.h1
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+                            className="font-display font-semibold leading-tight tracking-tight mb-6"
+                            style={{ fontSize: 'clamp(2rem, 9vw, 3.8rem)', color: '#E6EDF7' }}
+                        >
+                            The Best Way<br /> to Manage Your<br /> Business.
+                        </motion.h1>
+
+                        <motion.p
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                            className="text-lg md:text-xl mb-10 leading-relaxed font-normal"
+                            style={{ color: '#9FB3D1', maxWidth: '600px', opacity: 0.85 }}
+                        >
+                            OPMW helps you manage your team, software, and customer support all in one place. We make big business easy.
+                        </motion.p>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                            className="flex flex-col sm:flex-row gap-4 mb-16"
+                        >
+                            <Link to="/contact" className="btn-solid-premium justify-center flex items-center text-base font-semibold px-8 py-4 rounded-md">
+                                Get Started <ArrowRight size={18} className="ml-2" />
+                            </Link>
+                            <Link
+                                to="/services"
+                                className="flex items-center justify-center text-base font-medium px-8 py-4 rounded-md transition-all duration-300 border"
+                                style={{
+                                    borderColor: 'rgba(255,255,255,0.1)',
+                                    color: '#E6EDF7'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.03)'
+                                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.backgroundColor = 'transparent'
+                                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
+                                }}
+                            >
+                                See Our Work
+                            </Link>
+                        </motion.div>
+
+                        {/* Integrated Capabilities Grid (The "Strategic Pillars") */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.5 }}
+                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pt-10 border-t border-white/5 w-full mt-auto"
+                        >
+                            {capabilities.map((cap, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    style={{
+                                        // Varied subtle parallax shifts
+                                        translateY: useTransform(springY, (v) => v * (12 + idx * 4)),
+                                        translateX: useTransform(springX, (v) => v * (12 + idx * 4))
+                                    }}
+                                    className="flex flex-col group cursor-default"
+                                >
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <div className="p-2.5 rounded-lg bg-[#2F80ED]/5 border border-[#2F80ED]/20 text-[#2F80ED] group-hover:bg-[#2F80ED]/10 group-hover:border-[#2F80ED]/40 transition-all duration-300">
+                                            {cap.icon}
+                                        </div>
+                                        <div className="text-[#E6EDF7] font-display font-bold tracking-wide text-sm">
+                                            {cap.label}
+                                        </div>
+                                    </div>
+                                    <div className="text-[#9FB3D1] text-[11px] leading-relaxed opacity-60 group-hover:opacity-100 transition-opacity">
+                                        {cap.desc}
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    </div>
+
+                    {/* Right Side: Intentionally Empty for Minimalist Balance */}
+                    <div className="hidden lg:block lg:col-span-4" />
+
+                </div>
+            </div>
         </section>
     )
 }

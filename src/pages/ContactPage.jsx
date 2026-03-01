@@ -37,12 +37,12 @@ const offices = [
 ]
 
 const inquiryTypes = [
-    'Enterprise Partnership',
-    'HRMS Demo Request',
-    'BPO Services Inquiry',
-    'Voice Operations',
-    'Web Development Project',
-    'Careers / Recruitment',
+    'Growing Your Business',
+    'Try Our HR Software',
+    'Business Support',
+    'Customer Support',
+    'Website and App Help',
+    'Join Our Team',
     'Press / Media',
     'Other',
 ]
@@ -59,15 +59,15 @@ export default function ContactPage() {
     }
 
     return (
-        <div className="pt-16">
+        <main className="pt-16">
             {/* Hero */}
             <section
                 className="relative min-h-[45vh] flex items-center overflow-hidden"
-                style={{ background: 'linear-gradient(160deg, #0B0B0F 0%, #0D0718 50%, #0B0B0F 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #03142A 0%, #071C36 100%)' }}
             >
                 <StarfieldBackground />
-                <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(92,47,191,0.14) 0%, transparent 80%)' }} />
-                <div className="container-opmw relative z-10 py-24 text-center">
+                <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(30,95,175,0.14) 0%, transparent 80%)' }} />
+                <header className="container-opmw relative z-10 py-24 text-center">
                     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="section-label mx-auto mb-6">
                         Contact Us
                     </motion.div>
@@ -79,7 +79,7 @@ export default function ContactPage() {
                         style={{ fontSize: 'clamp(2rem, 5vw, 3.75rem)', color: '#F0F0F5' }}
                     >
                         Let's Build Something
-                        <br /><span className="text-gradient">Exceptional Together.</span>
+                        <br /><span className="text-gradient">Great Together.</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0 }}
@@ -88,30 +88,30 @@ export default function ContactPage() {
                         className="max-w-xl mx-auto text-base"
                         style={{ color: '#7A7A8A' }}
                     >
-                        Whether it's a partnership inquiry, product demo, or a project discussion — our enterprise team responds within 2 business hours.
+                        Whether you want to work with us, see our software, or just have a question — our team will get back to you within 2 hours.
                     </motion.p>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, #0B0B0F, transparent)' }} />
+                </header>
+                <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, #03142A, transparent)' }} />
             </section>
 
             {/* Trust Strip */}
             <div
                 className="py-5"
                 style={{
-                    background: 'rgba(124,58,237,0.05)',
-                    borderTop: '1px solid rgba(124,58,237,0.12)',
-                    borderBottom: '1px solid rgba(124,58,237,0.12)',
+                    background: 'rgba(47,128,237,0.05)',
+                    borderTop: '1px solid rgba(47,128,237,0.12)',
+                    borderBottom: '1px solid rgba(47,128,237,0.12)',
                 }}
             >
                 <div className="container-opmw flex flex-wrap items-center justify-center gap-8 text-xs" style={{ color: '#5A5A6A' }}>
                     {[
-                        { icon: MessageSquare, label: 'Average response time: 2 hours' },
-                        { icon: Calendar, label: 'Demo scheduling within 48 hours' },
-                        { icon: Building2, label: 'Dedicated enterprise account team' },
-                        { icon: Clock, label: '24/7 support for active clients' },
+                        { icon: MessageSquare, label: 'Fast help: Usually within 2 hours' },
+                        { icon: Calendar, label: 'See our software in action within 2 days' },
+                        { icon: Building2, label: 'A team just for your business' },
+                        { icon: Clock, label: 'Support available 24/7' },
                     ].map(({ icon: Icon, label }) => (
                         <div key={label} className="flex items-center gap-2">
-                            <Icon size={13} style={{ color: '#5B2FBF' }} />
+                            <Icon size={13} style={{ color: '#133B6A' }} />
                             {label}
                         </div>
                     ))}
@@ -119,7 +119,7 @@ export default function ContactPage() {
             </div>
 
             {/* Contact Form + Info */}
-            <section className="section-pad" style={{ background: '#0B0B0F' }}>
+            <section className="section-pad" style={{ background: 'linear-gradient(135deg, #03142A 0%, #071C36 100%)' }}>
                 <div className="container-opmw">
                     <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
                         {/* Form — 3/5 */}
@@ -137,9 +137,9 @@ export default function ContactPage() {
                                 {submitted ? (
                                     <div className="text-center py-10">
                                         <div className="text-5xl mb-5">✅</div>
-                                        <h3 className="font-display font-bold text-2xl mb-3" style={{ color: '#F0F0F5' }}>Message Received!</h3>
+                                        <h3 className="font-display font-bold text-2xl mb-3" style={{ color: '#F0F0F5' }}>Thank you!</h3>
                                         <p className="text-base leading-relaxed" style={{ color: '#7A7A8A' }}>
-                                            Thank you for reaching out. Our enterprise team will respond within 2 business hours. Check your inbox shortly.
+                                            We got your message. Our team will get back to you in about 2 hours. Please check your email soon.
                                         </p>
                                     </div>
                                 ) : (
@@ -159,7 +159,7 @@ export default function ContactPage() {
                                                         onChange={e => setForm({ ...form, [f.key]: e.target.value })}
                                                         className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200"
                                                         style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                                        onFocus={e => e.target.style.borderColor = 'rgba(124,58,237,0.4)'}
+                                                        onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
                                                         onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
                                                     />
                                                 </div>
@@ -175,7 +175,7 @@ export default function ContactPage() {
                                                 onChange={e => setForm({ ...form, company: e.target.value })}
                                                 className="w-full px-4 py-3 rounded-xl text-sm outline-none"
                                                 style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                                onFocus={e => e.target.style.borderColor = 'rgba(124,58,237,0.4)'}
+                                                onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
                                                 onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
                                             />
                                         </div>
@@ -187,7 +187,7 @@ export default function ContactPage() {
                                                 value={form.inquiry}
                                                 onChange={e => setForm({ ...form, inquiry: e.target.value })}
                                                 className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                                                style={{ background: 'rgba(11,11,15,0.9)', border: '1px solid rgba(255,255,255,0.08)', color: form.inquiry ? '#F0F0F5' : '#5A5A6A' }}
+                                                style={{ background: '#0D2A4D', border: '1px solid rgba(255,255,255,0.08)', color: form.inquiry ? '#F0F0F5' : '#5A5A6A' }}
                                             >
                                                 <option value="">Select inquiry type...</option>
                                                 {inquiryTypes.map(t => <option key={t}>{t}</option>)}
@@ -204,7 +204,7 @@ export default function ContactPage() {
                                                 onChange={e => setForm({ ...form, message: e.target.value })}
                                                 className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none"
                                                 style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                                onFocus={e => e.target.style.borderColor = 'rgba(124,58,237,0.4)'}
+                                                onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
                                                 onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
                                             />
                                         </div>
@@ -231,11 +231,11 @@ export default function ContactPage() {
                             <h2 className="font-display font-bold text-2xl" style={{ color: '#F0F0F5' }}>Our Offices</h2>
 
                             {offices.map((office) => (
-                                <div
+                                <article
                                     key={office.city}
                                     className="rounded-2xl p-6"
                                     style={{
-                                        background: 'rgba(255,255,255,0.02)',
+                                        background: 'rgba(47,128,237,0.03)',
                                         border: '1px solid rgba(255,255,255,0.07)',
                                     }}
                                 >
@@ -243,7 +243,7 @@ export default function ContactPage() {
                                         <span className="text-2xl">{office.flag}</span>
                                         <div>
                                             <div className="font-display font-bold text-base" style={{ color: '#F0F0F5' }}>{office.city}</div>
-                                            <div className="text-xs" style={{ color: '#9F6EFF' }}>{office.role}</div>
+                                            <div className="text-xs" style={{ color: '#2F80ED' }}>{office.role}</div>
                                         </div>
                                     </div>
 
@@ -255,14 +255,14 @@ export default function ContactPage() {
                                         <div className="flex items-center gap-2.5">
                                             <Phone size={12} style={{ color: '#3A3A4E', flexShrink: 0 }} />
                                             <a href={`tel:${office.phone}`} className="text-xs transition-colors" style={{ color: '#5A5A6A' }}
-                                                onMouseEnter={e => e.target.style.color = '#9F6EFF'}
+                                                onMouseEnter={e => e.target.style.color = '#2F80ED'}
                                                 onMouseLeave={e => e.target.style.color = '#5A5A6A'}
                                             >{office.phone}</a>
                                         </div>
                                         <div className="flex items-center gap-2.5">
                                             <Mail size={12} style={{ color: '#3A3A4E', flexShrink: 0 }} />
                                             <a href={`mailto:${office.email}`} className="text-xs transition-colors" style={{ color: '#5A5A6A' }}
-                                                onMouseEnter={e => e.target.style.color = '#9F6EFF'}
+                                                onMouseEnter={e => e.target.style.color = '#2F80ED'}
                                                 onMouseLeave={e => e.target.style.color = '#5A5A6A'}
                                             >{office.email}</a>
                                         </div>
@@ -271,7 +271,7 @@ export default function ContactPage() {
                                             <span className="text-xs" style={{ color: '#3A3A4E' }}>{office.hours}</span>
                                         </div>
                                     </div>
-                                </div>
+                                </article>
                             ))}
 
                             {/* Enterprise email box */}
@@ -279,7 +279,7 @@ export default function ContactPage() {
                                 className="rounded-2xl p-6"
                                 style={{
                                     background: 'linear-gradient(135deg, rgba(45,23,96,0.4) 0%, rgba(30,16,64,0.3) 100%)',
-                                    border: '1px solid rgba(124,58,237,0.2)',
+                                    border: '1px solid rgba(47,128,237,0.2)',
                                 }}
                             >
                                 <div className="text-lg mb-2">✦</div>
@@ -290,7 +290,7 @@ export default function ContactPage() {
                                 <a
                                     href="mailto:enterprise@opmw.io"
                                     className="text-xs font-semibold transition-colors"
-                                    style={{ color: '#9F6EFF' }}
+                                    style={{ color: '#2F80ED' }}
                                 >
                                     enterprise@opmw.io →
                                 </a>
@@ -299,6 +299,6 @@ export default function ContactPage() {
                     </div>
                 </div>
             </section>
-        </div>
+        </main>
     )
 }

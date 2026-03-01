@@ -10,7 +10,8 @@ const services = [
     {
         icon: Building2,
         category: 'BPO',
-        title: 'Business Process Outsourcing',
+        title: 'Business Support Services',
+        image: '/amazon_ops.jpg',
         description:
             'End-to-end BPO services that integrate seamlessly with your core operations. From customer experience to back-office processing, we scale with your enterprise.',
         features: [
@@ -21,12 +22,13 @@ const services = [
             'Quality Assurance Programs',
             'SLA-Driven Performance',
         ],
-        gradient: 'linear-gradient(135deg, rgba(30,16,64,0.9) 0%, rgba(20,20,25,0.95) 100%)',
+        gradient: 'linear-gradient(135deg, #0B192E 0%, #030F1C 100%)',
     },
     {
         icon: Phone,
         category: 'Voice Ops',
-        title: 'International Voice Operations',
+        title: 'Customer Support & Calling',
+        image: '/voice_ops.jpg',
         description:
             'Premium multilingual voice operations powered by AI-enhanced agent support. Inbound, outbound, and blended campaigns for global enterprises.',
         features: [
@@ -37,12 +39,13 @@ const services = [
             'Omnichannel Support',
             'CSAT Optimization Programs',
         ],
-        gradient: 'linear-gradient(135deg, rgba(22,14,52,0.9) 0%, rgba(20,20,25,0.95) 100%)',
+        gradient: 'linear-gradient(135deg, #0D1B36 0%, #051226 100%)',
     },
     {
         icon: Code2,
         category: 'Web Dev',
-        title: 'Web Application Development',
+        title: 'Website & App Building',
+        image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200',
         description:
             'Full-stack, cloud-native application development. React frontends, Node.js microservices, and AWS infrastructure — from MVP to enterprise scale.',
         features: [
@@ -53,12 +56,13 @@ const services = [
             'DevOps & CI/CD Pipelines',
             'UI/UX Design & Prototyping',
         ],
-        gradient: 'linear-gradient(135deg, rgba(30,16,64,0.9) 0%, rgba(20,20,25,0.95) 100%)',
+        gradient: 'linear-gradient(135deg, #0B192E 0%, #030F1C 100%)',
     },
     {
         icon: Users,
         category: 'HRMS SaaS',
-        title: 'Human Resource Management System',
+        title: 'HR Management Software',
+        image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200',
         description:
             'Enterprise-grade HRMS SaaS platform unifying workforce management — payroll, attendance, performance, and recruitment in one integrated solution.',
         features: [
@@ -69,7 +73,7 @@ const services = [
             'Analytics & Reporting',
             'Multi-Tenant SaaS Architecture',
         ],
-        gradient: 'linear-gradient(135deg, rgba(45,23,96,0.9) 0%, rgba(20,20,25,0.95) 100%)',
+        gradient: 'linear-gradient(135deg, #0D1B36 0%, #051226 100%)',
     },
 ]
 
@@ -96,114 +100,153 @@ const caseStudies = [
 
 export default function ServicesPage() {
     return (
-        <div className="pt-16">
+        <main className="pt-16">
             {/* Hero */}
-            <section
-                className="relative min-h-[55vh] flex items-center overflow-hidden"
-                style={{ background: 'linear-gradient(160deg, #0B0B0F 0%, #0D0718 50%, #0B0B0F 100%)' }}
-            >
+            <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-[#03142A]">
                 <StarfieldBackground />
-                <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(92,47,191,0.15) 0%, transparent 80%)' }}
-                />
-                <div className="container-opmw relative z-10 py-24 text-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="section-label mx-auto mb-6"
-                    >
-                        Our Services
-                    </motion.div>
-                    <motion.h1
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.1 }}
-                        className="font-display font-bold mb-5"
-                        style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', color: '#F0F0F5' }}
-                    >
-                        Four Divisions.
-                        <br />
-                        <span className="text-gradient">One Unified Platform.</span>
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.2 }}
-                        className="max-w-2xl mx-auto text-lg"
-                        style={{ color: '#7A7A8A' }}
-                    >
-                        Enterprise-grade services that integrate across BPO, Voice Operations, Web Development, and HRMS — powering your entire operational stack.
-                    </motion.p>
+                <div className="container-opmw relative z-10 py-20">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        <header className="text-left">
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.6 }}
+                                className="section-label mb-6"
+                            >
+                                Our Services
+                            </motion.div>
+                            <motion.h1
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 0.1 }}
+                                className="font-display font-bold mb-6 leading-[1.1]"
+                                style={{ fontSize: 'clamp(2.25rem, 8vw, 4.5rem)', color: '#F0F0F5' }}
+                            >
+                                Global Work.
+                                <br />
+                                <span className="text-gradient">Simplified Results.</span>
+                            </motion.h1>
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 0.2 }}
+                                className="text-xl text-[#9FB3D1] max-w-xl leading-relaxed mb-10"
+                            >
+                                We provide great business support, customer care, and software development — all through one trusted partner.
+                            </motion.p>
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 0.3 }}
+                                className="flex flex-wrap gap-4"
+                            >
+                                <Link to="/contact" className="btn-primary py-4 px-10">
+                                    Start Today <ArrowRight size={18} />
+                                </Link>
+                                <a href="#divisions" className="btn-secondary py-4 px-10">
+                                    See Our Services
+                                </a>
+                            </motion.div>
+                        </header>
+
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, x: 40 }}
+                            animate={{ opacity: 1, scale: 1, x: 0 }}
+                            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                            className="relative mt-12 lg:mt-0"
+                        >
+                            <figure className="relative z-10 rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(47,128,237,0.15)] m-0">
+                                <img
+                                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200"
+                                    alt="Global Strategic Operations"
+                                    className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-tr from-[#03142A]/40 to-transparent" />
+                            </figure>
+                            {/* Decorative elements */}
+                            <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#7C3AED]/10 blur-[100px] rounded-full" />
+                            <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-[#2F80ED]/10 blur-[100px] rounded-full" />
+                        </motion.div>
+                    </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, #0B0B0F, transparent)' }} />
+                <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, #03142A, transparent)' }} />
             </section>
 
             {/* Service Blocks */}
-            <section className="section-pad" style={{ background: '#0B0B0F' }}>
+            <section id="divisions" className="section-pad relative overflow-hidden bg-[#03142A]">
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent z-10" />
+
                 <div className="container-opmw">
-                    <div className="space-y-8">
+                    <div className="space-y-16">
                         {services.map((svc, i) => {
                             const Icon = svc.icon
+                            const isEven = i % 2 === 0
                             return (
-                                <motion.div
+                                <motion.article
                                     key={svc.category}
-                                    initial={{ opacity: 0, y: 28 }}
+                                    initial={{ opacity: 0, y: 40 }}
                                     whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: '-60px' }}
-                                    transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-                                    className="rounded-2xl p-8 md:p-10 group relative overflow-hidden"
-                                    style={{
-                                        background: svc.gradient,
-                                        border: '1px solid rgba(255,255,255,0.07)',
-                                    }}
+                                    viewport={{ once: true, margin: '-100px' }}
+                                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                                    className="relative grid lg:grid-cols-12 gap-12 items-center"
                                 >
-                                    <div
-                                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                                        style={{ background: 'radial-gradient(ellipse 50% 60% at 80% 50%, rgba(124,58,237,0.08) 0%, transparent 80%)' }}
-                                    />
-
-                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-                                        <div>
-                                            <div className="flex items-center gap-4 mb-5">
-                                                <div
-                                                    className="w-12 h-12 rounded-xl flex items-center justify-center"
-                                                    style={{ background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(124,58,237,0.25)' }}
-                                                >
-                                                    <Icon size={22} style={{ color: '#9F6EFF' }} />
-                                                </div>
-                                                <div className="section-label" style={{ fontSize: '10px' }}>{svc.category}</div>
-                                            </div>
-                                            <h2
-                                                className="font-display font-bold text-2xl md:text-3xl mb-4"
-                                                style={{ color: '#F0F0F5' }}
+                                    {/* Content Column */}
+                                    <div className={`lg:col-span-12 xl:col-span-7 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+                                        <div className="flex items-center gap-4 mb-6">
+                                            <div
+                                                className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                                                style={{ background: 'rgba(47,128,237,0.1)', border: '1px solid rgba(47,128,237,0.2)' }}
                                             >
-                                                {svc.title}
-                                            </h2>
-                                            <p className="text-base leading-relaxed mb-6" style={{ color: '#7A7A8A' }}>
-                                                {svc.description}
-                                            </p>
-                                            <Link to="/contact" className="btn-primary">
-                                                Get Started <ArrowRight size={15} />
-                                            </Link>
+                                                <Icon size={28} style={{ color: '#2F80ED' }} />
+                                            </div>
+                                            <div>
+                                                <div className="section-label mb-1" style={{ fontSize: '10px' }}>{svc.category}</div>
+                                                <h2 className="font-display font-bold text-2xl md:text-3xl text-white">
+                                                    {svc.title}
+                                                </h2>
+                                            </div>
                                         </div>
+                                        <p className="text-lg text-[#9FB3D1] leading-relaxed mb-8 max-w-2xl">
+                                            {svc.description}
+                                        </p>
 
-                                        <div>
-                                            <h3 className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: '#3A3A4E' }}>
-                                                Capabilities
+                                        <div className="mb-10">
+                                            <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#3A3A4E] mb-6">
+                                                Core Capabilities
                                             </h3>
-                                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
                                                 {svc.features.map(f => (
-                                                    <li key={f} className="flex items-start gap-2.5">
-                                                        <CheckCircle2 size={14} className="mt-0.5 flex-shrink-0" style={{ color: '#5B2FBF' }} />
-                                                        <span className="text-sm" style={{ color: '#9A9AAA' }}>{f}</span>
+                                                    <li key={f} className="flex items-center gap-3 group/feat">
+                                                        <div className="w-5 h-5 rounded-full bg-[#133B6A]/30 border border-[#133B6A]/50 flex items-center justify-center group-hover/feat:bg-[#2F80ED]/20 group-hover/feat:border-[#2F80ED]/40 transition-colors">
+                                                            <CheckCircle2 size={10} className="text-[#2F80ED]" />
+                                                        </div>
+                                                        <span className="text-sm text-[#9FB3D1]/80 group-hover/feat:text-[#E6EDF7] transition-colors">{f}</span>
                                                     </li>
                                                 ))}
                                             </ul>
                                         </div>
+
+                                        <Link to="/contact" className="btn-primary">
+                                            Inquire About {svc.category} <ArrowRight size={16} />
+                                        </Link>
                                     </div>
-                                </motion.div>
+
+                                    {/* Image Column */}
+                                    <div className={`lg:col-span-12 xl:col-span-5 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
+                                        <motion.figure
+                                            whileHover={{ scale: 1.02 }}
+                                            transition={{ duration: 0.4 }}
+                                            className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl aspect-[4/3] xl:aspect-square m-0"
+                                        >
+                                            <img
+                                                src={svc.image}
+                                                alt={svc.title}
+                                                className="w-full h-full object-cover"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-[#03142A]/60 via-transparent to-transparent" />
+                                        </motion.figure>
+                                    </div>
+                                </motion.article>
                             )
                         })}
                     </div>
@@ -211,7 +254,9 @@ export default function ServicesPage() {
             </section>
 
             {/* Case Studies */}
-            <section className="section-pad" style={{ background: 'linear-gradient(180deg, #0B0B0F, #0D0718, #0B0B0F)' }}>
+            <section className="section-pad relative overflow-hidden bg-[#03142A]">
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent z-10" />
+
                 <div className="container-opmw">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -230,7 +275,7 @@ export default function ServicesPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                         {caseStudies.map((cs, i) => (
-                            <motion.div
+                            <motion.article
                                 key={cs.title}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -248,17 +293,17 @@ export default function ServicesPage() {
                                         <span
                                             key={t}
                                             className="text-[10px] px-2 py-0.5 rounded-full"
-                                            style={{ background: 'rgba(124,58,237,0.08)', border: '1px solid rgba(124,58,237,0.15)', color: '#9F6EFF' }}
+                                            style={{ background: 'rgba(47,128,237,0.08)', border: '1px solid rgba(47,128,237,0.15)', color: '#2F80ED' }}
                                         >
                                             {t}
                                         </span>
                                     ))}
                                 </div>
-                            </motion.div>
+                            </motion.article>
                         ))}
                     </div>
                 </div>
             </section>
-        </div>
+        </main>
     )
 }

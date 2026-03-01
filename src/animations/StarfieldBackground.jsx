@@ -68,6 +68,7 @@ export default function StarfieldBackground({ className = '' }) {
         function draw() {
             const w = canvas.width
             const h = canvas.height
+            if (w <= 0 || h <= 0 || !Number.isFinite(w) || !Number.isFinite(h)) return
 
             // Clear with very slight trail for smooth motion
             ctx.clearRect(0, 0, w, h)
@@ -116,14 +117,17 @@ export default function StarfieldBackground({ className = '' }) {
                 ctx.fill()
 
                 // Add subtle glow to near-layer stars
-                if (star.layer === 2 && star.size > 1.5) {
+                if (star.layer === 2 && star.size > 1.5 && Number.isFinite(drawX) && Number.isFinite(drawY) && Number.isFinite(star.size)) {
                     ctx.beginPath()
                     ctx.arc(drawX, drawY, star.size * 2.5, 0, Math.PI * 2)
-                    const grd = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, star.size * 2.5)
-                    grd.addColorStop(0, `rgba(159, 110, 255, ${alpha * 0.3})`)
-                    grd.addColorStop(1, 'rgba(159, 110, 255, 0)')
-                    ctx.fillStyle = grd
-                    ctx.fill()
+                    const radius = star.size * 2.5
+                    if (radius > 0) {
+                        const grd = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, radius)
+                        grd.addColorStop(0, `rgba(159, 110, 255, ${alpha * 0.3})`)
+                        grd.addColorStop(1, 'rgba(159, 110, 255, 0)')
+                        ctx.fillStyle = grd
+                        ctx.fill()
+                    }
                 }
             })
 

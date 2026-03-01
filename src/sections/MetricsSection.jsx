@@ -3,49 +3,12 @@ import { motion, useInView } from 'framer-motion'
 import { animateValue } from '@/lib/utils'
 
 const metrics = [
-    {
-        value: 500,
-        suffix: '+',
-        label: 'Enterprise Clients',
-        description: 'Across 20+ industries globally',
-        color: '#7C3AED',
-    },
-    {
-        value: 98,
-        suffix: '%',
-        label: 'Retention Rate',
-        description: '3-year rolling average',
-        color: '#9F6EFF',
-    },
-    {
-        value: 12,
-        suffix: '+',
-        label: 'Global Offices',
-        description: 'On 4 continents',
-        color: '#7C3AED',
-    },
-    {
-        value: 2,
-        suffix: 'B+',
-        prefix: '$',
-        label: 'Revenue Managed',
-        description: 'Total client revenue impacted',
-        color: '#9F6EFF',
-    },
-    {
-        value: 10000,
-        suffix: '+',
-        label: 'Professionals',
-        description: 'Deployed across client accounts',
-        color: '#7C3AED',
-    },
-    {
-        value: 99.9,
-        suffix: '%',
-        label: 'Platform Uptime',
-        description: 'SLA guaranteed',
-        color: '#9F6EFF',
-    },
+    { value: 500, suffix: '+', label: 'Business Clients', description: 'Working with companies everywhere.' },
+    { value: 98, suffix: '%', label: 'Client Happiness', description: 'Most of our clients stay with us for years.' },
+    { value: 12, suffix: '+', label: 'Offices Worldwide', description: 'Ready to support you anywhere.' },
+    { value: 2, suffix: 'B+', prefix: '$', label: 'Total Value Managed', description: 'The total value we help our clients manage.' },
+    { value: 10000, suffix: '+', label: 'Daily Users', description: 'People who use our software every day.' },
+    { value: 99.9, suffix: '%', label: 'Always Online', description: 'Our systems are always ready when you need them.' },
 ]
 
 function MetricCard({ metric, index }) {
@@ -55,7 +18,7 @@ function MetricCard({ metric, index }) {
 
     useEffect(() => {
         if (inView) {
-            animateValue(0, metric.value, 1800, setCount)
+            animateValue(0, metric.value, 1500, setCount)
         }
     }, [inView, metric.value])
 
@@ -64,69 +27,79 @@ function MetricCard({ metric, index }) {
         : Math.floor(count).toLocaleString()
 
     return (
-        <motion.div
+        <motion.article
             ref={ref}
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="glass-card p-6 flex flex-col gap-2 relative overflow-hidden group"
+            transition={{ duration: 0.6, delay: index * 0.05, ease: "easeOut" }}
+            className="sky-light-card p-6 flex flex-col gap-2 rounded-lg border group relative h-full"
+            style={{
+                backgroundColor: '#0D2A4D',
+                borderColor: 'rgba(255,255,255,0.08)',
+            }}
+            onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+            }}
         >
-            {/* Accent glow */}
+            {/* Subtle radial glow instead of grid */}
             <div
-                className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ background: `linear-gradient(90deg, transparent, ${metric.color}, transparent)` }}
+                className="absolute inset-0 opacity-[0.05] pointer-events-none"
+                style={{
+                    background: 'radial-gradient(circle at 50% 0%, #2F80ED, transparent 70%)',
+                }}
             />
 
+
             <div
-                className="font-display font-bold leading-none"
+                className="font-display font-bold leading-none tracking-tight relative z-10"
                 style={{
-                    fontSize: 'clamp(2rem, 4vw, 3rem)',
-                    background: `linear-gradient(135deg, #F0F0F5 0%, ${metric.color} 100%)`,
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
+                    fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+                    color: '#E6EDF7',
                 }}
             >
                 {metric.prefix}{displayValue}{metric.suffix}
             </div>
 
-            <div className="font-semibold text-sm" style={{ color: '#E0E0E8' }}>
+            <div className="font-semibold text-sm tracking-wide relative z-10" style={{ color: '#E6EDF7' }}>
                 {metric.label}
             </div>
-            <div className="text-xs leading-relaxed" style={{ color: '#5A5A6A' }}>
+            <div className="text-xs leading-relaxed relative z-10" style={{ color: '#9FB3D1' }}>
                 {metric.description}
             </div>
-        </motion.div>
+
+            <style jsx="true">{`
+                @keyframes panDown { from { background-position: 0 0; } to { background-position: 0 100px; } }
+            `}</style>
+        </motion.article>
     )
 }
 
 export default function MetricsSection() {
     return (
-        <section className="section-pad relative" aria-label="Company metrics">
+        <section className="section-pad relative bg-[#03142A]" aria-label="Our Growth in Numbers">
             <div className="container-opmw">
                 {/* Section header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                <motion.header
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
                     viewport={{ once: true, margin: '-100px' }}
                     transition={{ duration: 0.6 }}
-                    className="text-center mb-14"
+                    className="mb-14 border-b border-white/10 pb-6"
                 >
-                    <div className="section-label mx-auto mb-5">By the Numbers</div>
+                    <div className="uppercase tracking-widest text-[#2F80ED] text-xs font-bold mb-3">Real Data</div>
                     <h2
-                        className="font-display font-bold mb-4"
-                        style={{ fontSize: 'clamp(1.75rem, 3.5vw, 3rem)', color: '#F0F0F5' }}
+                        className="font-display font-bold"
+                        style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', color: '#E6EDF7', lineHeight: '1.2' }}
                     >
-                        The Scale of Our Impact
+                        Our Reach Around the World
                     </h2>
-                    <p className="max-w-xl mx-auto text-base" style={{ color: '#5A5A6A' }}>
-                        Trusted by enterprises across BPO, Tech, Finance, and Healthcare for mission-critical operations.
-                    </p>
-                </motion.div>
+                </motion.header>
 
                 {/* Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {metrics.map((metric, i) => (
                         <MetricCard key={metric.label} metric={metric} index={i} />
                     ))}

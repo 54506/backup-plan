@@ -91,47 +91,78 @@ export default function ProjectsPage() {
     const [expanded, setExpanded] = useState(null)
 
     return (
-        <div className="pt-16">
+        <main className="pt-16">
             {/* Hero */}
-            <section
-                className="relative min-h-[50vh] flex items-center overflow-hidden"
-                style={{ background: 'linear-gradient(160deg, #0B0B0F 0%, #0D0718 50%, #0B0B0F 100%)' }}
-            >
+            <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-[#03142A]">
                 <StarfieldBackground />
-                <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(92,47,191,0.15) 0%, transparent 80%)' }} />
-                <div className="container-opmw relative z-10 py-24 text-center">
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="section-label mx-auto mb-6">
-                        Case Studies
-                    </motion.div>
-                    <motion.h1
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="font-display font-bold mb-5"
-                        style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', color: '#F0F0F5' }}
-                    >
-                        Proven Outcomes.
-                        <br /><span className="text-gradient">Real Enterprise Scale.</span>
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className="max-w-xl mx-auto text-base"
-                        style={{ color: '#7A7A8A' }}
-                    >
-                        Detailed case studies from enterprise deployments across BPO, Voice Ops, Web Dev, and HRMS.
-                    </motion.p>
+                <div className="container-opmw relative z-10 py-20">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        <header className="text-left">
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                className="section-label mb-6"
+                            >
+                                Success Stories
+                            </motion.div>
+                            <motion.h1
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.1 }}
+                                className="font-display font-bold mb-6 leading-[1.1]"
+                                style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', color: '#F0F0F5' }}
+                            >
+                                Good Work.
+                                <br />
+                                <span className="text-gradient">Big Results.</span>
+                            </motion.h1>
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                                className="text-xl text-[#9FB3D1] max-w-xl leading-relaxed mb-10"
+                            >
+                                See how we help businesses grow and work better across the world.
+                            </motion.p>
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.3 }}
+                                className="flex flex-wrap gap-4"
+                            >
+                                <a href="#case-studies" className="btn-primary py-4 px-10">
+                                    See Our Work <ArrowRight size={18} />
+                                </a>
+                            </motion.div>
+                        </header>
+
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, x: 40 }}
+                            animate={{ opacity: 1, scale: 1, x: 0 }}
+                            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                            className="relative mt-12 lg:mt-0"
+                        >
+                            <figure className="relative z-10 rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(47,128,237,0.15)] m-0">
+                                <img
+                                    src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200"
+                                    alt="Corporate Scale"
+                                    className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-tr from-[#03142A]/40 to-transparent" />
+                            </figure>
+                            <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#7C3AED]/10 blur-[100px] rounded-full" />
+                        </motion.div>
+                    </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, #0B0B0F, transparent)' }} />
+                <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, #03142A, transparent)' }} />
             </section>
 
             {/* Case Study List */}
-            <section className="section-pad" style={{ background: '#0B0B0F' }}>
+            <section id="case-studies" className="section-pad" style={{ background: 'linear-gradient(135deg, #03142A 0%, #071C36 100%)' }}>
                 <div className="container-opmw max-w-4xl">
                     <div className="space-y-5">
                         {caseStudies.map((cs, i) => (
-                            <motion.div
+                            <motion.article
                                 key={cs.id}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -139,15 +170,15 @@ export default function ProjectsPage() {
                                 transition={{ duration: 0.55, delay: i * 0.08 }}
                                 className="rounded-2xl overflow-hidden cursor-pointer"
                                 style={{
-                                    background: 'rgba(255,255,255,0.02)',
-                                    border: expanded === cs.id ? '1px solid rgba(124,58,237,0.3)' : '1px solid rgba(255,255,255,0.07)',
-                                    boxShadow: expanded === cs.id ? '0 0 30px rgba(124,58,237,0.1)' : 'none',
+                                    background: 'rgba(47,128,237,0.03)',
+                                    border: expanded === cs.id ? '1px solid rgba(47,128,237,0.3)' : '1px solid rgba(255,255,255,0.07)',
+                                    boxShadow: expanded === cs.id ? '0 0 30px rgba(47,128,237,0.1)' : 'none',
                                     transition: 'all 0.3s ease',
                                 }}
                                 onClick={() => setExpanded(expanded === cs.id ? null : cs.id)}
                             >
                                 {/* Header */}
-                                <div className="flex items-start justify-between p-6 gap-4">
+                                <header className="flex items-start justify-between p-6 gap-4">
                                     <div className="flex-1">
                                         <div className="flex items-center gap-3 mb-3">
                                             <div className="section-label" style={{ fontSize: '10px' }}>{cs.category}</div>
@@ -156,7 +187,7 @@ export default function ProjectsPage() {
                                         <h2 className="font-display font-bold text-xl mb-2" style={{ color: '#F0F0F5' }}>{cs.title}</h2>
                                         <div className="flex flex-wrap gap-2">
                                             {cs.tags.map(t => (
-                                                <span key={t} className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: 'rgba(124,58,237,0.08)', border: '1px solid rgba(124,58,237,0.15)', color: '#9F6EFF' }}>{t}</span>
+                                                <span key={t} className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: 'rgba(47,128,237,0.08)', border: '1px solid rgba(47,128,237,0.15)', color: '#2F80ED' }}>{t}</span>
                                             ))}
                                         </div>
                                     </div>
@@ -172,7 +203,7 @@ export default function ProjectsPage() {
                                             <ChevronDown size={18} style={{ color: '#5A5A6A' }} />
                                         </motion.div>
                                     </div>
-                                </div>
+                                </header>
 
                                 {/* Expanded Detail */}
                                 <AnimatePresence>
@@ -206,8 +237,8 @@ export default function ProjectsPage() {
                                                         <h3 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#3A3A4E' }}>Results</h3>
                                                         <div className="grid grid-cols-2 gap-3">
                                                             {cs.results.map(r => (
-                                                                <div key={r.label} className="p-4 rounded-xl" style={{ background: 'rgba(124,58,237,0.06)', border: '1px solid rgba(124,58,237,0.12)' }}>
-                                                                    <div className="font-display font-bold text-xl mb-0.5" style={{ color: '#C4A7FF' }}>{r.val}</div>
+                                                                <div key={r.label} className="p-4 rounded-xl" style={{ background: 'rgba(47,128,237,0.06)', border: '1px solid rgba(47,128,237,0.12)' }}>
+                                                                    <div className="font-display font-bold text-xl mb-0.5" style={{ color: '#4DA3FF' }}>{r.val}</div>
                                                                     <div className="text-[10px]" style={{ color: '#5A5A6A' }}>{r.label}</div>
                                                                 </div>
                                                             ))}
@@ -218,7 +249,7 @@ export default function ProjectsPage() {
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
-                            </motion.div>
+                            </motion.article>
                         ))}
                     </div>
 
@@ -234,6 +265,6 @@ export default function ProjectsPage() {
                     </motion.div>
                 </div>
             </section>
-        </div>
+        </main>
     )
 }

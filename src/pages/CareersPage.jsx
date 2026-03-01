@@ -53,43 +53,77 @@ export default function CareersPage() {
     }
 
     return (
-        <div className="pt-16">
+        <main className="pt-16">
             {/* Hero */}
-            <section
-                className="relative min-h-[50vh] flex items-center overflow-hidden"
-                style={{ background: 'linear-gradient(160deg, #0B0B0F 0%, #0D0718 50%, #0B0B0F 100%)' }}
-            >
+            <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-[#03142A]">
                 <StarfieldBackground />
-                <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(92,47,191,0.15) 0%, transparent 80%)' }} />
-                <div className="container-opmw relative z-10 py-24 text-center">
-                    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="section-label mx-auto mb-6">
-                        Join OPMW
-                    </motion.div>
-                    <motion.h1
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="font-display font-bold mb-5"
-                        style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', color: '#F0F0F5' }}
-                    >
-                        Build the Future of
-                        <br /><span className="text-gradient">Enterprise Operations.</span>
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className="max-w-xl mx-auto text-base mb-8"
-                        style={{ color: '#7A7A8A' }}
-                    >
-                        {filtered.length} open roles across Engineering, Operations, Sales, Product, and more — in 12 cities worldwide.
-                    </motion.p>
+                <div className="container-opmw relative z-10 py-20">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        <header className="text-left">
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                className="section-label mb-6"
+                            >
+                                Join Our Team
+                            </motion.div>
+                            <motion.h1
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.1 }}
+                                className="font-display font-bold mb-6 leading-[1.1]"
+                                style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', color: '#F0F0F5' }}
+                            >
+                                Help Us
+                                <br />
+                                <span className="text-gradient">Grow.</span>
+                            </motion.h1>
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                                className="text-xl text-[#9FB3D1] max-w-xl leading-relaxed mb-10"
+                            >
+                                Join our team of experts and engineers working around the world to build great things.
+                            </motion.p>
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.3 }}
+                                className="flex flex-wrap gap-4"
+                            >
+                                <a href="#roles" className="btn-primary py-4 px-10">
+                                    View Open Roles <ArrowRight size={18} />
+                                </a>
+                                <Link to="/about" className="btn-secondary py-4 px-10">
+                                    Our Culture
+                                </Link>
+                            </motion.div>
+                        </header>
+
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, y: 40 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                            className="relative w-full max-w-lg mx-auto lg:max-w-none"
+                        >
+                            <figure className="relative z-10 rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(47,128,237,0.15)] m-0">
+                                <img
+                                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200"
+                                    alt="OPMW Team"
+                                    className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-tr from-[#03142A]/40 to-transparent" />
+                            </figure>
+                            <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#2F80ED]/10 blur-[100px] rounded-full" />
+                        </motion.div>
+                    </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, #0B0B0F, transparent)' }} />
+                <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, #03142A, transparent)' }} />
             </section>
 
             {/* Perks */}
-            <section className="section-pad" style={{ background: '#0B0B0F' }}>
+            <section className="section-pad" style={{ background: 'linear-gradient(135deg, #03142A 0%, #071C36 100%)' }}>
                 <div className="container-opmw">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -97,15 +131,15 @@ export default function CareersPage() {
                         viewport={{ once: true }}
                         className="text-center mb-12"
                     >
-                        <div className="section-label mx-auto mb-5">Why OPMW</div>
+                        <div className="section-label mx-auto mb-5">Why Join Us</div>
                         <h2 className="font-display font-bold" style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)', color: '#F0F0F5' }}>
-                            Life at OPMW
+                            Working with Us
                         </h2>
                     </motion.div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-20">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-20">
                         {perks.map((p, i) => (
-                            <motion.div
+                            <motion.article
                                 key={p.title}
                                 initial={{ opacity: 0, y: 16 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -116,7 +150,7 @@ export default function CareersPage() {
                                 <div className="text-2xl mb-3">{p.emoji}</div>
                                 <div className="font-semibold text-sm mb-1" style={{ color: '#E0E0E8' }}>{p.title}</div>
                                 <div className="text-xs" style={{ color: '#5A5A6A' }}>{p.desc}</div>
-                            </motion.div>
+                            </motion.article>
                         ))}
                     </div>
 
@@ -132,7 +166,7 @@ export default function CareersPage() {
                                 onChange={e => setSearchQuery(e.target.value)}
                                 className="w-full pl-10 pr-4 py-3 rounded-xl text-sm outline-none"
                                 style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                onFocus={e => e.target.style.borderColor = 'rgba(124,58,237,0.35)'}
+                                onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.35)'}
                                 onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
                             />
                         </div>
@@ -142,7 +176,7 @@ export default function CareersPage() {
                             value={selectedCity}
                             onChange={e => setSelectedCity(e.target.value)}
                             className="px-4 py-3 rounded-xl text-sm outline-none"
-                            style={{ background: 'rgba(11,11,15,0.9)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5', minWidth: '160px' }}
+                            style={{ background: '#0D2A4D', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5', minWidth: '160px' }}
                         >
                             {cities.map(c => <option key={c}>{c}</option>)}
                         </select>
@@ -152,36 +186,36 @@ export default function CareersPage() {
                             value={selectedDept}
                             onChange={e => setSelectedDept(e.target.value)}
                             className="px-4 py-3 rounded-xl text-sm outline-none"
-                            style={{ background: 'rgba(11,11,15,0.9)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5', minWidth: '190px' }}
+                            style={{ background: '#0D2A4D', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5', minWidth: '190px' }}
                         >
                             {depts.map(d => <option key={d}>{d}</option>)}
                         </select>
                     </div>
 
                     {/* Role List */}
-                    <div className="space-y-3">
+                    <div id="roles" className="space-y-3">
                         {filtered.length === 0 ? (
                             <div className="text-center py-16" style={{ color: '#5A5A6A' }}>
-                                No roles match your filters. <button onClick={() => { setSelectedCity('All Cities'); setSelectedDept('All Departments'); setSearchQuery('') }} style={{ color: '#9F6EFF' }} className="underline ml-1">Clear filters</button>
+                                No roles match your filters. <button onClick={() => { setSelectedCity('All Cities'); setSelectedDept('All Departments'); setSearchQuery('') }} style={{ color: '#2F80ED' }} className="underline ml-1">Clear filters</button>
                             </div>
                         ) : (
                             filtered.map((role, i) => (
-                                <motion.div
+                                <motion.article
                                     key={role.id}
                                     initial={{ opacity: 0, y: 12 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: i * 0.04 }}
                                     className="flex items-center justify-between p-5 rounded-2xl group cursor-pointer transition-all duration-200"
                                     style={{
-                                        background: 'rgba(255,255,255,0.02)',
+                                        background: 'rgba(47,128,237,0.03)',
                                         border: '1px solid rgba(255,255,255,0.07)',
                                     }}
                                     onMouseEnter={e => {
-                                        e.currentTarget.style.background = 'rgba(124,58,237,0.06)'
-                                        e.currentTarget.style.borderColor = 'rgba(124,58,237,0.2)'
+                                        e.currentTarget.style.background = 'rgba(47,128,237,0.06)'
+                                        e.currentTarget.style.borderColor = 'rgba(47,128,237,0.2)'
                                     }}
                                     onMouseLeave={e => {
-                                        e.currentTarget.style.background = 'rgba(255,255,255,0.02)'
+                                        e.currentTarget.style.background = 'rgba(47,128,237,0.03)'
                                         e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'
                                     }}
                                     onClick={() => setSelectedRole(role)}
@@ -205,7 +239,7 @@ export default function CareersPage() {
                                     >
                                         Apply <ArrowRight size={12} />
                                     </button>
-                                </motion.div>
+                                </motion.article>
                             ))
                         )}
                     </div>
@@ -225,8 +259,8 @@ export default function CareersPage() {
                         className="w-full max-w-lg rounded-2xl p-8 relative"
                         style={{
                             background: '#0F0F14',
-                            border: '1px solid rgba(124,58,237,0.25)',
-                            boxShadow: '0 0 60px rgba(124,58,237,0.15)',
+                            border: '1px solid rgba(47,128,237,0.25)',
+                            boxShadow: '0 0 60px rgba(47,128,237,0.15)',
                             maxHeight: '90vh',
                             overflowY: 'auto',
                         }}
@@ -269,7 +303,7 @@ export default function CareersPage() {
                                                 onChange={e => setAppForm({ ...appForm, [f.key]: e.target.value })}
                                                 className="w-full px-4 py-3 rounded-xl text-sm outline-none"
                                                 style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                                onFocus={e => e.target.style.borderColor = 'rgba(124,58,237,0.35)'}
+                                                onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.35)'}
                                                 onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
                                             />
                                         </div>
@@ -283,7 +317,7 @@ export default function CareersPage() {
                                             onChange={e => setAppForm({ ...appForm, message: e.target.value })}
                                             className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none"
                                             style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                            onFocus={e => e.target.style.borderColor = 'rgba(124,58,237,0.35)'}
+                                            onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.35)'}
                                             onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
                                         />
                                     </div>
@@ -296,6 +330,6 @@ export default function CareersPage() {
                     </motion.div>
                 </div>
             )}
-        </div>
+        </main>
     )
 }

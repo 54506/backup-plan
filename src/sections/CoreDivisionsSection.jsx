@@ -6,11 +6,11 @@ const divisions = [
     {
         id: 'bpo',
         icon: Building2,
-        label: 'Business Process',
-        title: 'BPO Services',
+        label: 'Business Support',
+        title: 'Business Support',
         description:
-            'End-to-end business process outsourcing — from back-office operations to customer experience management, delivered at enterprise scale with measurable SLAs.',
-        tags: ['Back Office', 'CX Management', 'Process Optimization', 'QA & Compliance'],
+            'We handle your back-office work and customer support so you can focus on growing your business.',
+        tags: ['Office Support', 'Customer Care', 'Better Process', 'Safe & Secure'],
         href: '/services',
         gradient: 'linear-gradient(135deg, rgba(30,16,64,0.8) 0%, rgba(45,23,96,0.5) 100%)',
         accentColor: '#7C3AED',
@@ -19,11 +19,11 @@ const divisions = [
     {
         id: 'voice',
         icon: Phone,
-        label: 'Voice Operations',
-        title: 'International Voice Ops',
+        label: 'Customer Support',
+        title: 'Customer Support',
         description:
-            'Premium multilingual voice operations for global enterprises — inbound, outbound, and blended campaigns with AI-enhanced agent support and real-time analytics.',
-        tags: ['Multilingual Agents', 'AI Assist', '24/7 Operations', 'Real-time Analytics'],
+            'We provide great customer support in many languages, 24 hours a day, using smart tools to help our team.',
+        tags: ['Many Languages', 'Smart Tools', 'Open 24/7', 'Live Updates'],
         href: '/services',
         gradient: 'linear-gradient(135deg, rgba(22,14,52,0.8) 0%, rgba(30,16,64,0.5) 100%)',
         accentColor: '#9F6EFF',
@@ -32,11 +32,11 @@ const divisions = [
     {
         id: 'web',
         icon: Code2,
-        label: 'Digital Engineering',
-        title: 'Web App Development',
+        label: 'Websites & Apps',
+        title: 'Websites & Apps',
         description:
-            'Full-stack web application development — React, Node, microservices, cloud-native architectures. From MVPs to enterprise platforms, built to scale.',
-        tags: ['React / Next.js', 'Node.js', 'Cloud Native', 'Microservices'],
+            'We build fast, modern websites and apps that are ready for millions of users, using the latest technology.',
+        tags: ['Fast React Sites', 'Modern Tools', 'Cloud Ready', 'Built to Scale'],
         href: '/services',
         gradient: 'linear-gradient(135deg, rgba(30,16,64,0.8) 0%, rgba(22,14,52,0.5) 100%)',
         accentColor: '#7C3AED',
@@ -45,11 +45,11 @@ const divisions = [
     {
         id: 'hrms',
         icon: Users,
-        label: 'SaaS Platform',
-        title: 'HRMS SaaS',
+        label: 'HR Software',
+        title: 'HR Software',
         description:
-            'Comprehensive workforce management SaaS — attendance, payroll, performance, recruiting, and analytics unified in one enterprise-grade platform.',
-        tags: ['Workforce Analytics', 'Payroll Engine', 'Performance Mgmt', 'API-First'],
+            'A simple way to manage your team, payroll, and hiring all in one place. We make running your office easy.',
+        tags: ['Team Data', 'Payroll Tool', 'Work Reviews', 'Easy to Connect'],
         href: '/hrms',
         gradient: 'linear-gradient(135deg, rgba(45,23,96,0.8) 0%, rgba(61,31,130,0.4) 100%)',
         accentColor: '#C4A7FF',
@@ -60,24 +60,12 @@ const divisions = [
 
 export default function CoreDivisionsSection() {
     return (
-        <section
-            className="section-pad relative"
-            style={{
-                background: 'linear-gradient(180deg, #0B0B0F 0%, #0D0718 50%, #0B0B0F 100%)',
-            }}
-            aria-label="Core business divisions"
-        >
-            {/* Subtle grid background */}
-            <div
-                className="absolute inset-0 pointer-events-none opacity-30"
-                style={{
-                    backgroundImage: `linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px)`,
-                    backgroundSize: '80px 80px',
-                }}
-            />
+        <section className="section-pad relative overflow-hidden bg-[#03142A]" aria-label="Our Main Services">
+            {/* Subtle top separator glow as seen in footer screenshot */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent z-10" />
 
             <div className="container-opmw relative z-10">
+
                 {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -91,10 +79,10 @@ export default function CoreDivisionsSection() {
                         className="font-display font-bold mb-4"
                         style={{ fontSize: 'clamp(1.75rem, 3.5vw, 3rem)', color: '#F0F0F5' }}
                     >
-                        One Platform. Four Divisions.
+                        One Place. Four Main Services.
                     </h2>
                     <p className="max-w-2xl mx-auto text-base leading-relaxed" style={{ color: '#5A5A6A' }}>
-                        OPMW brings together four enterprise-grade service verticals under a single unified operational ecosystem — eliminating fragmentation, maximizing efficiency.
+                        OPMW offers four main services to help your business work better and grow faster.
                     </p>
                 </motion.div>
 
@@ -207,7 +195,7 @@ export default function CoreDivisionsSection() {
                                         className="inline-flex items-center gap-2 text-sm font-semibold group/link transition-all duration-200"
                                         style={{ color: div.accentColor }}
                                     >
-                                        Explore Division
+                                        Learn More
                                         <ArrowRight
                                             size={14}
                                             className="transition-transform duration-200 group-hover/link:translate-x-1"
@@ -219,6 +207,6 @@ export default function CoreDivisionsSection() {
                     })}
                 </div>
             </div>
-        </section>
+        </section >
     )
 }

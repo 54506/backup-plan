@@ -9,49 +9,49 @@ const features = [
         icon: Users2,
         title: 'Workforce Management',
         description: 'Complete employee lifecycle from onboarding to exit. Profiles, org charts, documents, and compliance in one place.',
-        color: '#7C3AED',
+        color: '#1E5FAF',
     },
     {
         icon: Clock,
         title: 'Attendance & Leave',
         description: 'Geo-fenced, biometric, and mobile attendance with intelligent leave management and policy automation.',
-        color: '#9F6EFF',
+        color: '#2F80ED',
     },
     {
         icon: CreditCard,
         title: 'Payroll Engine',
         description: 'Multi-jurisdiction payroll with automatic tax calculations, compliance, and same-day disbursement capabilities.',
-        color: '#7C3AED',
+        color: '#1E5FAF',
     },
     {
         icon: Star,
         title: 'Performance Management',
         description: 'OKR tracking, 360° feedback, review cycles, and performance analytics to drive accountability.',
-        color: '#9F6EFF',
+        color: '#2F80ED',
     },
     {
         icon: Briefcase,
         title: 'Recruitment Pipeline',
         description: 'AI-powered candidate sourcing, resume parsing, interview scheduling, and offer management — all integrated.',
-        color: '#7C3AED',
+        color: '#1E5FAF',
     },
     {
         icon: BarChart3,
         title: 'Advanced Analytics',
         description: 'Real-time workforce dashboards, predictive attrition, headcount planning, and custom report builder.',
-        color: '#9F6EFF',
+        color: '#2F80ED',
     },
     {
         icon: Lock,
         title: 'Security & Compliance',
         description: 'SOC 2 Type II, GDPR, ISO 27001. Role-based access, SSO, MFA, and full audit trails.',
-        color: '#7C3AED',
+        color: '#1E5FAF',
     },
     {
         icon: ArrowRight,
         title: 'Integrations & API',
         description: '100+ pre-built integrations: Salesforce, SAP, Slack, Microsoft 365, Jira, and a full REST API.',
-        color: '#9F6EFF',
+        color: '#2F80ED',
     },
 ]
 
@@ -95,64 +95,79 @@ export default function HRMSPage() {
     }
 
     return (
-        <div className="pt-16">
+        <main className="pt-16">
             {/* Hero */}
-            <section
-                className="relative min-h-[65vh] flex items-center overflow-hidden"
-                style={{ background: 'linear-gradient(160deg, #0B0B0F 0%, #0D0718 40%, #150D2E 70%, #0B0B0F 100%)' }}
-            >
+            <section className="relative min-h-[75vh] flex items-center overflow-hidden bg-[#03142A]">
                 <StarfieldBackground />
-                <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(92,47,191,0.18) 0%, transparent 80%)' }}
-                />
-                <div className="container-opmw relative z-10 py-28 text-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="section-label mx-auto mb-6"
-                    >
-                        HRMS SaaS Platform
-                    </motion.div>
-                    <motion.h1
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="font-display font-bold mb-5"
-                        style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)', color: '#F0F0F5' }}
-                    >
-                        Your Entire Workforce.
-                        <br />
-                        <span className="text-gradient">One Platform.</span>
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="max-w-2xl mx-auto text-lg mb-10"
-                        style={{ color: '#7A7A8A' }}
-                    >
-                        OPMW HRMS brings together attendance, payroll, performance, and recruitment in a single enterprise-grade SaaS platform — built to eliminate HR complexity at scale.
-                    </motion.p>
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                        className="flex gap-4 justify-center"
-                    >
-                        <a href="#demo" className="btn-primary">
-                            Request Demo <ArrowRight size={15} />
-                        </a>
-                        <Link to="/contact" className="btn-secondary">
-                            Talk to Sales
-                        </Link>
-                    </motion.div>
+                <div className="container-opmw relative z-10 py-20">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        <header className="text-left">
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                className="section-label mb-6"
+                            >
+                                HR Management Software
+                            </motion.div>
+                            <motion.h1
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.1 }}
+                                className="font-display font-bold mb-6 leading-[1.1]"
+                                style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', color: '#F0F0F5' }}
+                            >
+                                Your Entire Team.
+                                <br />
+                                <span className="text-gradient">In One Place.</span>
+                            </motion.h1>
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                                className="text-xl text-[#9FB3D1] max-w-xl leading-relaxed mb-10"
+                            >
+                                OPMW makes it easy to manage attendance, payroll, and hiring in one simple software. We help you run your office without the stress.
+                            </motion.p>
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.3 }}
+                                className="flex flex-wrap gap-4"
+                            >
+                                <a href="#demo" className="btn-primary py-4 px-10">
+                                    Request Demo <ArrowRight size={18} />
+                                </a>
+                                <Link to="/contact" className="btn-secondary py-4 px-10">
+                                    Talk to Sales
+                                </Link>
+                            </motion.div>
+                        </header>
+
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, x: 40 }}
+                            animate={{ opacity: 1, scale: 1, x: 0 }}
+                            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                            className="relative mt-12 lg:mt-0"
+                        >
+                            <figure className="relative z-10 rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(47,128,237,0.15)] m-0">
+                                <img
+                                    src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200"
+                                    alt="Workforce Analytics"
+                                    className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-tr from-[#03142A]/40 to-transparent" />
+                            </figure>
+                            <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#2F80ED]/10 blur-[100px] rounded-full" />
+                        </motion.div>
+                    </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, #0B0B0F, transparent)' }} />
+                <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, #03142A, transparent)' }} />
             </section>
 
             {/* Feature Grid */}
-            <section className="section-pad" style={{ background: '#0B0B0F' }}>
+            <section className="section-pad relative overflow-hidden bg-[#03142A]">
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent z-10" />
+
                 <div className="container-opmw">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -160,12 +175,12 @@ export default function HRMSPage() {
                         viewport={{ once: true }}
                         className="text-center mb-14"
                     >
-                        <div className="section-label mx-auto mb-5">Platform Capabilities</div>
+                        <div className="section-label mx-auto mb-5">What It Can Do</div>
                         <h2
                             className="font-display font-bold"
                             style={{ fontSize: 'clamp(1.75rem, 3.5vw, 3rem)', color: '#F0F0F5' }}
                         >
-                            Everything HR. One Platform.
+                            Everything About Your Team. One Place.
                         </h2>
                     </motion.div>
 
@@ -173,7 +188,7 @@ export default function HRMSPage() {
                         {features.map((feat, i) => {
                             const Icon = feat.icon
                             return (
-                                <motion.div
+                                <motion.article
                                     key={feat.title}
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
@@ -183,13 +198,13 @@ export default function HRMSPage() {
                                 >
                                     <div
                                         className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                                        style={{ background: 'rgba(124,58,237,0.12)', border: '1px solid rgba(124,58,237,0.2)' }}
+                                        style={{ background: 'rgba(47,128,237,0.12)', border: '1px solid rgba(47,128,237,0.2)' }}
                                     >
                                         <Icon size={18} style={{ color: feat.color }} />
                                     </div>
                                     <h3 className="font-semibold text-sm mb-2" style={{ color: '#E0E0E8' }}>{feat.title}</h3>
                                     <p className="text-xs leading-relaxed" style={{ color: '#5A5A6A' }}>{feat.description}</p>
-                                </motion.div>
+                                </motion.article>
                             )
                         })}
                     </div>
@@ -197,10 +212,9 @@ export default function HRMSPage() {
             </section>
 
             {/* Dashboard Preview */}
-            <section
-                className="section-pad relative overflow-hidden"
-                style={{ background: 'linear-gradient(180deg, #0B0B0F, #0D0718, #0B0B0F)' }}
-            >
+            <section className="section-pad relative overflow-hidden bg-[#03142A]">
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent z-10" />
+
                 <div className="container-opmw">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -208,120 +222,146 @@ export default function HRMSPage() {
                         viewport={{ once: true }}
                         className="text-center mb-12"
                     >
-                        <div className="section-label mx-auto mb-5">Product Preview</div>
+                        <div className="section-label mx-auto mb-5">How It Looks</div>
                         <h2 className="font-display font-bold" style={{ fontSize: 'clamp(1.75rem, 3.5vw, 3rem)', color: '#F0F0F5' }}>
-                            Designed for Clarity. Built for Scale.
+                            Easy to Use. Built to Grow.
                         </h2>
                     </motion.div>
 
                     {/* Full Dashboard Mock */}
-                    <motion.div
+                    <motion.figure
                         initial={{ opacity: 0, y: 32 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                         className="rounded-2xl overflow-hidden max-w-5xl mx-auto"
                         style={{
-                            background: 'rgba(14,14,20,0.95)',
-                            border: '1px solid rgba(124,58,237,0.2)',
-                            boxShadow: '0 0 80px rgba(124,58,237,0.12), 0 30px 80px rgba(0,0,0,0.6)',
+                            background: '#0D2A4D',
+                            border: '1px solid rgba(47,128,237,0.2)',
+                            boxShadow: '0 0 80px rgba(47,128,237,0.12), 0 30px 80px rgba(0,0,0,0.6)',
                         }}
                     >
                         {/* Window chrome */}
-                        <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(20,20,30,0.9)' }}>
+                        <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', background: '#0D2A4D' }}>
                             <div className="flex gap-1.5">
                                 <div className="w-3 h-3 rounded-full" style={{ background: '#EF4444', opacity: 0.7 }} />
                                 <div className="w-3 h-3 rounded-full" style={{ background: '#F59E0B', opacity: 0.7 }} />
                                 <div className="w-3 h-3 rounded-full" style={{ background: '#22C55E', opacity: 0.7 }} />
                             </div>
-                            <div className="ml-4 text-xs px-4 py-1 rounded" style={{ background: 'rgba(124,58,237,0.10)', color: '#9F6EFF', border: '1px solid rgba(124,58,237,0.15)' }}>
+                            <div className="ml-4 text-xs px-4 py-1 rounded" style={{ background: 'rgba(47,128,237,0.10)', color: '#2F80ED', border: '1px solid rgba(47,128,237,0.15)' }}>
                                 OPMW HRMS — Dashboard
                             </div>
                         </div>
 
-                        <div className="flex" style={{ minHeight: '420px' }}>
-                            {/* Sidebar */}
-                            <div className="w-48 flex-shrink-0 p-4" style={{ borderRight: '1px solid rgba(255,255,255,0.05)', background: 'rgba(11,11,15,0.8)' }}>
+                        <div className="flex flex-col lg:flex-row" style={{ minHeight: '420px' }}>
+                            {/* Sidebar - Hidden on mobile and tablet */}
+                            <nav
+                                className="hrms-sidebar lg:block w-48 flex-shrink-0 p-4"
+                                aria-label="Dashboard Mock Navigation"
+                                style={{
+                                    borderRight: '1px solid rgba(255,255,255,0.05)',
+                                    background: '#0D2A4D'
+                                }}
+                            >
                                 <div className="space-y-1">
                                     {['Dashboard', 'Employees', 'Attendance', 'Payroll', 'Performance', 'Recruitment', 'Analytics', 'Settings'].map((item, i) => (
                                         <div
                                             key={item}
-                                            className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs cursor-pointer transition-colors"
+                                            className="flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] cursor-pointer transition-colors"
                                             style={{
-                                                background: i === 0 ? 'rgba(124,58,237,0.15)' : 'transparent',
-                                                color: i === 0 ? '#9F6EFF' : '#5A5A6A',
-                                                border: i === 0 ? '1px solid rgba(124,58,237,0.2)' : '1px solid transparent',
+                                                background: i === 0 ? 'rgba(47,128,237,0.15)' : 'transparent',
+                                                color: i === 0 ? '#2F80ED' : '#5A5A6A',
+                                                border: i === 0 ? '1px solid rgba(47,128,237,0.2)' : '1px solid transparent',
                                             }}
                                         >
-                                            <div className="w-1.5 h-1.5 rounded-full" style={{ background: i === 0 ? '#7C3AED' : '#3A3A4E' }} />
+                                            <div className="w-1.5 h-1.5 rounded-full" style={{ background: i === 0 ? '#1E5FAF' : '#3A3A4E' }} />
                                             {item}
                                         </div>
                                     ))}
                                 </div>
-                            </div>
+                            </nav>
 
                             {/* Main panel */}
-                            <div className="flex-1 p-6">
-                                <div className="grid grid-cols-4 gap-3 mb-6">
+                            <div className="flex-1 p-4 md:p-6 min-w-0 overflow-hidden">
+                                {/* Mobile Header Nav - Horizontal Scrollable */}
+                                <div className="hrms-mobile-nav flex gap-3 pb-4 mb-4">
+                                    {['Dashboard', 'Employees', 'Attendance', 'Payroll', 'Hiring', 'Apps'].map((item, i) => (
+                                        <div key={item} className="flex-shrink-0 whitespace-nowrap px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider border border-white/5" style={{ background: i === 0 ? 'rgba(47,128,237,0.15)' : 'rgba(255,255,255,0.03)', color: i === 0 ? '#2F80ED' : '#5A5A6A' }}>
+                                            {item}
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Metrics - Forced Mobile Stack or Tighter Grid */}
+                                <div className="hrms-metrics-grid mb-6">
                                     {[
                                         { label: 'Total Employees', val: '1,247', icon: '👥' },
                                         { label: 'On Leave Today', val: '34', icon: '🌴' },
                                         { label: 'Pending Payroll', val: '₹2.4M', icon: '💳' },
                                         { label: 'Open Roles', val: '12', icon: '📋' },
                                     ].map(m => (
-                                        <div key={m.label} className="p-4 rounded-xl" style={{ background: 'rgba(124,58,237,0.06)', border: '1px solid rgba(124,58,237,0.10)' }}>
-                                            <div className="text-base mb-1">{m.icon}</div>
-                                            <div className="font-display font-bold text-xl" style={{ color: '#F0F0F5' }}>{m.val}</div>
-                                            <div className="text-[10px]" style={{ color: '#5A5A6A' }}>{m.label}</div>
+                                        <div key={m.label} className="p-3 rounded-xl flex flex-col justify-center" style={{ background: 'rgba(47,128,237,0.06)', border: '1px solid rgba(47,128,237,0.10)' }}>
+                                            <div className="flex items-center justify-between mb-1">
+                                                <span className="text-sm">{m.icon}</span>
+                                                <span className="text-[8px] font-bold text-[#22C55E]">↑ 12%</span>
+                                            </div>
+                                            <div className="font-display font-bold text-base md:text-xl" style={{ color: '#F0F0F5' }}>{m.val}</div>
+                                            <div className="text-[9px] uppercase tracking-tighter truncate" style={{ color: '#5A5A6A' }}>{m.label}</div>
                                         </div>
                                     ))}
                                 </div>
 
-                                {/* Chart area */}
-                                <div className="rounded-xl p-4 mb-4" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                                    <div className="text-xs font-semibold mb-3" style={{ color: '#5A5A6A' }}>Headcount Trend (12mo)</div>
-                                    <div className="flex items-end gap-1.5 h-20">
-                                        {[820, 860, 890, 920, 950, 980, 1010, 1060, 1100, 1150, 1200, 1247].map((v, i) => (
+                                {/* Chart area - Improved responsiveness */}
+                                <div className="rounded-xl p-4 mb-4" style={{ background: 'rgba(47,128,237,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                    <div className="text-[10px] font-semibold mb-4 flex items-center justify-between" style={{ color: '#5A5A6A' }}>
+                                        <span className="uppercase tracking-widest">Headcount Trend</span>
+                                        <span className="text-[#2F80ED]">Enterprise Tier</span>
+                                    </div>
+                                    <div className="flex items-end gap-1 h-20">
+                                        {[40, 55, 45, 70, 65, 85, 75, 95, 80, 100, 90, 110].map((v, i) => (
                                             <motion.div
                                                 key={i}
                                                 initial={{ height: 0 }}
-                                                whileInView={{ height: `${((v - 800) / 500) * 100}%` }}
+                                                whileInView={{ height: `${(v / 120) * 100}%` }}
                                                 viewport={{ once: true }}
-                                                transition={{ duration: 0.6, delay: i * 0.04 }}
+                                                transition={{ duration: 0.8, delay: i * 0.05 }}
                                                 className="flex-1 rounded-t-sm"
-                                                style={{ background: i === 11 ? 'linear-gradient(to top, #5B2FBF, #9F6EFF)' : 'rgba(124,58,237,0.2)' }}
+                                                style={{
+                                                    background: i === 11
+                                                        ? 'linear-gradient(to top, #1E5FAF, #2F80ED)'
+                                                        : 'rgba(47,128,237,0.15)',
+                                                    minWidth: '2px'
+                                                }}
                                             />
                                         ))}
                                     </div>
                                 </div>
 
-                                {/* Recent activity */}
-                                <div className="space-y-2">
+                                {/* Recent activity - Compact for mobile */}
+                                <div className="space-y-1.5">
                                     {[
-                                        { action: 'Payroll processed', detail: 'March 2025 — 1,247 employees', time: '2h ago', dot: '#22C55E' },
-                                        { action: 'New hire onboarded', detail: 'Priya Sharma — Engineering', time: '5h ago', dot: '#9F6EFF' },
-                                        { action: 'Leave approved', detail: 'Raj Kumar — 3 days', time: '1d ago', dot: '#F59E0B' },
+                                        { action: 'Payroll processed', time: '2h ago', status: 'Success' },
+                                        { action: 'New hire onboarded', time: '5h ago', status: 'In Review' },
                                     ].map(a => (
-                                        <div key={a.action} className="flex items-center justify-between px-4 py-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: a.dot }} />
-                                                <div>
-                                                    <div className="text-xs font-medium" style={{ color: '#C0C0CC' }}>{a.action}</div>
-                                                    <div className="text-[10px]" style={{ color: '#5A5A6A' }}>{a.detail}</div>
-                                                </div>
+                                        <div key={a.action} className="flex items-center justify-between px-3 py-2 rounded-lg" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)' }}>
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-1 h-1 rounded-full bg-[#2F80ED]" />
+                                                <div className="text-[10px] font-medium" style={{ color: '#A0A0B0' }}>{a.action}</div>
                                             </div>
-                                            <div className="text-[10px]" style={{ color: '#3A3A4E' }}>{a.time}</div>
+                                            <div className="text-[9px] text-[#5A5A6A]">{a.time}</div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </motion.figure>
                 </div>
             </section>
 
             {/* Pricing */}
-            <section className="section-pad" style={{ background: '#0B0B0F' }}>
+            <section className="section-pad relative overflow-hidden bg-[#03142A]">
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent z-10" />
+
                 <div className="container-opmw">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -331,13 +371,13 @@ export default function HRMSPage() {
                     >
                         <div className="section-label mx-auto mb-5">Pricing</div>
                         <h2 className="font-display font-bold" style={{ fontSize: 'clamp(1.75rem, 3.5vw, 3rem)', color: '#F0F0F5' }}>
-                            Transparent. Scalable. Fair.
+                            Clear and Simple Pricing.
                         </h2>
                     </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
                         {plans.map((plan, i) => (
-                            <motion.div
+                            <motion.article
                                 key={plan.name}
                                 initial={{ opacity: 0, y: 24 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -346,30 +386,30 @@ export default function HRMSPage() {
                                 className="relative rounded-2xl p-7"
                                 style={{
                                     background: plan.featured
-                                        ? 'linear-gradient(135deg, rgba(45,23,96,0.7) 0%, rgba(30,16,64,0.8) 100%)'
-                                        : 'rgba(255,255,255,0.02)',
+                                        ? 'linear-gradient(135deg, #0D2A4D 0%, #0D2A4D 100%)'
+                                        : 'rgba(47,128,237,0.03)',
                                     border: plan.featured
-                                        ? '1px solid rgba(196,167,255,0.25)'
+                                        ? '1px solid rgba(77,163,255,0.25)'
                                         : '1px solid rgba(255,255,255,0.07)',
-                                    boxShadow: plan.featured ? '0 0 40px rgba(124,58,237,0.15)' : 'none',
+                                    boxShadow: plan.featured ? '0 0 40px rgba(47,128,237,0.15)' : 'none',
                                 }}
                             >
                                 {plan.featured && (
                                     <div
                                         className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest"
-                                        style={{ background: 'linear-gradient(135deg, #5B2FBF, #7C3AED)', color: '#fff', boxShadow: '0 0 20px rgba(124,58,237,0.4)' }}
+                                        style={{ background: 'linear-gradient(135deg, #133B6A, #1E5FAF)', color: '#fff', boxShadow: '0 0 20px rgba(47,128,237,0.4)' }}
                                     >
                                         Most Popular
                                     </div>
                                 )}
-                                <div className="mb-2 text-sm font-semibold" style={{ color: '#9F6EFF' }}>{plan.name}</div>
+                                <div className="mb-2 text-sm font-semibold" style={{ color: '#2F80ED' }}>{plan.name}</div>
                                 <div className="font-display font-bold mb-1" style={{ fontSize: '2rem', color: '#F0F0F5' }}>{plan.price}</div>
                                 <div className="text-xs mb-3" style={{ color: '#5A5A6A' }}>{plan.unit}</div>
                                 <p className="text-sm mb-6" style={{ color: '#7A7A8A' }}>{plan.description}</p>
                                 <ul className="space-y-2.5 mb-8">
                                     {plan.features.map(f => (
                                         <li key={f} className="flex items-center gap-2.5">
-                                            <CheckCircle2 size={13} style={{ color: '#7C3AED', flexShrink: 0 }} />
+                                            <CheckCircle2 size={13} style={{ color: '#1E5FAF', flexShrink: 0 }} />
                                             <span className="text-sm" style={{ color: '#9A9AAA' }}>{f}</span>
                                         </li>
                                     ))}
@@ -380,14 +420,16 @@ export default function HRMSPage() {
                                 >
                                     {plan.cta} <ArrowRight size={14} />
                                 </a>
-                            </motion.div>
+                            </motion.article>
                         ))}
                     </div>
                 </div>
             </section>
 
             {/* Demo Form */}
-            <section id="demo" className="section-pad" style={{ background: 'linear-gradient(180deg, #0B0B0F, #0D0718)' }}>
+            <section id="demo" className="section-pad relative overflow-hidden bg-[#03142A]">
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent z-10" />
+
                 <div className="container-opmw max-w-2xl">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -434,7 +476,7 @@ export default function HRMSPage() {
                                                     border: '1px solid rgba(255,255,255,0.08)',
                                                     color: '#F0F0F5',
                                                 }}
-                                                onFocus={e => e.target.style.borderColor = 'rgba(124,58,237,0.4)'}
+                                                onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
                                                 onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
                                             />
                                         </div>
@@ -452,7 +494,7 @@ export default function HRMSPage() {
                                             onChange={e => setDemoForm({ ...demoForm, company: e.target.value })}
                                             className="w-full px-4 py-3 rounded-xl text-sm outline-none"
                                             style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                            onFocus={e => e.target.style.borderColor = 'rgba(124,58,237,0.4)'}
+                                            onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
                                             onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
                                         />
                                     </div>
@@ -462,7 +504,7 @@ export default function HRMSPage() {
                                             value={demoForm.employees}
                                             onChange={e => setDemoForm({ ...demoForm, employees: e.target.value })}
                                             className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                                            style={{ background: 'rgba(11,11,15,0.9)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
+                                            style={{ background: '#0D2A4D', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
                                         >
                                             <option value="">Select range</option>
                                             <option>50–200</option>
@@ -482,7 +524,7 @@ export default function HRMSPage() {
                                         onChange={e => setDemoForm({ ...demoForm, message: e.target.value })}
                                         className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none"
                                         style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                        onFocus={e => e.target.style.borderColor = 'rgba(124,58,237,0.4)'}
+                                        onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
                                         onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
                                     />
                                 </div>
@@ -495,6 +537,6 @@ export default function HRMSPage() {
                     </motion.div>
                 </div>
             </section>
-        </div>
+        </main>
     )
 }

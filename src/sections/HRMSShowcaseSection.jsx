@@ -3,36 +3,29 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, CheckCircle2, BarChart3, Users2, Clock, Lock } from 'lucide-react'
 
 const features = [
-    { icon: Users2, label: 'Workforce Management', desc: 'Full employee lifecycle from hire to retire' },
-    { icon: BarChart3, label: 'Advanced Analytics', desc: 'Real-time dashboards and predictive insights' },
-    { icon: Clock, label: 'Attendance & Leave', desc: 'Geo-fenced attendance with biometric support' },
-    { icon: Lock, label: 'Role-Based Access', desc: 'Granular permissions with SSO & MFA' },
+    { icon: Users2, label: 'Managing Your Team', desc: 'Everything from hiring to retiring' },
+    { icon: BarChart3, label: 'Smart Data', desc: 'Live updates and easy-to-read reports' },
+    { icon: Clock, label: 'Attendance & Leave', desc: 'Track time and time-off easily' },
+    { icon: Lock, label: 'Safe and Secure', desc: 'Keep your team data private' },
 ]
 
 const benefits = [
-    'Automated payroll with multi-jurisdiction tax compliance',
-    'AI-powered recruitment pipeline and candidate scoring',
-    'Performance review cycles with 360° feedback',
-    'Native mobile apps for iOS and Android',
-    'Open API with 100+ pre-built integrations',
+    'Automatic payroll with tax and compliance built-in',
+    'Smart hiring tools to find the best people easily',
+    'Reviews and feedback to help your team grow',
+    'Mobile apps for iOS and Android so you can work anywhere',
+    'Connects with more than 100 other tools',
 ]
 
 export default function HRMSShowcaseSection() {
     return (
-        <section
-            className="section-pad relative overflow-hidden"
-            aria-label="HRMS Platform showcase"
-        >
-            {/* Background */}
-            <div
-                className="absolute inset-0"
-                style={{
-                    background: 'linear-gradient(160deg, #0B0B0F 0%, #0D0718 50%, #0B0B0F 100%)',
-                }}
-            />
+        <section className="section-pad relative overflow-hidden bg-[#03142A]" aria-label="Our HR Software">
+            {/* Subtle top separator glow */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent z-10" />
+
             {/* Glow */}
             <div
-                className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+                className="absolute top-1/2 right-0 -translate-y-1/2 w-[80%] max-w-[600px] h-[300px] md:h-[600px] rounded-full pointer-events-none"
                 style={{
                     background: 'radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%)',
                 }}
@@ -47,17 +40,17 @@ export default function HRMSShowcaseSection() {
                         viewport={{ once: true, margin: '-100px' }}
                         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <div className="section-label mb-6">Flagship SaaS Product</div>
+                        <div className="section-label mb-6">Our Best Software</div>
                         <h2
                             className="font-display font-bold mb-5 leading-tight"
-                            style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)', color: '#F0F0F5' }}
+                            style={{ fontSize: 'clamp(1.65rem, 4vw, 2.75rem)', color: '#F0F0F5' }}
                         >
-                            HRMS Platform —
+                            Our HR Platform —
                             <br />
-                            <span className="text-gradient">Workforce Unified.</span>
+                            <span className="text-gradient">Your Team Together.</span>
                         </h2>
                         <p className="text-base leading-relaxed mb-8" style={{ color: '#7A7A8A' }}>
-                            One enterprise-grade platform to manage your entire workforce — attendance, payroll, performance, recruitment, and deep analytics — engineered for scale and compliance.
+                            Manage everything about your team — from payroll to hiring — in one easy-to-use software built for any business.
                         </p>
 
                         {/* Benefits list */}
@@ -72,10 +65,10 @@ export default function HRMSShowcaseSection() {
 
                         <div className="flex gap-3">
                             <Link to="/hrms" className="btn-primary">
-                                Explore HRMS <ArrowRight size={15} />
+                                Learn More <ArrowRight size={15} />
                             </Link>
                             <Link to="/contact" className="btn-secondary">
-                                Request Demo
+                                Try It Now
                             </Link>
                         </div>
                     </motion.div>
@@ -119,7 +112,7 @@ export default function HRMSShowcaseSection() {
 
                             <div className="p-6 space-y-4">
                                 {/* Top metrics row */}
-                                <div className="grid grid-cols-3 gap-3">
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                     {[
                                         { label: 'Active Employees', val: '1,247', change: '+3.2%' },
                                         { label: 'Attendance Today', val: '94.6%', change: '+1.1%' },

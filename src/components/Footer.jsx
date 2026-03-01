@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
-import { Twitter, Linkedin, Github, ArrowRight, Mail, Phone, MapPin } from 'lucide-react'
+import { Twitter, Linkedin, Github, ArrowRight, Mail, Phone, MapPin, Globe, Shield } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 const footerLinks = {
     Company: [
-        { label: 'About OPMW', href: '/' },
-        { label: 'Our Mission', href: '/' },
-        { label: 'Leadership', href: '/' },
-        { label: 'Press & Media', href: '/' },
+        { label: 'About OPMW', href: '/about#about' },
+        { label: 'Our Mission', href: '/about#mission' },
+        { label: 'Leadership', href: '/about#leadership' },
         { label: 'Careers', href: '/careers' },
     ],
     Services: [
@@ -14,21 +14,12 @@ const footerLinks = {
         { label: 'Voice Operations', href: '/services' },
         { label: 'Web Development', href: '/services' },
         { label: 'HRMS SaaS', href: '/hrms' },
-        { label: 'Enterprise Solutions', href: '/services' },
-    ],
-    Platform: [
-        { label: 'HRMS Dashboard', href: '/hrms' },
-        { label: 'Workforce Analytics', href: '/hrms' },
-        { label: 'Payroll Management', href: '/hrms' },
-        { label: 'Integrations', href: '/hrms' },
-        { label: 'API Access', href: '/hrms' },
+        { label: 'Cloud Solutions', href: '/services' },
     ],
     Resources: [
         { label: 'Case Studies', href: '/projects' },
-        { label: 'Documentation', href: '/' },
-        { label: 'Blog', href: '/' },
-        { label: 'Privacy Policy', href: '/' },
-        { label: 'Terms of Service', href: '/' },
+        { label: 'Privacy Policy', href: '/privacy' },
+        { label: 'Terms of Service', href: '/terms' },
     ],
 }
 
@@ -39,203 +30,201 @@ const socials = [
 ]
 
 const offices = [
-    { city: 'Hyderabad', country: 'India', flag: '🇮🇳' },
-    { city: 'Dubai', country: 'UAE', flag: '🇦🇪' },
-    { city: 'London', country: 'UK', flag: '🇬🇧' },
+    { city: 'Hyderabad', country: 'HQ', flag: '🇮🇳' },
+    { city: 'Noida', country: 'North India', flag: '🇮🇳' },
+    { city: 'Indore', country: 'Central India', flag: '🇮🇳' },
+    { city: 'Bangalore', country: 'Innovation Center', flag: '🇮🇳' },
 ]
 
 export default function Footer() {
     return (
         <footer
             role="contentinfo"
+            className="footer-root"
             style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
         >
-            {/* CTA Band above footer */}
+            {/* ── Call to Action Band ── */}
             <div
                 className="relative overflow-hidden"
                 style={{
-                    background: 'linear-gradient(135deg, #0D0718 0%, #1E1040 50%, #0D0718 100%)',
-                    borderBottom: '1px solid rgba(124,58,237,0.2)',
+                    background: 'linear-gradient(135deg, #030F1C 0%, #081D36 50%, #030F1C 100%)',
+                    borderBottom: '1px solid rgba(47,128,237,0.2)',
                 }}
             >
-                <div className="container-opmw py-16 flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div>
-                        <h2 className="font-display text-3xl md:text-4xl font-bold mb-2" style={{ color: '#F0F0F5' }}>
-                            Ready to Unify Your Operations?
-                        </h2>
-                        <p style={{ color: '#A0A0B0' }} className="text-lg max-w-xl">
-                            Join enterprises worldwide who trust OPMW to power their integrated execution.
+                <div className="container-opmw py-14 flex flex-col lg:flex-row items-center justify-between gap-10">
+                    <div className="text-center lg:text-left">
+                        <motion.h2
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="font-display text-3xl md:text-4xl font-bold mb-3 tracking-tight"
+                            style={{ color: '#E6EDF7' }}
+                        >
+                            Ready to Grow Your Business?
+                        </motion.h2>
+                        <p style={{ color: '#9FB3D1', opacity: 0.8 }} className="text-lg max-w-2xl">
+                            Use OPMW to organize your work and help your business grow.
                         </p>
                     </div>
-                    <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
-                        <Link to="/contact" className="btn-primary">
-                            Request a Demo <ArrowRight size={16} />
+                    <div className="flex flex-col sm:flex-row gap-4 flex-shrink-0">
+                        <Link to="/contact" className="btn-solid-premium px-8 py-3.5 rounded-md flex items-center justify-center gap-2">
+                            Contact Us <ArrowRight size={18} />
                         </Link>
-                        <Link to="/hrms" className="btn-secondary">
-                            Explore HRMS
+                        <Link to="/services" className="px-8 py-3.5 rounded-md border border-white/10 hover:bg-white/5 transition-colors text-white font-medium flex items-center justify-center">
+                            Learn More
                         </Link>
                     </div>
                 </div>
-                {/* Decorative glow */}
-                <div
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full pointer-events-none"
-                    style={{
-                        background: 'radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%)',
-                    }}
-                />
+                {/* Visual Accent */}
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2F80ED]/40 to-transparent" />
             </div>
 
-            {/* Main Footer */}
+            {/* ── Main Footer Area ── */}
             <div
                 className="relative"
-                style={{ background: 'rgba(9, 9, 13, 0.98)' }}
+                style={{ background: '#030F1C' }}
             >
-                <div className="container-opmw pt-16 pb-8">
-                    {/* Top Row */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-10 pb-12" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                        {/* Brand Column */}
-                        <div className="col-span-2">
-                            {/* Logo */}
-                            <Link to="/" className="flex items-center gap-2.5 mb-5 group w-fit">
-                                <div
-                                    className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold"
-                                    style={{
-                                        background: 'linear-gradient(135deg, #5B2FBF 0%, #7C3AED 100%)',
-                                        boxShadow: '0 0 20px rgba(124,58,237,0.35)',
-                                    }}
+                <div className="container-opmw pt-12 pb-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-16">
+                        {/* Brand Space */}
+                        <div className="lg:col-span-4 space-y-8">
+                            <Link to="/" className="flex items-center gap-5 mb-8 group w-fit">
+                                <motion.div
+                                    whileHover={{ scale: 1.1, rotate: 2 }}
+                                    className="relative flex items-center justify-center w-20 h-20"
                                 >
-                                    <span className="font-display font-bold text-sm">OP</span>
-                                </div>
+                                    <motion.div
+                                        animate={{ rotate: 360 }}
+                                        transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+                                        className="absolute inset-[-6px] rounded-full border border-dashed border-[#2F80ED]/30"
+                                    />
+                                    <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-xl group-hover:bg-blue-500/20 transition-colors" />
+                                    <img
+                                        src="/logo.png"
+                                        alt="OPMW Logo"
+                                        className="w-full h-full object-contain relative z-10"
+                                    />
+                                </motion.div>
                                 <div>
-                                    <div className="font-display font-bold text-lg" style={{ color: '#F0F0F5' }}>OPMW</div>
-                                    <div className="text-[10px] font-medium tracking-widest uppercase" style={{ color: 'rgba(159,110,255,0.6)' }}>
-                                        One Place Multi Work
+                                    <div className="font-display font-bold text-4xl tracking-tight text-[#E6EDF7]">OPMW</div>
+                                    <div className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#2F80ED] mt-2 opacity-80">
+                                        One Place. All Your Work.
                                     </div>
                                 </div>
                             </Link>
 
-                            <p className="text-sm leading-relaxed mb-6 max-w-xs" style={{ color: '#606070' }}>
-                                Enterprise-grade integrated platform for BPO, Voice Operations, Web Development & HRMS — powering growth from one unified ecosystem.
+                            <p className="text-sm leading-relaxed mb-8 max-w-sm" style={{ color: '#9FB3D1', opacity: 0.6 }}>
+                                OPMW helps businesses with support services, HR software, and building great websites. We make work easier for teams everywhere.
                             </p>
 
-                            {/* Tagline */}
-                            <div
-                                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium mb-6"
-                                style={{
-                                    background: 'rgba(124,58,237,0.10)',
-                                    border: '1px solid rgba(124,58,237,0.20)',
-                                    color: '#9F6EFF',
-                                }}
-                            >
-                                ✦ Integrated Execution. Unified Growth.
-                            </div>
-
-                            {/* Social Links */}
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-4 mb-8">
                                 {socials.map(({ icon: Icon, href, label }) => (
                                     <a
                                         key={label}
                                         href={href}
                                         aria-label={label}
-                                        className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 group"
-                                        style={{
-                                            background: 'rgba(255,255,255,0.04)',
-                                            border: '1px solid rgba(255,255,255,0.08)',
-                                        }}
-                                        onMouseEnter={e => {
-                                            e.currentTarget.style.background = 'rgba(124,58,237,0.15)'
-                                            e.currentTarget.style.borderColor = 'rgba(124,58,237,0.35)'
-                                            e.currentTarget.style.boxShadow = '0 0 12px rgba(124,58,237,0.2)'
-                                        }}
-                                        onMouseLeave={e => {
-                                            e.currentTarget.style.background = 'rgba(255,255,255,0.04)'
-                                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'
-                                            e.currentTarget.style.boxShadow = 'none'
-                                        }}
+                                        className="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-[#9FB3D1] hover:text-white hover:border-[#2F80ED]/50 hover:bg-[#2F80ED]/5 transition-all"
                                     >
-                                        <Icon size={15} style={{ color: '#606070' }} className="group-hover:text-violet-400 transition-colors" />
+                                        <Icon size={16} />
                                     </a>
                                 ))}
                             </div>
+
+                            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-white/5 border border-white/10">
+                                <Shield size={14} className="text-[#2F80ED]" />
+                                <span className="text-[11px] font-bold uppercase tracking-widest text-[#E6EDF7]/60">Safe and Secure Systems</span>
+                            </div>
                         </div>
 
-                        {/* Link Columns */}
-                        {Object.entries(footerLinks).map(([group, links]) => (
-                            <div key={group}>
-                                <h3
-                                    className="text-xs font-semibold uppercase tracking-widest mb-5"
-                                    style={{ color: '#3A3A4E' }}
-                                >
-                                    {group}
+                        {/* Navigation Grid */}
+                        <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+                            {Object.entries(footerLinks).map(([group, links]) => (
+                                <div key={group}>
+                                    <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#2F80ED] mb-6 opacity-80">
+                                        {group}
+                                    </h3>
+                                    <ul className="space-y-4">
+                                        {links.map(link => (
+                                            <li key={link.label}>
+                                                <Link
+                                                    to={link.href}
+                                                    className="text-sm text-[#9FB3D1] hover:text-white transition-colors flex items-center gap-2 group/item"
+                                                >
+                                                    <span className="w-1 h-1 rounded-full bg-[#2F80ED] scale-0 group-hover/item:scale-100 transition-transform" />
+                                                    {link.label}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+
+                            {/* Newsletter Column */}
+                            <div className="lg:col-span-1">
+                                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#2F80ED] mb-6 opacity-80">
+                                    Stay Connected
                                 </h3>
-                                <ul className="space-y-3">
-                                    {links.map(link => (
-                                        <li key={link.label}>
-                                            <Link
-                                                to={link.href}
-                                                className="text-sm transition-colors duration-200"
-                                                style={{ color: '#606070' }}
-                                                onMouseEnter={e => e.target.style.color = '#9F6EFF'}
-                                                onMouseLeave={e => e.target.style.color = '#606070'}
-                                            >
-                                                {link.label}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
+                                <p className="text-xs text-[#9FB3D1]/60 leading-relaxed mb-6">
+                                    Get our monthly newsletter for business news and tips.
+                                </p>
+                                <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
+                                    <div className="relative group">
+                                        <input
+                                            type="email"
+                                            placeholder="your@email.com"
+                                            className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-xs text-[#E6EDF7] focus:outline-none focus:border-[#2F80ED]/50 transition-all placeholder:text-[#9FB3D1]/30"
+                                        />
+                                        <div className="absolute inset-0 rounded-lg bg-[#2F80ED]/5 blur-[2px] opacity-0 group-focus-within:opacity-100 transition-opacity pointer-events-none" />
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-[#2F80ED] hover:bg-[#2F80ED]/90 text-white font-bold py-3 rounded-lg text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-blue-500/10"
+                                    >
+                                        Sign Up
+                                    </button>
+                                </form>
                             </div>
-                        ))}
+                        </div>
                     </div>
 
-                    {/* Bottom Row */}
-                    <div className="pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                        {/* Offices */}
-                        <div className="flex flex-wrap gap-4">
-                            {offices.map(({ city, country, flag }) => (
-                                <div
-                                    key={city}
-                                    className="flex items-center gap-2 text-xs"
-                                    style={{ color: '#606070' }}
-                                >
-                                    <span>{flag}</span>
-                                    <span>{city}, {country}</span>
+                    {/* ── Global Footprint ── */}
+                    <div className="pt-10 pb-10 border-t border-white/5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+                        <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+                            {offices.map(({ city, flag, country }) => (
+                                <div key={city} className="flex items-center gap-2 text-xs font-medium text-[#9FB3D1]/70 group cursor-default">
+                                    <span className="grayscale group-hover:grayscale-0 transition-all">{flag}</span>
+                                    <span className="group-hover:text-white transition-colors">{city} <span className="text-[10px] opacity-40 ml-1">({country})</span></span>
                                 </div>
                             ))}
                         </div>
 
-                        {/* Contact Info */}
                         <div className="flex flex-wrap items-center gap-6">
-                            <a
-                                href="mailto:enterprise@opmw.io"
-                                className="flex items-center gap-2 text-xs transition-colors duration-200"
-                                style={{ color: '#606070' }}
-                                onMouseEnter={e => e.currentTarget.style.color = '#9F6EFF'}
-                                onMouseLeave={e => e.currentTarget.style.color = '#606070'}
-                            >
-                                <Mail size={12} /> enterprise@opmw.io
+                            <a href="mailto:enterprise@opmw.io" className="flex items-center gap-2 text-xs font-medium text-[#9FB3D1]/70 hover:text-white transition-colors">
+                                <Mail size={14} className="text-[#2F80ED]" /> enterprise@opmw.io
                             </a>
-                            <a
-                                href="tel:+911234567890"
-                                className="flex items-center gap-2 text-xs transition-colors duration-200"
-                                style={{ color: '#606070' }}
-                                onMouseEnter={e => e.currentTarget.style.color = '#9F6EFF'}
-                                onMouseLeave={e => e.currentTarget.style.color = '#606070'}
-                            >
-                                <Phone size={12} /> +91 12345 67890
+                            <a href="tel:+911234567890" className="flex items-center gap-2 text-xs font-medium text-[#9FB3D1]/70 hover:text-white transition-colors">
+                                <Globe size={14} className="text-[#2F80ED]" /> global.support
                             </a>
                         </div>
                     </div>
 
-                    {/* Copyright */}
-                    <div className="mt-6 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-                        <p className="text-xs" style={{ color: '#3A3A4E' }}>
-                            © {new Date().getFullYear()} OPMW – One Place Multi Work. All rights reserved.
-                        </p>
-                        <p className="text-xs" style={{ color: '#3A3A4E' }}>
-                            Integrated Execution. Unified Growth.
-                        </p>
+                    {/* ── Legal & Certification ── */}
+                    <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+                        <div className="flex items-center gap-3">
+                            <p className="text-[11px] font-medium text-[#9FB3D1]/40">
+                                © {new Date().getFullYear()} OPMW Platform. All rights reserved. Registered Trademark.
+                            </p>
+                        </div>
+                        <div className="flex items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-[#9FB3D1]/30">
+                            <span>Security Protocols v4.2</span>
+                            <span className="hidden sm:block">Working Together. Growing Together.</span>
+                        </div>
                     </div>
                 </div>
+
+                {/* Corner Shimmers */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/5 blur-[120px] pointer-events-none rounded-full translate-x-1/2 -translate-y-1/2" />
+                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/5 blur-[100px] pointer-events-none rounded-full -translate-x-1/2 translate-y-1/2" />
             </div>
         </footer>
     )
