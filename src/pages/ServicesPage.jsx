@@ -1,255 +1,242 @@
-import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import {
-    ArrowRight, Building2, Phone, Code2, Users,
-    CheckCircle2, TrendingUp, Clock, Globe, Shield, Zap, Loader2
-} from 'lucide-react'
+import { Phone, Code2, Users, ArrowRight, Sparkles } from 'lucide-react'
 import StarfieldBackground from '@/animations/StarfieldBackground'
-import api from '@/lib/api'
 
-// Helper to map icon string to Lucide component
-const iconMap = {
-    Building2, Phone, Code2, Users,
-}
+const services = [
+    {
+        id: 'bpo',
+        href: '/services/bpo',
+        icon: Phone,
+        emoji: '📞',
+        category: 'Operations',
+        title: 'BPO & International Voice',
+        subtitle: 'Global campaigns. Real results.',
+        description:
+            'Our voice and non-voice teams operate with defined KPIs and monitored quality standards. We handle large-scale international campaigns with operational accuracy.',
+        tags: ['Inbound Support', 'Outbound Sales', 'Amazon Support', 'Non-Voice Processing'],
+        image: '/assets/bpo_hero.png',
+        accentColor: '#2F80ED',
+        gradientFrom: 'rgba(47,128,237,0.12)',
+        gradientTo: 'rgba(47,128,237,0.02)',
+        stat: { value: '90+', label: 'Active Agents' },
+    },
+    {
+        id: 'it',
+        href: '/services/it',
+        icon: Code2,
+        emoji: '💻',
+        category: 'Technology',
+        title: 'IT & Web Applications',
+        subtitle: 'Systems that actually scale.',
+        description:
+            'We build functional, web-based systems including ERPs and monitoring dashboards that support real business workflows — designed to last.',
+        tags: ['Custom Web Apps', 'ERP Platforms', 'API Integration', 'DevOps'],
+        image: '/assets/it_hero.png',
+        accentColor: '#7C3AED',
+        gradientFrom: 'rgba(124,58,237,0.12)',
+        gradientTo: 'rgba(124,58,237,0.02)',
+        stat: { value: '80+', label: 'Products Delivered' },
+    },
+    {
+        id: 'hrms',
+        href: '/services/hrms',
+        icon: Users,
+        emoji: '👥',
+        category: 'Proprietary Product',
+        title: 'OPMW HRMS',
+        subtitle: 'HR simplified. Built for growth.',
+        description:
+            'OPMW HRMS was developed from real operational challenges. Built for growing businesses that require visibility without expensive enterprise software.',
+        tags: ['Payroll Automation', 'Attendance', 'Performance', 'Compliance'],
+        image: '/assets/hrms_hero.png',
+        accentColor: '#9F6EFF',
+        gradientFrom: 'rgba(159,110,255,0.12)',
+        gradientTo: 'rgba(159,110,255,0.02)',
+        stat: { value: '40%', label: 'HR Time Saved' },
+    },
+]
 
 export default function ServicesPage() {
-    const [services, setServices] = useState([])
-    const [caseStudies, setCaseStudies] = useState([])
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [svcRes, caseRes] = await Promise.all([
-                    api.get('/services'),
-                    api.get('/case-studies')
-                ])
-                setServices(svcRes.data)
-                setCaseStudies(caseRes.data)
-            } catch (err) {
-                console.error('Failed to fetch services/cases', err)
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchData()
-    }, [])
-
-    if (loading) {
-        return (
-            <div className="min-h-screen bg-[#03142A] flex flex-col items-center justify-center gap-6">
-                <Loader2 className="animate-spin text-[#2F80ED]" size={50} />
-                <span className="text-sm font-bold uppercase tracking-[0.3em] text-[#5A5A6A]">Loading OPMW Solutions...</span>
-            </div>
-        )
-    }
-
     return (
-        <main className="pt-16">
-            {/* Hero */}
-            <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-[#03142A]">
-                <StarfieldBackground />
-                <div className="container-opmw relative z-10 py-20">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
-                        <header className="text-left">
-                            <motion.div
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.6 }}
-                                className="section-label mb-6"
-                            >
-                                Our Services
-                            </motion.div>
-                            <motion.h1
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: 0.1 }}
-                                className="font-display font-bold mb-6 leading-[1.1]"
-                                style={{ fontSize: 'clamp(2.25rem, 8vw, 4.5rem)', color: '#F0F0F5' }}
-                            >
-                                Global Work.
-                                <br />
-                                <span className="text-gradient">Simplified Results.</span>
-                            </motion.h1>
-                            <motion.p
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: 0.2 }}
-                                className="text-xl text-[#9FB3D1] max-w-xl leading-relaxed mb-10"
-                            >
-                                We provide great business support, customer care, and software development — all through one trusted partner.
-                            </motion.p>
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: 0.3 }}
-                                className="flex flex-wrap gap-4"
-                            >
-                                <Link to="/contact" className="btn-primary py-4 px-10">
-                                    Start Today <ArrowRight size={18} />
-                                </Link>
-                                <a href="#divisions" className="btn-secondary py-4 px-10">
-                                    See Our Services
-                                </a>
-                            </motion.div>
-                        </header>
+        <main className="bg-[#03142A] text-[#E6EDF7] min-h-screen overflow-x-hidden">
+            <StarfieldBackground className="opacity-40" />
 
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9, x: 40 }}
-                            animate={{ opacity: 1, scale: 1, x: 0 }}
-                            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                            className="relative mt-12 lg:mt-0"
-                        >
-                            <figure className="relative z-10 rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(47,128,237,0.15)] m-0">
-                                <img
-                                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200"
-                                    alt="Global Strategic Operations"
-                                    className="w-full h-full object-cover"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-tr from-[#03142A]/40 to-transparent" />
-                            </figure>
-                            {/* Decorative elements */}
-                            <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#7C3AED]/10 blur-[100px] rounded-full" />
-                            <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-[#2F80ED]/10 blur-[100px] rounded-full" />
-                        </motion.div>
-                    </div>
+            {/* ── Hero ── */}
+            <section className="relative pt-32 pb-16 overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(47,128,237,0.08)_0%,transparent_70%)] pointer-events-none" />
+                <div className="container-opmw relative z-10 text-center">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#2F80ED]/30 bg-[#2F80ED]/5 mb-6"
+                    >
+                        <Sparkles size={12} className="text-[#2F80ED]" />
+                        <span className="text-xs font-bold tracking-[0.3em] uppercase text-[#2F80ED]">Specialized Divisions</span>
+                    </motion.div>
+
+                    <motion.h1
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6"
+                    >
+                        Global Work.<br />
+                        <span className="text-gradient">Simplified Results.</span>
+                    </motion.h1>
+
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="text-lg md:text-xl text-[#9FB3D1] max-w-2xl mx-auto leading-relaxed"
+                    >
+                        We operate through three specialized divisions that support end-to-end business operations. Choose a division to explore what we can do for you.
+                    </motion.p>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, #03142A, transparent)' }} />
             </section>
 
-            {/* Service Blocks */}
-            <section id="divisions" className="section-pad relative overflow-hidden bg-[#03142A]">
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent z-10" />
-
+            {/* ── Service Cards ── */}
+            <section className="pb-20">
                 <div className="container-opmw">
-                    <div className="space-y-16">
-                        {services.map((svc, i) => {
-                            const isEven = i % 2 === 0
-                            return (
-                                <motion.article
-                                    key={svc.category}
-                                    initial={{ opacity: 0, y: 40 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: '-100px' }}
-                                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                                    className="relative grid lg:grid-cols-12 gap-12 items-center"
+                    <div className="space-y-8">
+                        {services.map((svc, i) => (
+                            <motion.div
+                                key={svc.id}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: '-60px' }}
+                                transition={{ delay: i * 0.1, duration: 0.7 }}
+                            >
+                                <Link
+                                    to={svc.href}
+                                    className="group block relative overflow-hidden rounded-3xl border border-white/8 transition-all duration-500 hover:border-white/15 hover:shadow-2xl"
+                                    style={{
+                                        background: `linear-gradient(135deg, ${svc.gradientFrom} 0%, rgba(3,20,42,0.8) 100%)`,
+                                    }}
                                 >
-                                    {/* Content Column */}
-                                    <div className={`lg:col-span-12 xl:col-span-7 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
-                                        <div className="flex items-center gap-4 mb-6">
-                                            <div
-                                                className="w-14 h-14 rounded-2xl flex items-center justify-center"
-                                                style={{ background: 'rgba(47,128,237,0.1)', border: '1px solid rgba(47,128,237,0.2)' }}
-                                            >
-                                                {(() => {
-                                                    const IconComp = iconMap[svc.icon] || Building2
-                                                    return <IconComp size={28} style={{ color: '#2F80ED' }} />
-                                                })()}
-                                            </div>
+                                    {/* Hover glow */}
+                                    <div
+                                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                                        style={{ boxShadow: `inset 0 0 80px ${svc.accentColor}10` }}
+                                    />
+
+                                    <div className="grid lg:grid-cols-2 gap-0 min-h-[420px]">
+                                        {/* Content side */}
+                                        <div className={`flex flex-col justify-between p-8 md:p-10 ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
                                             <div>
-                                                <div className="section-label mb-1" style={{ fontSize: '10px' }}>{svc.category}</div>
-                                                <h2 className="font-display font-bold text-2xl md:text-3xl text-white">
+                                                {/* Header */}
+                                                <div className="flex items-center gap-4 mb-6">
+                                                    <div
+                                                        className="w-14 h-14 rounded-2xl text-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                                                        style={{ background: `${svc.accentColor}15`, border: `1px solid ${svc.accentColor}30` }}
+                                                    >
+                                                        {svc.emoji}
+                                                    </div>
+                                                    <div>
+                                                        <div
+                                                            className="text-[10px] font-bold uppercase tracking-[0.3em] mb-1"
+                                                            style={{ color: svc.accentColor }}
+                                                        >
+                                                            {svc.category}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-white mb-2">
                                                     {svc.title}
                                                 </h2>
+                                                <p className="text-base font-medium mb-4" style={{ color: svc.accentColor }}>
+                                                    {svc.subtitle}
+                                                </p>
+                                                <p className="text-[#9FB3D1] leading-relaxed text-sm md:text-base mb-6">
+                                                    {svc.description}
+                                                </p>
+
+                                                {/* Tags */}
+                                                <div className="flex flex-wrap gap-2 mb-8">
+                                                    {svc.tags.map(tag => (
+                                                        <span
+                                                            key={tag}
+                                                            className="text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
+                                                            style={{ background: `${svc.accentColor}12`, color: svc.accentColor }}
+                                                        >
+                                                            {tag}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* CTA Row */}
+                                            <div className="flex items-center justify-between">
+                                                <div
+                                                    className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl font-bold text-sm text-white transition-all duration-300 group-hover:gap-4"
+                                                    style={{ background: svc.accentColor }}
+                                                >
+                                                    Explore Division
+                                                    <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                                                </div>
+                                                <div className="text-right hidden sm:block">
+                                                    <div className="text-2xl font-display font-bold text-white">{svc.stat.value}</div>
+                                                    <div className="text-[10px] uppercase tracking-widest font-bold" style={{ color: svc.accentColor }}>{svc.stat.label}</div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <p className="text-lg text-[#9FB3D1] leading-relaxed mb-8 max-w-2xl">
-                                            {svc.description}
-                                        </p>
 
-                                        <div className="mb-10">
-                                            <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#3A3A4E] mb-6">
-                                                Core Capabilities
-                                            </h3>
-                                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
-                                                {svc.features.map(f => (
-                                                    <li key={f} className="flex items-center gap-3 group/feat">
-                                                        <div className="w-5 h-5 rounded-full bg-[#133B6A]/30 border border-[#133B6A]/50 flex items-center justify-center group-hover/feat:bg-[#2F80ED]/20 group-hover/feat:border-[#2F80ED]/40 transition-colors">
-                                                            <CheckCircle2 size={10} className="text-[#2F80ED]" />
-                                                        </div>
-                                                        <span className="text-sm text-[#9FB3D1]/80 group-hover/feat:text-[#E6EDF7] transition-colors">{f}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-
-                                        <Link to="/contact" className="btn-primary">
-                                            Inquire About {svc.category} <ArrowRight size={16} />
-                                        </Link>
-                                    </div>
-
-                                    {/* Image Column */}
-                                    <div className={`lg:col-span-12 xl:col-span-5 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
-                                        <motion.figure
-                                            whileHover={{ scale: 1.02 }}
-                                            transition={{ duration: 0.4 }}
-                                            className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl aspect-[4/3] xl:aspect-square m-0"
-                                        >
+                                        {/* Image side */}
+                                        <div className={`relative overflow-hidden ${i % 2 === 1 ? 'lg:order-1' : ''} hidden lg:block`}>
                                             <img
                                                 src={svc.image}
                                                 alt={svc.title}
-                                                className="w-full h-full object-cover"
+                                                className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"
                                             />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-[#03142A]/60 via-transparent to-transparent" />
-                                        </motion.figure>
+                                            <div
+                                                className={`absolute inset-0 ${i % 2 === 1
+                                                    ? 'bg-gradient-to-l from-transparent to-[#03142A]'
+                                                    : 'bg-gradient-to-r from-transparent to-[#03142A]'
+                                                    }`}
+                                            />
+                                            {/* Floating stat on mobile / overlay */}
+                                            <motion.div
+                                                animate={{ y: [0, -10, 0] }}
+                                                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.5 }}
+                                                className="absolute bottom-8 left-8 p-5 rounded-2xl border shadow-xl"
+                                                style={{
+                                                    background: 'rgba(8,30,58,0.9)',
+                                                    backdropFilter: 'blur(12px)',
+                                                    borderColor: `${svc.accentColor}30`,
+                                                }}
+                                            >
+                                                <div className="text-3xl font-display font-bold text-white">{svc.stat.value}</div>
+                                                <div className="text-[10px] uppercase tracking-widest font-bold mt-1" style={{ color: svc.accentColor }}>{svc.stat.label}</div>
+                                            </motion.div>
+                                        </div>
                                     </div>
-                                </motion.article>
-                            )
-                        })}
+                                </Link>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            {/* Case Studies */}
-            <section className="section-pad relative overflow-hidden bg-[#03142A]">
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent z-10" />
-
-                <div className="container-opmw">
+            {/* ── CTA ── */}
+            <section className="section-pad">
+                <div className="container-opmw text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-center mb-14"
                     >
-                        <div className="section-label mx-auto mb-5">Results That Speak</div>
-                        <h2
-                            className="font-display font-bold"
-                            style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)', color: '#F0F0F5' }}
-                        >
-                            Client Success Stories
+                        <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">
+                            Not Sure Where to Start?
                         </h2>
+                        <p className="text-[#9FB3D1] text-lg max-w-xl mx-auto mb-8">
+                            Talk to our team. We'll help you identify the right service for your needs.
+                        </p>
+                        <Link to="/contact" className="btn-primary px-10 py-4 rounded-2xl text-base">
+                            Talk to OPMW <ArrowRight size={18} />
+                        </Link>
                     </motion.div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        {caseStudies.map((cs, i) => (
-                            <motion.article
-                                key={cs.title}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className="glass-card p-6"
-                            >
-                                <div className="section-label mb-4" style={{ fontSize: '10px' }}>{cs.category}</div>
-                                <h3 className="font-display font-bold text-lg mb-3 leading-snug" style={{ color: '#F0F0F5' }}>
-                                    {cs.title}
-                                </h3>
-                                <p className="text-sm leading-relaxed mb-4" style={{ color: '#7A7A8A' }}>{cs.result}</p>
-                                <div className="flex flex-wrap gap-2">
-                                    {cs.tags.map(t => (
-                                        <span
-                                            key={t}
-                                            className="text-[10px] px-2 py-0.5 rounded-full"
-                                            style={{ background: 'rgba(47,128,237,0.08)', border: '1px solid rgba(47,128,237,0.15)', color: '#2F80ED' }}
-                                        >
-                                            {t}
-                                        </span>
-                                    ))}
-                                </div>
-                            </motion.article>
-                        ))}
-                    </div>
                 </div>
             </section>
         </main>

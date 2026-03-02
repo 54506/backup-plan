@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Mail, Phone, Clock, MapPin, Building2, MessageSquare, Calendar } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { ArrowRight, Mail, Phone, Clock, MapPin, Building2, MessageSquare, Calendar, Lock } from 'lucide-react'
 import StarfieldBackground from '@/animations/StarfieldBackground'
 
 import api from '@/lib/api'
@@ -9,32 +10,52 @@ const offices = [
     {
         city: 'Hyderabad',
         flag: '🇮🇳',
-        role: 'Global HQ',
-        address: 'HITEC City, Madhapur, Hyderabad — 500081, India',
+        role: 'Global Headquarters',
+        address: 'H.No 2-48/12, Plot No 12, P Gopi Building, Gachibowli, Serlingampally, Hyderabad, India',
         phone: '+91 40 1234 5678',
         email: 'hyd@opmw.io',
         timezone: 'IST — UTC+5:30',
-        hours: 'Mon–Fri: 9AM – 7PM IST',
+        hours: 'Mon–Sat: 9AM – 8PM IST',
     },
     {
-        city: 'Dubai',
-        flag: '🇦🇪',
-        role: 'Middle East Ops',
-        address: 'Business Bay Tower, Dubai, UAE',
-        phone: '+971 4 XXX XXXX',
-        email: 'dubai@opmw.io',
-        timezone: 'GST — UTC+4',
-        hours: 'Sun–Thu: 9AM – 6PM GST',
+        city: 'Chennai',
+        flag: '🇮🇳',
+        role: 'Technology Hub',
+        address: 'Tidel Park, Rajiv Gandhi Salai, Taramani, Chennai, India',
+        phone: '+91 44 2234 5678',
+        email: 'chennai@opmw.io',
+        timezone: 'IST — UTC+5:30',
+        hours: 'Mon–Sat: 9AM – 8PM IST',
     },
     {
-        city: 'London',
-        flag: '🇬🇧',
-        role: 'Europe HQ',
-        address: 'Canary Wharf, London E14, UK',
-        phone: '+44 20 XXXX XXXX',
-        email: 'london@opmw.io',
-        timezone: 'GMT/BST',
-        hours: 'Mon–Fri: 9AM – 6PM GMT',
+        city: 'Bangalore',
+        flag: '🇮🇳',
+        role: 'Innovation Center',
+        address: 'ITPL Main Rd, Whitefield, Bangalore, India',
+        phone: '+91 80 3234 5678',
+        email: 'blr@opmw.io',
+        timezone: 'IST — UTC+5:30',
+        hours: 'Mon–Sat: 9AM – 8PM IST',
+    },
+    {
+        city: 'Noida',
+        flag: '🇮🇳',
+        role: 'North India Ops',
+        address: 'Sector 62, Noida, Uttar Pradesh, India',
+        phone: '+91 120 4234 5678',
+        email: 'noida@opmw.io',
+        timezone: 'IST — UTC+5:30',
+        hours: 'Mon–Sat: 9AM – 8PM IST',
+    },
+    {
+        city: 'Indore',
+        flag: '🇮🇳',
+        role: 'Central India Hub',
+        address: 'Vijay Nagar, Indore, Madhya Pradesh, India',
+        phone: '+91 731 5234 5678',
+        email: 'indore@opmw.io',
+        timezone: 'IST — UTC+5:30',
+        hours: 'Mon–Sat: 9AM – 8PM IST',
     },
 ]
 
@@ -50,6 +71,7 @@ const inquiryTypes = [
 ]
 
 export default function ContactPage() {
+    const isLoggedIn = !!localStorage.getItem('opmw_token')
     const [form, setForm] = useState({
         name: '', email: '', company: '', inquiry_type: '', message: '',
     })
@@ -73,50 +95,37 @@ export default function ContactPage() {
     }
 
     return (
-        <main className="pt-16">
+        <main className="bg-[#03142A]">
             {/* Hero */}
             <section
-                className="relative min-h-[45vh] flex items-center overflow-hidden"
+                className="relative min-h-[38vh] flex items-center overflow-hidden"
                 style={{ background: 'linear-gradient(135deg, #03142A 0%, #071C36 100%)' }}
             >
-                <StarfieldBackground />
-                <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(30,95,175,0.14) 0%, transparent 80%)' }} />
-                <header className="container-opmw relative z-10 py-24 text-center">
-                    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="section-label mx-auto mb-6">
-                        Contact Us
-                    </motion.div>
-                    <motion.h1
-                        initial={{ opacity: 0, y: 24 }}
+                <div className="absolute inset-0 z-0 opacity-40">
+                    <StarfieldBackground />
+                </div>
+
+                <div className="container-opmw relative z-10 pt-20">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="font-display font-bold mb-4"
-                        style={{ fontSize: 'clamp(2rem, 5vw, 3.75rem)', color: '#F0F0F5' }}
+                        transition={{ duration: 0.8 }}
                     >
-                        Let's Build Something
-                        <br /><span className="text-gradient">Great Together.</span>
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className="max-w-xl mx-auto text-base"
-                        style={{ color: '#7A7A8A' }}
-                    >
-                        Whether you want to work with us, see our software, or just have a question — our team will get back to you within 2 hours.
-                    </motion.p>
-                </header>
-                <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, #03142A, transparent)' }} />
+                        <p className="text-[#2F80ED] font-bold uppercase tracking-[0.4em] text-[10px] mb-4">Contact OPMW</p>
+                        <h1 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">
+                            Let's build your <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">operations layer.</span>
+                        </h1>
+                        <p className="max-w-xl text-[#8B9DC3] text-lg leading-relaxed">
+                            Have a question about our services, software, or potential partnership?
+                            Our dedicated team is ready to help you scale.
+                        </p>
+                    </motion.div>
+                </div>
             </section>
 
-            {/* Trust Strip */}
-            <div
-                className="py-5"
-                style={{
-                    background: 'rgba(47,128,237,0.05)',
-                    borderTop: '1px solid rgba(47,128,237,0.12)',
-                    borderBottom: '1px solid rgba(47,128,237,0.12)',
-                }}
-            >
+            {/* Quick Stats/Links Bar */}
+            <div className="border-y border-white/5 bg-[#051428]/50 backdrop-blur-md py-6">
                 <div className="container-opmw flex flex-wrap items-center justify-center gap-8 text-xs" style={{ color: '#5A5A6A' }}>
                     {[
                         { icon: MessageSquare, label: 'Fast help: Usually within 2 hours' },
@@ -132,191 +141,168 @@ export default function ContactPage() {
                 </div>
             </div>
 
-            {/* Contact Form + Info */}
-            <section className="section-pad" style={{ background: 'linear-gradient(135deg, #03142A 0%, #071C36 100%)' }}>
+            {/* Contact Form + Image */}
+            <section className="py-24" style={{ background: 'linear-gradient(135deg, #03142A 0%, #071C36 100%)' }}>
                 <div className="container-opmw">
-                    <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
-                        {/* Form — 3/5 */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                        {/* Form Side */}
                         <motion.div
-                            initial={{ opacity: 0, x: -24 }}
+                            initial={{ opacity: 0, x: -25 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="lg:col-span-3"
+                            className="bg-white/5 border border-white/10 rounded-[2.5rem] p-8 md:p-12 backdrop-blur-xl relative overflow-hidden"
                         >
-                            <h2 className="font-display font-bold text-2xl mb-8" style={{ color: '#F0F0F5' }}>
-                                Send Us a Message
-                            </h2>
-
-                            <div className="glass-card p-8">
-                                {submitted ? (
-                                    <div className="text-center py-10">
-                                        <div className="text-5xl mb-5">✅</div>
-                                        <h3 className="font-display font-bold text-2xl mb-3" style={{ color: '#F0F0F5' }}>Thank you!</h3>
-                                        <p className="text-base leading-relaxed" style={{ color: '#7A7A8A' }}>
-                                            We got your message. Our team will get back to you in about 2 hours. Please check your email soon.
-                                        </p>
+                            {!isLoggedIn ? (
+                                <div className="text-center py-12 px-6">
+                                    <div className="w-20 h-20 bg-blue-500/10 border border-blue-500/20 rounded-3xl flex items-center justify-center mx-auto mb-8">
+                                        <Lock size={32} className="text-blue-400" />
                                     </div>
-                                ) : (
-                                    <>
-                                        {error && (
-                                            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold mb-6">
-                                                {error}
-                                            </div>
-                                        )}
-                                        <form onSubmit={handleSubmit} className="space-y-6">
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                                {[
-                                                    { label: 'Full Name *', key: 'name', type: 'text', ph: 'Emma Johnson' },
-                                                    { label: 'Work Email *', key: 'email', type: 'email', ph: 'emma@company.com' },
-                                                ].map(f => (
-                                                    <div key={f.key}>
-                                                        <label className="block text-xs font-semibold mb-2" style={{ color: '#A0A0B0' }}>{f.label}</label>
-                                                        <input
-                                                            type={f.type}
-                                                            required
-                                                            placeholder={f.ph}
-                                                            value={form[f.key]}
-                                                            onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                                                            className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200"
-                                                            style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                                            onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
-                                                            onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
-                                                        />
-                                                    </div>
-                                                ))}
-                                            </div>
-
+                                    <h2 className="text-2xl font-display font-bold text-white mb-4">Authentication Required</h2>
+                                    <p className="text-[#8B9DC3] mb-8 max-w-sm mx-auto">
+                                        To maintain the security of our communications and provide personalized support, please sign in to contact our team.
+                                    </p>
+                                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                        <Link to="/login" className="px-8 py-3.5 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-500 transition-all">
+                                            Sign In
+                                        </Link>
+                                        <Link to="/signup" className="px-8 py-3.5 rounded-xl border border-white/10 text-white font-bold hover:bg-white/5 transition-all">
+                                            Create Account
+                                        </Link>
+                                    </div>
+                                </div>
+                            ) : submitted ? (
+                                <div className="text-center py-10 px-6">
+                                    <div className="w-20 h-20 bg-green-500/10 border border-green-500/20 rounded-3xl flex items-center justify-center mx-auto mb-8">
+                                        <div className="text-4xl">✅</div>
+                                    </div>
+                                    <h3 className="font-display font-bold text-3xl mb-4 text-white">Message Sent</h3>
+                                    <p className="text-[#8B9DC3] leading-relaxed mb-8">
+                                        Thank you for reaching out. We've received your inquiry and a specialist will contact you within 2 hours.
+                                    </p>
+                                    <button onClick={() => setSubmitted(false)} className="text-[#2F80ED] font-bold text-sm hover:text-white transition-colors">
+                                        Send another message
+                                    </button>
+                                </div>
+                            ) : (
+                                <>
+                                    <h2 className="text-2xl font-display font-bold text-white mb-8">Send us a message</h2>
+                                    {error && (
+                                        <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+                                            {error}
+                                        </div>
+                                    )}
+                                    <form onSubmit={handleSubmit} className="space-y-6">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                             <div>
-                                                <label className="block text-xs font-semibold mb-2" style={{ color: '#A0A0B0' }}>Company</label>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Acme Corp"
-                                                    value={form.company}
-                                                    onChange={e => setForm({ ...form, company: e.target.value })}
-                                                    className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                                                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                                    onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
-                                                    onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
-                                                />
+                                                <label className="block text-xs font-bold text-[#475569] uppercase tracking-widest mb-2 ml-1">Name</label>
+                                                <input required placeholder="Your name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
+                                                    className="w-full px-6 py-4 rounded-2xl bg-[#03142A]/60 border border-white/5 text-white placeholder-[#334155] focus:border-blue-500/40 focus:outline-none transition-all" />
                                             </div>
-
                                             <div>
-                                                <label className="block text-xs font-semibold mb-2" style={{ color: '#A0A0B0' }}>Type of Inquiry *</label>
-                                                <select
-                                                    required
-                                                    value={form.inquiry_type}
-                                                    onChange={e => setForm({ ...form, inquiry_type: e.target.value })}
-                                                    className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                                                    style={{ background: '#0D2A4D', border: '1px solid rgba(255,255,255,0.08)', color: form.inquiry_type ? '#F0F0F5' : '#5A5A6A' }}
-                                                >
-                                                    <option value="">Select inquiry type...</option>
-                                                    {inquiryTypes.map(t => <option key={t}>{t}</option>)}
-                                                </select>
+                                                <label className="block text-xs font-bold text-[#475569] uppercase tracking-widest mb-2 ml-1">Email</label>
+                                                <input required type="email" placeholder="you@company.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
+                                                    className="w-full px-6 py-4 rounded-2xl bg-[#03142A]/60 border border-white/5 text-white placeholder-[#334155] focus:border-blue-500/40 focus:outline-none transition-all" />
                                             </div>
+                                        </div>
 
-                                            <div>
-                                                <label className="block text-xs font-semibold mb-2" style={{ color: '#A0A0B0' }}>Message *</label>
-                                                <textarea
-                                                    required
-                                                    rows={5}
-                                                    placeholder="Tell us about your needs, project scope, or questions..."
-                                                    value={form.message}
-                                                    onChange={e => setForm({ ...form, message: e.target.value })}
-                                                    className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none"
-                                                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                                    onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
-                                                    onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
-                                                />
-                                            </div>
-
-                                            <button type="submit" disabled={isSubmitting} className="btn-primary w-full justify-center py-4 disabled:opacity-50">
-                                                {isSubmitting ? 'Sending...' : 'Send Message'} <ArrowRight size={15} />
-                                            </button>
-
-                                            <p className="text-center text-xs" style={{ color: '#3A3A4E' }}>
-                                                We respect your privacy. No spam — ever.
-                                            </p>
-                                        </form>
-                                    </>
-                                )}
-                            </div>
-                        </motion.div>
-
-                        {/* Right info — 2/5 */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 24 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="lg:col-span-2 space-y-5"
-                        >
-                            <h2 className="font-display font-bold text-2xl" style={{ color: '#F0F0F5' }}>Our Offices</h2>
-
-                            {offices.map((office) => (
-                                <article
-                                    key={office.city}
-                                    className="rounded-2xl p-6"
-                                    style={{
-                                        background: 'rgba(47,128,237,0.03)',
-                                        border: '1px solid rgba(255,255,255,0.07)',
-                                    }}
-                                >
-                                    <div className="flex items-center gap-3 mb-3">
-                                        <span className="text-2xl">{office.flag}</span>
                                         <div>
-                                            <div className="font-display font-bold text-base" style={{ color: '#F0F0F5' }}>{office.city}</div>
-                                            <div className="text-xs" style={{ color: '#2F80ED' }}>{office.role}</div>
+                                            <label className="block text-xs font-bold text-[#475569] uppercase tracking-widest mb-2 ml-1">Company</label>
+                                            <input placeholder="Your organization" value={form.company} onChange={e => setForm({ ...form, company: e.target.value })}
+                                                className="w-full px-6 py-4 rounded-2xl bg-[#03142A]/60 border border-white/5 text-white placeholder-[#334155] focus:border-blue-500/40 focus:outline-none transition-all" />
                                         </div>
-                                    </div>
 
-                                    <div className="space-y-2">
-                                        <div className="flex items-start gap-2.5">
-                                            <MapPin size={12} style={{ color: '#3A3A4E', marginTop: 2, flexShrink: 0 }} />
-                                            <span className="text-xs leading-snug" style={{ color: '#5A5A6A' }}>{office.address}</span>
+                                        <div>
+                                            <label className="block text-xs font-bold text-[#475569] uppercase tracking-widest mb-2 ml-1">Inquiry Type</label>
+                                            <select required value={form.inquiry_type} onChange={e => setForm({ ...form, inquiry_type: e.target.value })}
+                                                className="w-full px-6 py-4 rounded-2xl bg-[#03142A]/60 border border-white/5 text-white focus:border-blue-500/40 focus:outline-none transition-all">
+                                                <option value="" className="bg-[#03142A]">Select inquiry type...</option>
+                                                {inquiryTypes.map(t => <option key={t} value={t} className="bg-[#03142A]">{t}</option>)}
+                                            </select>
                                         </div>
-                                        <div className="flex items-center gap-2.5">
-                                            <Phone size={12} style={{ color: '#3A3A4E', flexShrink: 0 }} />
-                                            <a href={`tel:${office.phone}`} className="text-xs transition-colors" style={{ color: '#5A5A6A' }}
-                                                onMouseEnter={e => e.target.style.color = '#2F80ED'}
-                                                onMouseLeave={e => e.target.style.color = '#5A5A6A'}
-                                            >{office.phone}</a>
-                                        </div>
-                                        <div className="flex items-center gap-2.5">
-                                            <Mail size={12} style={{ color: '#3A3A4E', flexShrink: 0 }} />
-                                            <a href={`mailto:${office.email}`} className="text-xs transition-colors" style={{ color: '#5A5A6A' }}
-                                                onMouseEnter={e => e.target.style.color = '#2F80ED'}
-                                                onMouseLeave={e => e.target.style.color = '#5A5A6A'}
-                                            >{office.email}</a>
-                                        </div>
-                                        <div className="flex items-center gap-2.5">
-                                            <Clock size={12} style={{ color: '#3A3A4E', flexShrink: 0 }} />
-                                            <span className="text-xs" style={{ color: '#3A3A4E' }}>{office.hours}</span>
-                                        </div>
-                                    </div>
-                                </article>
-                            ))}
 
-                            {/* Enterprise email box */}
-                            <div
-                                className="rounded-2xl p-6"
-                                style={{
-                                    background: 'linear-gradient(135deg, rgba(45,23,96,0.4) 0%, rgba(30,16,64,0.3) 100%)',
-                                    border: '1px solid rgba(47,128,237,0.2)',
-                                }}
-                            >
-                                <div className="text-lg mb-2">✦</div>
-                                <div className="font-semibold text-sm mb-1.5" style={{ color: '#F0F0F5' }}>Enterprise Partnerships</div>
-                                <p className="text-xs mb-3" style={{ color: '#5A5A6A' }}>
-                                    For strategic partnerships and enterprise contracts, contact our dedicated partnership team directly.
-                                </p>
-                                <a
-                                    href="mailto:enterprise@opmw.io"
-                                    className="text-xs font-semibold transition-colors"
-                                    style={{ color: '#2F80ED' }}
-                                >
-                                    enterprise@opmw.io →
-                                </a>
+                                        <div>
+                                            <label className="block text-xs font-bold text-[#475569] uppercase tracking-widest mb-2 ml-1">Message</label>
+                                            <textarea required rows={5} placeholder="Tell us more about your requirements..."
+                                                value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
+                                                className="w-full px-6 py-4 rounded-2xl bg-[#03142A]/60 border border-white/5 text-white placeholder-[#334155] focus:border-blue-500/40 focus:outline-none transition-all resize-none" />
+                                        </div>
+
+                                        <button type="submit" disabled={isSubmitting} className="w-full py-5 rounded-2xl bg-blue-600 text-white font-bold flex items-center justify-center gap-2 hover:bg-blue-500 transition-all disabled:opacity-50">
+                                            {isSubmitting ? 'Sending...' : 'Send Message'} <ArrowRight size={18} />
+                                        </button>
+                                    </form>
+                                </>
+                            )}
+                        </motion.div>
+
+                        {/* Image panel — right half */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 25 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="relative h-full min-h-[500px] rounded-[2.5rem] overflow-hidden group"
+                        >
+                            <img
+                                src="/assets/contact_side.png"
+                                alt="OPMW workspace"
+                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#03142A] via-transparent to-transparent" />
+
+                            {/* Floating info card */}
+                            <div className="absolute bottom-8 left-8 right-8">
+                                <div className="p-8 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-xl">
+                                    <div className="text-xs font-bold uppercase tracking-widest mb-3 text-blue-400">💬 Global Support</div>
+                                    <div className="text-xl font-display font-bold text-white mb-2">Direct Channel</div>
+                                    <p className="text-sm text-[#8B9DC3] mb-4">Enterprise clients receive a dedicated Slack channel and account lead.</p>
+                                    <div className="flex items-center gap-4 text-xs font-bold text-white">
+                                        <div className="flex items-center gap-1.5"><Mail size={14} className="text-blue-400" /> enterprise@opmw.io</div>
+                                    </div>
+                                </div>
                             </div>
                         </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Offices Section */}
+            <section className="py-24 border-t border-white/5">
+                <div className="container-opmw">
+                    <div className="text-center mb-16">
+                        <p className="text-[#2F80ED] font-bold uppercase tracking-[0.4em] text-[10px] mb-4">Global Presence</p>
+                        <h2 className="text-3xl md:text-5xl font-display font-bold text-white">Our Offices</h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {offices.map((office, idx) => (
+                            <motion.div
+                                key={office.city}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: idx * 0.1 }}
+                                viewport={{ once: true }}
+                                className="p-8 rounded-[2rem] bg-white/5 border border-white/10 hover:border-blue-500/30 transition-all group"
+                            >
+                                <div className="text-3xl mb-6">{office.flag}</div>
+                                <h3 className="text-xl font-display font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">{office.city}</h3>
+                                <p className="text-xs font-bold text-blue-500 uppercase tracking-widest mb-6">{office.role}</p>
+
+                                <div className="space-y-4">
+                                    <div className="flex gap-3 text-sm text-[#8B9DC3]">
+                                        <MapPin size={16} className="shrink-0 text-[#3A4A5A]" />
+                                        <span>{office.address}</span>
+                                    </div>
+                                    <div className="flex gap-3 text-sm text-[#8B9DC3]">
+                                        <Clock size={16} className="shrink-0 text-[#3A4A5A]" />
+                                        <span>{office.hours}</span>
+                                    </div>
+                                    <div className="flex gap-3 text-sm text-[#8B9DC3]">
+                                        <Mail size={16} className="shrink-0 text-[#3A4A5A]" />
+                                        <span>{office.email}</span>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>

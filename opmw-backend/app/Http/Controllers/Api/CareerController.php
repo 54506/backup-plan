@@ -57,7 +57,7 @@ class CareerController extends Controller
 
         try {
             Mail::to($validated['email'])
-                ->send(new CareerApplicationMail($application));
+                ->queue(new CareerApplicationMail($application));
         } catch (\Exception $e) {
             \Log::error('Career mail failed: ' . $e->getMessage());
         }

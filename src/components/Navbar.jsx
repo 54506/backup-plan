@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ArrowRight } from 'lucide-react'
+import { Menu, X, ArrowRight, LogOut } from 'lucide-react'
+import api from '@/lib/api'
 
 const navLinks = [
+    { label: 'Home', href: '/' },
     { label: 'About Us', href: '/about' },
     { label: 'Services', href: '/services' },
     { label: 'HRMS', href: '/hrms' },
@@ -13,9 +15,22 @@ const navLinks = [
 ]
 
 export default function Navbar() {
+    const navigate = useNavigate()
+    const location = useLocation()
     const [scrolled, setScrolled] = useState(false)
     const [mobileOpen, setMobileOpen] = useState(false)
-    const isLoggedIn = !!localStorage.getItem('token')
+    const isLoggedIn = !!localStorage.getItem('opmw_token')
+
+    const handleLogout = () => {
+        // Immediate UI feedback
+        localStorage.removeItem('opmw_token')
+        localStorage.removeItem('opmw_user')
+        setMobileOpen(false)
+        navigate('/login')
+
+        // Background API call - don't wait for it
+        api.post('/auth/logout').catch(() => { })
+    }
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 10)
@@ -43,75 +58,96 @@ export default function Navbar() {
             >
                 <nav className="container-opmw flex items-center justify-between h-full">
 
-                    {/* Logo Segment - Iconic & Large */}
-                    <Link to="/" className="flex items-center group overflow-hidden" aria-label="OPMW Home">
-                        <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                            className="relative flex items-center justify-center w-24 h-24 md:w-32 md:h-32 -ml-4 overflow-hidden"
-                        >
+                    {/* Logo Segment - enlarged logo, no text */}
+                    <Link to="/" className="flex items-center group" aria-label="OPMW Home">
+                        <div className="relative flex items-center justify-center w-20 h-20 md:w-28 md:h-28 overflow-hidden">
                             <img
                                 src="/logo.png"
                                 alt="OPMW Logo"
-                                className="w-full h-full object-contain relative z-10 drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-all duration-300"
+                                className="w-full h-full object-contain"
                             />
-
-                            {/* Logo Shimmer Sweep */}
-                            <motion.div
-                                className="absolute inset-x-0 h-full w-[100%] z-20 pointer-events-none"
-                                style={{
-                                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.05) 55%, transparent)',
-                                    transform: 'skewX(-20deg)'
-                                }}
-                                animate={{
-                                    x: ['-200%', '200%']
-                                }}
-                                transition={{
-                                    duration: 1.5,
-                                    repeat: Infinity,
-                                    repeatDelay: 5.5,
-                                    ease: "easeInOut"
-                                }}
-                            />
-                        </motion.div>
+                        </div>
                     </Link>
 
                     {/* Desktop Navigation - Simple & Clean */}
                     <div className="hidden lg:flex items-center gap-2 h-full">
                         {navLinks.map((link) => (
-                            <NavLink
-                                key={link.href}
-                                to={link.href}
-                                className={({ isActive }) =>
-                                    `relative px-5 py-2 text-base font-bold tracking-wide transition-all duration-300 rounded-full
-                                    ${isActive
-                                        ? 'text-[#2F80ED]'
-                                        : 'text-[#9FB3D1] hover:text-white hover:bg-white/5'
-                                    }`
-                                }
-                            >
-                                {({ isActive }) => (
-                                    <>
-                                        {link.label}
-                                        {isActive && (
-                                            <motion.div
-                                                layoutId="nav-pill-simple"
-                                                className="absolute bottom-0 left-5 right-5 h-[2px] bg-[#2F80ED]"
-                                                transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-                                            />
-                                        )}
-                                    </>
+                            <div key={link.href} className="relative group h-full flex items-center">
+                                <NavLink
+                                    to={link.href}
+                                    className={({ isActive }) =>
+                                        `relative px-5 py-2 text-base font-bold tracking-wide transition-all duration-300 rounded-full
+                                        ${isActive
+                                            ? 'text-[#2F80ED]'
+                                            : 'text-[#9FB3D1] hover:text-white hover:bg-white/5'
+                                        }`
+                                    }
+                                >
+                                    {({ isActive }) => (
+                                        <>
+                                            {link.label}
+                                            {isActive && (
+                                                <motion.div
+                                                    layoutId="nav-pill-simple"
+                                                    className="absolute bottom-0 left-5 right-5 h-[2px] bg-[#2F80ED]"
+                                                    transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+                                                />
+                                            )}
+                                        </>
+                                    )}
+                                </NavLink>
+
+                                {/* Services Mega Dropdown */}
+                                {link.label === 'Services' && (
+                                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 translate-y-3 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 ease-out z-50">
+                                        <div className="w-72 bg-[#071C36]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden">
+                                            <div className="px-3 pt-3 pb-1">
+                                                <div className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#9FB3D1]/40 px-3 py-2">Our Divisions</div>
+                                            </div>
+                                            <div className="px-3 pb-3 space-y-1">
+                                                {[
+                                                    { name: 'BPO & International Voice', desc: 'Global campaign operations', href: '/services/bpo', color: '#2F80ED', emoji: '📞' },
+                                                    { name: 'IT & Web Applications', desc: 'Custom software & ERP', href: '/services/it', color: '#7C3AED', emoji: '💻' },
+                                                    { name: 'OPMW HRMS', desc: 'Proprietary SaaS product', href: '/services/hrms', color: '#9F6EFF', emoji: '👥' },
+                                                ].map((sub) => (
+                                                    <Link
+                                                        key={sub.href}
+                                                        to={sub.href}
+                                                        className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-all group/sub"
+                                                    >
+                                                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
+                                                            style={{ background: `${sub.color}15`, border: `1px solid ${sub.color}25` }}>
+                                                            {sub.emoji}
+                                                        </div>
+                                                        <div>
+                                                            <div className="text-sm font-bold text-[#E6EDF7] group-hover/sub:text-white transition-colors">{sub.name}</div>
+                                                            <div className="text-[10px] text-[#9FB3D1]/50 mt-0.5">{sub.desc}</div>
+                                                        </div>
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                            <div className="border-t border-white/5 px-6 py-3">
+                                                <Link to="/services" className="text-xs font-bold text-[#2F80ED] hover:text-white transition-colors flex items-center gap-1">
+                                                    View all services →
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
                                 )}
-                            </NavLink>
+                            </div>
                         ))}
                     </div>
 
                     {/* Desktop Actions - Minimalist */}
                     <div className="hidden lg:flex items-center gap-6">
                         {isLoggedIn ? (
-                            <span className="text-base font-bold text-[#E6EDF7]">
-                                Welcome
-                            </span>
+                            <button
+                                onClick={handleLogout}
+                                className="flex items-center gap-2 text-base font-bold text-[#9FB3D1] hover:text-white transition-colors duration-200"
+                            >
+                                <LogOut size={18} />
+                                Logout
+                            </button>
                         ) : (
                             <Link
                                 to="/login"
@@ -185,9 +221,12 @@ export default function Navbar() {
                             </nav>
                             <div className="p-6 border-t border-white/5 space-y-4">
                                 {isLoggedIn ? (
-                                    <div className="text-center py-2 text-[#9FB3D1] font-bold">
-                                        Welcome Back
-                                    </div>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full flex justify-center items-center py-4 rounded-xl font-bold text-[#FF4D4D] border border-red-500/10 hover:bg-red-500/5 transition-all"
+                                    >
+                                        <LogOut size={20} className="mr-2" /> Logout
+                                    </button>
                                 ) : (
                                     <Link
                                         to="/login"

@@ -5,24 +5,24 @@ import { Zap, Shield, Maximize, Activity, ArrowRight, Globe, Cpu } from 'lucide-
 
 const capabilities = [
     {
-        icon: <Zap size={22} />,
-        label: 'Smart Analytics',
-        desc: 'Understand your business with smart data.'
+        icon: <Globe size={22} />,
+        label: 'Multi-City Operations',
+        desc: 'Chennai, Hyderabad, Bangalore, Noida, Indore.'
+    },
+    {
+        icon: <Cpu size={22} />,
+        label: 'Scalable Workforce',
+        desc: '300+ trained professionals and growing.'
     },
     {
         icon: <Shield size={22} />,
-        label: 'Safe and Secure',
-        desc: 'We keep your data safe and private.'
+        label: 'Cost-Optimized',
+        desc: 'Reliable execution with structured delivery.'
     },
     {
-        icon: <Maximize size={22} />,
-        label: 'Ready to Grow',
-        desc: 'Built to grow as your business gets bigger.'
-    },
-    {
-        icon: <Activity size={22} />,
-        label: 'Smart Workflows',
-        desc: 'Save time with automated tasks.'
+        icon: <Zap size={22} />,
+        label: 'Integrated BPO + IT',
+        desc: 'Operations and technology under one system.'
     },
 ]
 
@@ -83,9 +83,10 @@ export default function HeroSection() {
                     loop
                     muted
                     playsInline
+                    poster="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 0.65 }}
-                    transition={{ duration: 1.5 }}
+                    transition={{ duration: 1 }}
                     className="absolute w-full h-full object-cover"
                 >
                     <source src="/hero-bg.mp4" type="video/mp4" />
@@ -160,8 +161,23 @@ export default function HeroSection() {
                             className="font-display font-semibold leading-tight tracking-tight mb-6"
                             style={{ fontSize: 'clamp(2rem, 9vw, 3.8rem)', color: '#E6EDF7' }}
                         >
-                            The Best Way<br /> to Manage Your<br /> Business.
+                            OPMW – <br /> One Place <br /> Multi Work
                         </motion.h1>
+
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.15 }}
+                            className="flex flex-wrap gap-x-4 gap-y-2 mb-6 text-sm font-bold tracking-widest uppercase text-[#2F80ED]"
+                        >
+                            <span>Integrated BPO</span>
+                            <span className="opacity-30">|</span>
+                            <span>International Voice</span>
+                            <span className="opacity-30">|</span>
+                            <span>Web Applications</span>
+                            <span className="opacity-30">|</span>
+                            <span>Enterprise HRMS</span>
+                        </motion.div>
 
                         <motion.p
                             initial={{ opacity: 0, x: -20 }}
@@ -170,7 +186,7 @@ export default function HeroSection() {
                             className="text-lg md:text-xl mb-10 leading-relaxed font-normal"
                             style={{ color: '#9FB3D1', maxWidth: '600px', opacity: 0.85 }}
                         >
-                            OPMW helps you manage your team, software, and customer support all in one place. We make big business easy.
+                            Modern businesses don’t just need vendors — they need reliable execution partners. OPMW brings operations, technology, and workforce management together under one structured system.
                         </motion.p>
 
                         <motion.div
@@ -179,8 +195,10 @@ export default function HeroSection() {
                             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                             className="flex flex-col sm:flex-row gap-4 mb-16"
                         >
-                            <Link to="/contact" className="btn-solid-premium justify-center flex items-center text-base font-semibold px-8 py-4 rounded-md">
-                                Get Started <ArrowRight size={18} className="ml-2" />
+                            <Link to="/contact" className="btn-primary relative z-10 overflow-hidden group">
+                                <span className="relative z-10 flex items-center gap-2">
+                                    Start Your Transformation <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                </span>
                             </Link>
                             <Link
                                 to="/services"

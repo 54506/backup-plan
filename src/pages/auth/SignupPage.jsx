@@ -1,214 +1,313 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
-import { Mail, Lock, User, ArrowRight, Building2, Globe, Users, Loader2 } from 'lucide-react'
-import StarfieldBackground from '@/animations/StarfieldBackground'
+import { Mail, Lock, User, ArrowRight, Loader2, Eye, EyeOff, CheckCircle2 } from 'lucide-react'
 import api from '@/lib/api'
+
+/* ─── Vercel-inspired dark grid + glow ─── */
+function SceneLeft() {
+    return (
+        <div className="absolute inset-0 overflow-hidden">
+            {/* Base */}
+            <div className="absolute inset-0" style={{ background: '#050C1C' }} />
+            {/* Perspective grid — fades to bottom */}
+            <svg className="absolute inset-0 w-full h-full opacity-[0.07]" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <defs>
+                    <pattern id="pg" width="60" height="60" patternUnits="userSpaceOnUse">
+                        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgb(100,150,255)" strokeWidth="0.8" />
+                    </pattern>
+                    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stopColor="white" stopOpacity="1" />
+                        <stop offset="1" stopColor="white" stopOpacity="0" />
+                    </linearGradient>
+                    <mask id="m"><rect width="100%" height="100%" fill="url(#fade)" /></mask>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#pg)" mask="url(#m)" />
+            </svg>
+            {/* Glows */}
+            <motion.div animate={{ scale: [1, 1.2, 1], opacity: [0.25, 0.4, 0.25] }}
+                transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute" style={{ width: 600, height: 600, top: '-15%', left: '-20%', borderRadius: '50%', background: 'radial-gradient(circle, rgba(47,128,237,0.3) 0%, transparent 65%)', filter: 'blur(60px)' }} />
+            <motion.div animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.35, 0.2] }}
+                transition={{ duration: 13, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
+                className="absolute" style={{ width: 500, height: 500, bottom: '-10%', right: '-10%', borderRadius: '50%', background: 'radial-gradient(circle, rgba(124,58,237,0.28) 0%, transparent 65%)', filter: 'blur(60px)' }} />
+        </div>
+    )
+}
+
+const steps = [
+    { id: 1, label: 'Your info', fields: ['name', 'email'] },
+    { id: 2, label: 'Set password', fields: ['password'] },
+]
+
+const checks = [
+    '90+ expert agents online',
+    'Custom IT solutions delivered fast',
+    'HRMS built for growing teams',
+]
 
 export default function SignupPage() {
     const navigate = useNavigate()
-    const [form, setForm] = useState({ name: '', email: '', password: '', password_confirmation: '' })
+    const [form, setForm] = useState({ name: '', email: '', password: '' })
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
+    const [showPass, setShowPass] = useState(false)
+    const [step, setStep] = useState(1)
 
     const handleSubmit = async (e) => {
+        if (step === 1) {
+            e.preventDefault()
+            setStep(2)
+            return
+        }
         e.preventDefault()
         setLoading(true)
         setError('')
-
         try {
-            // Laravel register route usually expects password_confirmation
-            const res = await api.post('/auth/register', {
-                ...form,
-                password_confirmation: form.password // Using password as confirmation for simplicity since UI only has one field
-            })
-            localStorage.setItem('opmw_token', res.data.token)
-            localStorage.setItem('opmw_user', JSON.stringify(res.data.user))
-            navigate('/')
+            await api.post('/auth/register', form)
+            // Redirect to login after successful registration
+            navigate('/login', { state: { message: 'Registration successful! Please sign in.' } })
         } catch (err) {
             setError(err.response?.data?.message || 'Registration failed. Please try again.')
         } finally {
             setLoading(false)
         }
     }
+    const f = { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', transition: 'all 0.2s' }
+    const onFocus = e => { e.target.style.borderColor = 'rgba(124,58,237,0.5)'; e.target.style.background = 'rgba(124,58,237,0.05)' }
+    const onBlur = e => { e.target.style.borderColor = 'rgba(255,255,255,0.07)'; e.target.style.background = 'rgba(255,255,255,0.04)' }
 
     return (
-        <main className="min-h-screen bg-[#03142A] flex flex-col lg:flex-row relative overflow-x-hidden">
+        <main className="min-h-screen flex flex-col lg:flex-row" style={{ background: '#050C1C' }}>
 
-            {/* ── Left Side: Cinematic Visual ── */}
-            <section className="hidden lg:flex lg:flex-col lg:relative lg:w-1/2 overflow-hidden bg-[#050C1A]">
-                <StarfieldBackground />
-                <div className="absolute inset-0 z-0">
-                    <img
-                        src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200"
-                        alt="Global Connectivity"
-                        className="w-full h-full object-cover opacity-60 mix-blend-color-dodge scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#03142A]" />
-                </div>
+            {/* ══════ LEFT — Scene ══════ */}
+            <aside className="hidden lg:flex lg:w-1/2 relative overflow-hidden flex-col justify-between p-12 xl:p-16">
+                <SceneLeft />
 
-                <div className="relative z-10 w-full flex flex-col justify-center px-16 xl:px-24 py-16">
+                {/* Animated particles */}
+                {[...Array(6)].map((_, i) => (
                     <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 1, delay: 0.2 }}
-                    >
-                        <figure className="mb-10 m-0">
-                            <img src="/logo.png" alt="OPMW" className="h-12 w-auto brightness-125" />
-                        </figure>
-                        <h2 className="font-display font-bold text-5xl xl:text-6xl text-white mb-8 leading-[1.1]">
-                            Grow your <br />
-                            <span className="text-gradient">business today.</span>
-                        </h2>
-                        <p className="text-xl text-[#9FB3D1] max-w-md leading-relaxed mb-12">
-                            Join our network and work with experts from around the world. We help you scale easily.
-                        </p>
-                        <div className="space-y-6">
+                        key={i}
+                        animate={{ y: [0, -120, 0], x: [0, (i % 2 === 0 ? 30 : -30), 0], opacity: [0, 0.6, 0] }}
+                        transition={{ duration: 6 + i * 1.5, repeat: Infinity, ease: 'easeInOut', delay: i * 1.1 }}
+                        className="absolute w-1 h-1 rounded-full"
+                        style={{
+                            left: `${15 + i * 12}%`, bottom: '15%',
+                            background: i % 2 === 0 ? '#2F80ED' : '#7C3AED',
+                            boxShadow: `0 0 6px ${i % 2 === 0 ? '#2F80ED' : '#7C3AED'}`,
+                        }}
+                    />
+                ))}
+
+                {/* Card mockup — premium UI preview */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.8 }}
+                    className="relative z-10 flex-1 flex items-center justify-center"
+                >
+                    <div className="w-full max-w-sm">
+                        {/* Fake dashboard card */}
+                        <motion.div
+                            animate={{ y: [0, -8, 0] }}
+                            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                            className="p-6 rounded-2xl mb-4"
+                            style={{ background: 'rgba(15,30,60,0.9)', border: '1px solid rgba(47,128,237,0.18)', backdropFilter: 'blur(20px)' }}
+                        >
+                            <div className="flex items-center justify-between mb-5">
+                                <div>
+                                    <div className="text-[10px] uppercase tracking-widest font-bold mb-1" style={{ color: '#2F80ED' }}>Operations Dashboard</div>
+                                    <div className="text-lg font-display font-bold text-white">This week</div>
+                                </div>
+                                <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: 'rgba(47,128,237,0.15)', border: '1px solid rgba(47,128,237,0.25)' }}>
+                                    <img src="/logo.png" alt="" className="w-5 h-5 object-contain" />
+                                </div>
+                            </div>
+                            {/* Mini bar chart */}
+                            <div className="flex items-end gap-1.5 mb-4" style={{ height: 50 }}>
+                                {[0.4, 0.7, 0.5, 0.9, 0.6, 0.8, 1].map((h, i) => (
+                                    <motion.div
+                                        key={i}
+                                        initial={{ scaleY: 0 }}
+                                        animate={{ scaleY: 1 }}
+                                        transition={{ delay: 0.6 + i * 0.08, duration: 0.5 }}
+                                        className="flex-1 rounded-sm origin-bottom"
+                                        style={{ height: `${h * 100}%`, background: i === 6 ? 'linear-gradient(to top, #2F80ED, #7C3AED)' : 'rgba(47,128,237,0.2)' }}
+                                    />
+                                ))}
+                            </div>
+                            <div className="flex justify-between">
+                                <div>
+                                    <div className="text-xl font-display font-bold text-white">1,240</div>
+                                    <div className="text-[10px] uppercase tracking-widest" style={{ color: '#4A5A6A' }}>Interactions</div>
+                                </div>
+                                <div className="text-right">
+                                    <div className="text-xl font-display font-bold" style={{ color: '#22C55E' }}>+12.4%</div>
+                                    <div className="text-[10px] uppercase tracking-widest" style={{ color: '#4A5A6A' }}>vs last week</div>
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* Secondary row */}
+                        <div className="grid grid-cols-2 gap-3">
                             {[
-                                { icon: Building2, text: 'Business Support' },
-                                { icon: Users, text: 'Experts Ready to Help' },
-                                { icon: Globe, text: 'Global Reach' },
-                            ].map((feat, i) => (
+                                { label: 'Agents Active', val: '87', color: '#2F80ED' },
+                                { label: 'QA Score', val: '99.2%', color: '#7C3AED' },
+                            ].map(s => (
                                 <motion.div
-                                    key={feat.text}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
-                                    className="flex items-center gap-4 text-white/70 text-sm font-bold uppercase tracking-widest"
+                                    key={s.label}
+                                    animate={{ y: [0, -5, 0] }}
+                                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: Math.random() * 2 }}
+                                    className="p-4 rounded-xl"
+                                    style={{ background: 'rgba(15,30,60,0.85)', border: `1px solid ${s.color}20`, backdropFilter: 'blur(12px)' }}
                                 >
-                                    <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-                                        <feat.icon size={16} className="text-[#7C3AED]" />
-                                    </div>
-                                    {feat.text}
+                                    <div className="text-lg font-display font-bold" style={{ color: s.color }}>{s.val}</div>
+                                    <div className="text-[10px] uppercase tracking-widest mt-1" style={{ color: '#4A5A6A' }}>{s.label}</div>
                                 </motion.div>
                             ))}
                         </div>
-                    </motion.div>
-                </div>
-                <div className="absolute bottom-12 left-16 xl:left-24 text-[10px] uppercase tracking-[0.4em] text-[#3A3A4E] font-bold">
-                    Start Your Journey With Us
-                </div>
-            </section>
+                    </div>
+                </motion.div>
 
-            {/* ── Right Side: Form ── */}
-            <section className="w-full lg:w-1/2 flex items-center justify-center px-5 py-12 sm:px-10 lg:py-8 relative min-h-screen z-10">
-                {/* Soft ambient glow — mobile only */}
-                <div className="lg:hidden absolute inset-0 z-0 pointer-events-none">
-                    <div className="absolute top-0 right-0 w-[60%] h-[40%] bg-[#7C3AED]/10 blur-[100px] rounded-full" />
-                    <div className="absolute bottom-0 left-0 w-[60%] h-[40%] bg-[#2F80ED]/10 blur-[100px] rounded-full" />
+                {/* Bottom */}
+                <div className="relative z-10">
+                    <h2 className="text-2xl font-display font-bold text-white mb-4">One account.<br />All of OPMW.</h2>
+                    <div className="space-y-2">
+                        {checks.map((c, i) => (
+                            <motion.div
+                                key={c}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.5 + i * 0.12 }}
+                                className="flex items-center gap-2.5"
+                            >
+                                <CheckCircle2 size={13} style={{ color: '#2F80ED', flexShrink: 0 }} />
+                                <span className="text-xs" style={{ color: '#7A8A9A' }}>{c}</span>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </aside>
+
+            {/* ══════ RIGHT — Form ══════ */}
+            <section className="w-full lg:w-1/2 flex items-center justify-center px-6 sm:px-12 py-16 lg:py-0 relative" style={{ background: '#030A18' }}>
+                <div className="absolute inset-0 pointer-events-none">
+                    <div className="absolute top-0 right-0 w-full h-1/2" style={{ background: 'radial-gradient(ellipse 60% 40% at 80% 0%, rgba(124,58,237,0.05) 0%, transparent 100%)' }} />
                 </div>
 
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.97 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8 }}
-                    className="w-full max-w-[460px] relative z-10"
-                >
-                    <div className="flex justify-center mb-8 lg:hidden">
-                        <img src="/logo.png" alt="OPMW" className="h-14 w-auto brightness-110" />
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+                    className="w-full max-w-[380px] relative z-10">
+
+                    {/* Mobile logo - Enlarged, no text */}
+                    <div className="flex items-center gap-2 mb-10 lg:hidden focus:outline-none">
+                        <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'rgba(124,58,237,0.12)', border: '1px solid rgba(124,58,237,0.25)' }}>
+                            <img src="/logo.png" alt="" className="w-8 h-8 object-contain" />
+                        </div>
                     </div>
 
-                    <header className="mb-8">
-                        <h1 className="text-3xl font-display font-bold text-white mb-3 text-center lg:text-left">
-                            Create Account
-                        </h1>
-                        <p className="text-[#9FB3D1] text-sm leading-relaxed text-center lg:text-left">
-                            Sign up to start working with our team.
-                        </p>
-                    </header>
+                    <div className="mb-8">
+                        <h1 className="text-2xl sm:text-3xl font-display font-bold text-white mb-2">Create your account</h1>
+                        <p className="text-sm" style={{ color: '#5A6A7A' }}>Get started with OPMW in under a minute.</p>
+                    </div>
 
-                    <form className="space-y-5" onSubmit={handleSubmit}>
-                        {error && (
-                            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold">
-                                {error}
+                    {/* Step indicator */}
+                    <div className="flex items-center gap-2 mb-8">
+                        {steps.map((s, i) => (
+                            <div key={s.id} className="flex items-center gap-2">
+                                <motion.div
+                                    animate={{ scale: step === s.id ? 1.1 : 1 }}
+                                    className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold"
+                                    style={{
+                                        background: step >= s.id ? 'linear-gradient(135deg,#7C3AED,#2F80ED)' : 'rgba(255,255,255,0.05)',
+                                        color: step >= s.id ? 'white' : '#3A4A5A',
+                                    }}
+                                >{s.id}</motion.div>
+                                {i < steps.length - 1 && <motion.div className="h-px w-10 rounded-full" style={{ background: step > 1 ? '#7C3AED' : 'rgba(255,255,255,0.07)' }} />}
                             </div>
-                        )}
+                        ))}
+                        <span className="ml-1 text-[10px] uppercase tracking-widest" style={{ color: '#3A4A5A' }}>
+                            {steps[step - 1].label}
+                        </span>
+                    </div>
 
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-[#5A5A6A] ml-1">
-                                Your Name
-                            </label>
-                            <div className="relative group/input">
-                                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5A5A6A] group-focus-within/input:text-[#7C3AED] transition-colors">
-                                    <User size={18} />
-                                </div>
-                                <input
-                                    type="text"
-                                    required
-                                    value={form.name}
-                                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                                    placeholder="Operator Name"
-                                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-[#3A3A4E] focus:outline-none focus:border-[#7C3AED]/50 transition-all focus:bg-white/10"
-                                />
-                            </div>
+                    {error && (
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold">
+                            {error}
+                        </motion.div>
+                    )}
+
+                    <form className="space-y-4" onSubmit={handleSubmit}>
+                        <AnimatePresence mode="wait">
+                            {step === 1 ? (
+                                <motion.div key="s1" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }} className="space-y-4">
+                                    <div>
+                                        <label className="block text-[10px] font-bold uppercase tracking-[0.25em] mb-2" style={{ color: '#3A4A5A' }}>Full Name</label>
+                                        <div className="relative">
+                                            <User size={14} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#3A4A5A' }} />
+                                            <input type="text" required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="John Smith"
+                                                className="w-full pl-10 pr-4 py-3.5 rounded-xl text-sm text-white placeholder:text-[#2A3A4A] outline-none" style={f} onFocus={onFocus} onBlur={onBlur} />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-[10px] font-bold uppercase tracking-[0.25em] mb-2" style={{ color: '#3A4A5A' }}>Work Email</label>
+                                        <div className="relative">
+                                            <Mail size={14} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#3A4A5A' }} />
+                                            <input type="email" required value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="you@company.com"
+                                                className="w-full pl-10 pr-4 py-3.5 rounded-xl text-sm text-white placeholder:text-[#2A3A4A] outline-none" style={f} onFocus={onFocus} onBlur={onBlur} />
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ) : (
+                                <motion.div key="s2" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }}>
+                                    <div>
+                                        <label className="block text-[10px] font-bold uppercase tracking-[0.25em] mb-2" style={{ color: '#3A4A5A' }}>Create Password</label>
+                                        <div className="relative">
+                                            <Lock size={14} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#3A4A5A' }} />
+                                            <input type={showPass ? 'text' : 'password'} required value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} placeholder="Min. 8 characters"
+                                                className="w-full pl-10 pr-12 py-3.5 rounded-xl text-sm text-white placeholder:text-[#2A3A4A] outline-none" style={f} onFocus={onFocus} onBlur={onBlur} />
+                                            <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: '#3A4A5A' }}
+                                                onMouseEnter={e => e.currentTarget.style.color = '#9FB3D1'} onMouseLeave={e => e.currentTarget.style.color = '#3A4A5A'}>
+                                                {showPass ? <EyeOff size={14} /> : <Eye size={14} />}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        <div className="flex gap-3 pt-1">
+                            {step === 2 && (
+                                <motion.button initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
+                                    type="button" onClick={() => setStep(1)}
+                                    className="px-5 py-3.5 rounded-xl font-bold text-sm"
+                                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#7A8A9A' }}
+                                    onMouseEnter={e => e.currentTarget.style.color = '#fff'} onMouseLeave={e => e.currentTarget.style.color = '#7A8A9A'}
+                                >← Back</motion.button>
+                            )}
+                            <motion.button
+                                whileHover={{ scale: 1.015, boxShadow: '0 8px 30px rgba(124,58,237,0.25)' }}
+                                whileTap={{ scale: 0.98 }}
+                                disabled={loading}
+                                className="flex-1 py-3.5 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 disabled:opacity-50"
+                                style={{ background: 'linear-gradient(135deg, #7C3AED 0%, #2F80ED 100%)' }}
+                            >
+                                {loading ? <Loader2 size={17} className="animate-spin" /> : step === 1 ? <><span>Continue</span><ArrowRight size={15} /></> : <><span>Create Account</span><ArrowRight size={15} /></>}
+                            </motion.button>
                         </div>
-
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-[#5A5A6A] ml-1">
-                                Email Address
-                            </label>
-                            <div className="relative group/input">
-                                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5A5A6A] group-focus-within/input:text-[#7C3AED] transition-colors">
-                                    <Mail size={18} />
-                                </div>
-                                <input
-                                    type="email"
-                                    required
-                                    value={form.email}
-                                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                                    placeholder="ops@entity.com"
-                                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-[#3A3A4E] focus:outline-none focus:border-[#7C3AED]/50 transition-all focus:bg-white/10"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-[#5A5A6A] ml-1">
-                                Password
-                            </label>
-                            <div className="relative group/input">
-                                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5A5A6A] group-focus-within/input:text-[#7C3AED] transition-colors">
-                                    <Lock size={18} />
-                                </div>
-                                <input
-                                    type="password"
-                                    required
-                                    value={form.password}
-                                    onChange={(e) => setForm({ ...form, password: e.target.value })}
-                                    placeholder="••••••••"
-                                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-[#3A3A4E] focus:outline-none focus:border-[#7C3AED]/50 transition-all focus:bg-white/10"
-                                />
-                            </div>
-                        </div>
-
-                        <button
-                            disabled={loading}
-                            className="w-full group/btn relative overflow-hidden bg-gradient-to-r from-[#7C3AED] to-[#2F80ED] p-[1px] rounded-2xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(124,58,237,0.3)] mt-1 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            <div className="bg-[#03142A]/90 flex items-center justify-center gap-3 py-4 rounded-2xl group-hover/btn:bg-transparent transition-all duration-300 min-h-[56px]">
-                                {loading ? (
-                                    <Loader2 className="animate-spin text-white" size={18} />
-                                ) : (
-                                    <>
-                                        <span className="font-bold text-white uppercase tracking-widest text-xs">Sign Up</span>
-                                        <ArrowRight size={18} className="text-white group-hover/btn:translate-x-1 transition-transform" />
-                                    </>
-                                )}
-                            </div>
-                        </button>
                     </form>
 
-                    <footer className="text-center mt-10 text-sm">
-                        <p className="text-[#5A5A6A]">
-                            Already have an account?{' '}
-                            <Link
-                                to="/login"
-                                className="text-white font-bold hover:text-[#7C3AED] transition-colors underline decoration-[#7C3AED]/30 decoration-2 underline-offset-8"
-                            >
-                                Sign In
-                            </Link>
-                        </p>
-                    </footer>
+                    <div className="flex items-center gap-4 my-8">
+                        <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.05)' }} />
+                        <span className="text-[10px] uppercase tracking-widest font-bold" style={{ color: '#2A3A4A' }}>Have an account?</span>
+                        <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.05)' }} />
+                    </div>
+
+                    <Link to="/login"
+                        className="w-full py-3 rounded-xl font-bold text-sm text-center block transition-all"
+                        style={{ border: '1px solid rgba(255,255,255,0.07)', color: '#9FB3D1' }}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(124,58,237,0.4)'; e.currentTarget.style.color = '#fff' }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'; e.currentTarget.style.color = '#9FB3D1' }}
+                    >Sign in to existing account →</Link>
                 </motion.div>
             </section>
         </main>

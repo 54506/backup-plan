@@ -26,7 +26,16 @@ Route::prefix('auth')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('user', [AuthController::class, 'user']);
         Route::post('logout', [AuthController::class, 'logout']);
+
+        // Resend Verification (Requires Auth)
+        Route::post('email/resend', [AuthController::class, 'resendVerification'])
+            ->name('verification.resend');
     });
+
+    // Email Verify (Public but Signed)
+    Route::get('email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
+        ->middleware(['signed'])
+        ->name('verification.verify');
 });
 
 // ── Public Data ───────────────────────────────────────────────────────────
@@ -34,13 +43,16 @@ Route::get('services', [ServiceController::class, 'index']);
 Route::get('case-studies', [CaseStudyController::class, 'index']);
 Route::get('job-roles', [CareerController::class, 'index']);
 
-// ── Form Submissions (rate limited) ───────────────────────────────────────
-Route::middleware('throttle:5,1')->group(function () {
-    Route::post('contact', [ContactController::class, 'store']);
-    Route::post('newsletter/subscribe', [NewsletterController::class, 'subscribe']);
+// ── Protected Form Submissions (rate limited) ───────────────────────────
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware('throttle:5,1')->group(function () {
+        Route::post('contact', [ContactController::class, 'store']);
+    });
+
+    Route::middleware('throttle:3,1')->group(function () {
+        Route::post('careers/apply', [CareerController::class, 'apply']);
+        Route::post('hrms/demo', [HrmsDemoController::class, 'store']);
+    });
 });
 
-Route::middleware('throttle:3,1')->group(function () {
-    Route::post('careers/apply', [CareerController::class, 'apply']);
-    Route::post('hrms/demo', [HrmsDemoController::class, 'store']);
-});
+Route::post('newsletter/subscribe', [NewsletterController::class, 'subscribe']);

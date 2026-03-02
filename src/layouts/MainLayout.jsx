@@ -4,11 +4,11 @@ import Footer from '@/components/Footer'
 
 export default function MainLayout() {
     return (
-        <div className="flex flex-col min-h-screen" style={{ background: '#03142A' }}>
+        <div style={{ background: '#03142A', display: 'flex', flexDirection: 'column', minHeight: '100vh', overflow: 'hidden' }}>
             <Navbar />
-            <main className="flex-1">
+            <div style={{ flex: '1 0 auto' }}>
                 <Outlet />
-            </main>
+            </div>
             <Footer />
         </div>
     )

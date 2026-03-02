@@ -3,18 +3,18 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, CheckCircle2, BarChart3, Users2, Clock, Lock } from 'lucide-react'
 
 const features = [
-    { icon: Users2, label: 'Managing Your Team', desc: 'Everything from hiring to retiring' },
-    { icon: BarChart3, label: 'Smart Data', desc: 'Live updates and easy-to-read reports' },
-    { icon: Clock, label: 'Attendance & Leave', desc: 'Track time and time-off easily' },
-    { icon: Lock, label: 'Safe and Secure', desc: 'Keep your team data private' },
+    { icon: Clock, label: 'Payroll Automation', desc: 'Secure and automatic payroll processing' },
+    { icon: Users2, label: 'Attendance & Shifts', desc: 'Track time and manage shifts across branches' },
+    { icon: BarChart3, label: 'Compliance Reporting', desc: 'Detailed tracking for regulatory needs' },
+    { icon: Lock, label: 'Multi-Branch Access', desc: 'Role-based control for growing teams' },
 ]
 
 const benefits = [
-    'Automatic payroll with tax and compliance built-in',
-    'Smart hiring tools to find the best people easily',
-    'Reviews and feedback to help your team grow',
-    'Mobile apps for iOS and Android so you can work anywhere',
-    'Connects with more than 100 other tools',
+    'Payroll processing & automation built for accuracy',
+    'Real-time attendance & shift tracking for all locations',
+    'Leave management and employee performance records',
+    'Multi-city operational visibility from a single dashboard',
+    'Designed for scalability without enterprise software costs',
 ]
 
 export default function HRMSShowcaseSection() {
@@ -40,17 +40,17 @@ export default function HRMSShowcaseSection() {
                         viewport={{ once: true, margin: '-100px' }}
                         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <div className="section-label mb-6">Our Best Software</div>
+                        <div className="section-label mb-6">Proprietary Product</div>
                         <h2
                             className="font-display font-bold mb-5 leading-tight"
                             style={{ fontSize: 'clamp(1.65rem, 4vw, 2.75rem)', color: '#F0F0F5' }}
                         >
-                            Our HR Platform —
+                            OPMW HRMS —
                             <br />
-                            <span className="text-gradient">Your Team Together.</span>
+                            <span className="text-gradient">Real Visibility for Growing Teams.</span>
                         </h2>
-                        <p className="text-base leading-relaxed mb-8" style={{ color: '#7A7A8A' }}>
-                            Manage everything about your team — from payroll to hiring — in one easy-to-use software built for any business.
+                        <p className="text-base leading-relaxed mb-8" style={{ color: '#9FB3D1', opacity: 0.8 }}>
+                            OPMW HRMS was developed from real operational challenges. It provides complete workforce management without the complexity or cost of large enterprise systems.
                         </p>
 
                         {/* Benefits list */}

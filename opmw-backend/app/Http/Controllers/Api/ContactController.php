@@ -28,7 +28,7 @@ class ContactController extends Controller
         try {
             Mail::to($validated['email'])
                 ->cc(config('mail.admin_email', env('ADMIN_EMAIL')))
-                ->send(new ContactConfirmationMail($inquiry));
+                ->queue(new ContactConfirmationMail($inquiry));
         } catch (\Exception $e) {
             \Log::error('Contact mail failed: ' . $e->getMessage());
         }

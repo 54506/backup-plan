@@ -67,11 +67,11 @@ export default function Footer() {
             <div
                 className="relative overflow-hidden"
                 style={{
-                    background: 'linear-gradient(135deg, #030F1C 0%, #081D36 50%, #030F1C 100%)',
+                    background: 'linear-gradient(135deg, #03142A 0%, #081D36 50%, #03142A 100%)',
                     borderBottom: '1px solid rgba(47,128,237,0.2)',
                 }}
             >
-                <div className="container-opmw py-14 flex flex-col lg:flex-row items-center justify-between gap-10">
+                <div className="container-opmw py-8 flex flex-col lg:flex-row items-center justify-between gap-10">
                     <div className="text-center lg:text-left">
                         <motion.h2
                             initial={{ opacity: 0, y: 10 }}
@@ -102,57 +102,44 @@ export default function Footer() {
             {/* ── Main Footer Area ── */}
             <div
                 className="relative"
-                style={{ background: '#030F1C' }}
+                style={{ background: '#03142A' }}
             >
-                <div className="container-opmw pt-12 pb-8">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-16">
+                <div className="container-opmw pt-8 pb-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-8">
                         {/* Brand Space */}
                         <div className="lg:col-span-4 space-y-8">
-                            <Link to="/" className="flex items-center gap-5 mb-8 group w-fit">
-                                <motion.div
-                                    whileHover={{ scale: 1.1, rotate: 2 }}
-                                    className="relative flex items-center justify-center w-20 h-20"
-                                >
-                                    <motion.div
-                                        animate={{ rotate: 360 }}
-                                        transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-                                        className="absolute inset-[-6px] rounded-full border border-dashed border-[#2F80ED]/30"
-                                    />
-                                    <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-xl group-hover:bg-blue-500/20 transition-colors" />
-                                    <img
-                                        src="/logo.png"
-                                        alt="OPMW Logo"
-                                        className="w-full h-full object-contain relative z-10"
-                                    />
-                                </motion.div>
-                                <div>
-                                    <div className="font-display font-bold text-4xl tracking-tight text-[#E6EDF7]">OPMW</div>
-                                    <div className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#2F80ED] mt-2 opacity-80">
-                                        One Place. All Your Work.
+                            <div className="space-y-6">
+                                <Link to="/" className="inline-flex items-center gap-3 mb-6 group">
+                                    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
+                                        <img src="/logo.png" alt="" className="w-8 h-8 object-contain" />
                                     </div>
+                                    <span className="font-display font-bold text-white tracking-widest text-xl">OPMW</span>
+                                </Link>
+                                <div className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#2F80ED] opacity-80">
+                                    One Place. All Your Work.
                                 </div>
-                            </Link>
 
-                            <p className="text-sm leading-relaxed mb-8 max-w-sm" style={{ color: '#9FB3D1', opacity: 0.6 }}>
-                                OPMW helps businesses with support services, HR software, and building great websites. We make work easier for teams everywhere.
-                            </p>
+                                <p className="text-sm leading-relaxed max-w-sm" style={{ color: '#9FB3D1', opacity: 0.6 }}>
+                                    OPMW helps businesses with support services, HR software, and building great websites. We make work easier for teams everywhere.
+                                </p>
 
-                            <div className="flex items-center gap-4 mb-8">
-                                {socials.map(({ icon: Icon, href, label }) => (
-                                    <a
-                                        key={label}
-                                        href={href}
-                                        aria-label={label}
-                                        className="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-[#9FB3D1] hover:text-white hover:border-[#2F80ED]/50 hover:bg-[#2F80ED]/5 transition-all"
-                                    >
-                                        <Icon size={16} />
-                                    </a>
-                                ))}
-                            </div>
+                                <div className="flex items-center gap-4">
+                                    {socials.map(({ icon: Icon, href, label }) => (
+                                        <a
+                                            key={label}
+                                            href={href}
+                                            aria-label={label}
+                                            className="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-[#9FB3D1] hover:text-white hover:border-[#2F80ED]/50 hover:bg-[#2F80ED]/5 transition-all"
+                                        >
+                                            <Icon size={16} />
+                                        </a>
+                                    ))}
+                                </div>
 
-                            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-white/5 border border-white/10">
-                                <Shield size={14} className="text-[#2F80ED]" />
-                                <span className="text-[11px] font-bold uppercase tracking-widest text-[#E6EDF7]/60">Safe and Secure Systems</span>
+                                <div className="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-white/5 border border-white/10">
+                                    <Shield size={14} className="text-[#2F80ED]" />
+                                    <span className="text-[11px] font-bold uppercase tracking-widest text-[#E6EDF7]/60">Safe and Secure Systems</span>
+                                </div>
                             </div>
                         </div>
 
@@ -222,7 +209,7 @@ export default function Footer() {
                     </div>
 
                     {/* ── Global Footprint ── */}
-                    <div className="pt-10 pb-10 border-t border-white/5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+                    <div className="pt-6 pb-4 border-t border-white/5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
                         <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
                             {offices.map(({ city, flag, country }) => (
                                 <div key={city} className="flex items-center gap-2 text-xs font-medium text-[#9FB3D1]/70 group cursor-default">

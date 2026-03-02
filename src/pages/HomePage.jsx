@@ -1,4 +1,5 @@
 import HeroSection from '@/sections/HeroSection'
+import AboutSummarySection from '@/sections/AboutSummarySection'
 import MetricsSection from '@/sections/MetricsSection'
 import CoreDivisionsSection from '@/sections/CoreDivisionsSection'
 import HRMSShowcaseSection from '@/sections/HRMSShowcaseSection'
@@ -9,6 +10,7 @@ export default function HomePage() {
     return (
         <>
             <HeroSection />
+            <AboutSummarySection />
             <MetricsSection />
             <CoreDivisionsSection />
             <HRMSShowcaseSection />

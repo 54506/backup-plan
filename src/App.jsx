@@ -6,6 +6,9 @@ import HomePage from '@/pages/HomePage'
 import AboutPage from '@/pages/AboutPage'
 
 import ServicesPage from '@/pages/ServicesPage'
+import BPOServicePage from '@/pages/services/BPOServicePage'
+import ITServicePage from '@/pages/services/ITServicePage'
+import HRMSServicePage from '@/pages/services/HRMSServicePage'
 import HRMSPage from '@/pages/HRMSPage'
 import ProjectsPage from '@/pages/ProjectsPage'
 import CareersPage from '@/pages/CareersPage'
@@ -47,6 +50,9 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/bpo" element={<BPOServicePage />} />
+          <Route path="/services/it" element={<ITServicePage />} />
+          <Route path="/services/hrms" element={<HRMSServicePage />} />
           <Route path="/hrms" element={<HRMSPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/careers" element={<CareersPage />} />
