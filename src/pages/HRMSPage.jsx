@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ArrowRight, CheckCircle2, BarChart3, Users2, Clock, Lock, CreditCard, Briefcase, Star } from 'lucide-react'
+import { ArrowRight, CheckCircle2, BarChart3, Users2, Clock, Lock, CreditCard, Briefcase, Star, Loader2 } from 'lucide-react'
 import StarfieldBackground from '@/animations/StarfieldBackground'
+import api from '@/lib/api'
 
 const features = [
     {
@@ -87,11 +88,22 @@ const plans = [
 
 export default function HRMSPage() {
     const [demoForm, setDemoForm] = useState({ name: '', email: '', company: '', employees: '', message: '' })
+    const [submitting, setSubmitting] = useState(false)
     const [submitted, setSubmitted] = useState(false)
+    const [error, setError] = useState('')
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        setSubmitted(true)
+        setSubmitting(true)
+        setError('')
+        try {
+            await api.post('/hrms/demo', demoForm)
+            setSubmitted(true)
+        } catch (err) {
+            setError(err.response?.data?.message || 'Failed to request demo.')
+        } finally {
+            setSubmitting(false)
+        }
     }
 
     return (
@@ -457,6 +469,11 @@ export default function HRMSPage() {
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-5">
+                                {error && (
+                                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold">
+                                        {error}
+                                    </div>
+                                )}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                                     {[
                                         { label: 'Full Name', key: 'name', type: 'text', placeholder: 'Emma Johnson' },
@@ -529,8 +546,8 @@ export default function HRMSPage() {
                                     />
                                 </div>
 
-                                <button type="submit" className="btn-primary w-full justify-center py-3.5">
-                                    Request My Demo <ArrowRight size={15} />
+                                <button type="submit" disabled={submitting} className="btn-primary w-full justify-center py-3.5 disabled:opacity-50">
+                                    {submitting ? 'Requesting Demo...' : 'Request My Demo'} <ArrowRight size={15} />
                                 </button>
                             </form>
                         )}

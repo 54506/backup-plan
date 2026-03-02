@@ -15,6 +15,7 @@ const navLinks = [
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false)
     const [mobileOpen, setMobileOpen] = useState(false)
+    const isLoggedIn = !!localStorage.getItem('token')
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 10)
@@ -107,18 +108,24 @@ export default function Navbar() {
 
                     {/* Desktop Actions - Minimalist */}
                     <div className="hidden lg:flex items-center gap-6">
-                        <Link
-                            to="/login"
-                            className="text-base font-bold text-[#9FB3D1] hover:text-white transition-colors duration-200"
-                        >
-                            Log In
-                        </Link>
+                        {isLoggedIn ? (
+                            <span className="text-base font-bold text-[#E6EDF7]">
+                                Welcome
+                            </span>
+                        ) : (
+                            <Link
+                                to="/login"
+                                className="text-base font-bold text-[#9FB3D1] hover:text-white transition-colors duration-200"
+                            >
+                                Log In
+                            </Link>
+                        )}
 
                         <Link
-                            to="/contact"
+                            to={isLoggedIn ? "/hrms" : "/contact"}
                             className="px-7 py-3 rounded-lg bg-[#2F80ED] text-base font-bold text-white shadow-lg hover:bg-[#1E5FAF] hover:shadow-[#2F80ED]/20 transition-all duration-300"
                         >
-                            Start Today
+                            {isLoggedIn ? "Dashboard" : "Start Today"}
                         </Link>
                     </div>
 
@@ -177,19 +184,25 @@ export default function Navbar() {
                                 ))}
                             </nav>
                             <div className="p-6 border-t border-white/5 space-y-4">
+                                {isLoggedIn ? (
+                                    <div className="text-center py-2 text-[#9FB3D1] font-bold">
+                                        Welcome Back
+                                    </div>
+                                ) : (
+                                    <Link
+                                        to="/login"
+                                        className="w-full flex justify-center items-center py-4 rounded-xl font-bold text-[#9FB3D1] border border-white/10 hover:bg-white/5"
+                                        onClick={() => setMobileOpen(false)}
+                                    >
+                                        Log In
+                                    </Link>
+                                )}
                                 <Link
-                                    to="/login"
-                                    className="w-full flex justify-center items-center py-4 rounded-xl font-bold text-[#9FB3D1] border border-white/10 hover:bg-white/5"
-                                    onClick={() => setMobileOpen(false)}
-                                >
-                                    Log In
-                                </Link>
-                                <Link
-                                    to="/contact"
+                                    to={isLoggedIn ? "/hrms" : "/contact"}
                                     className="btn-soft-diffusion w-full flex justify-center items-center py-4 rounded-xl font-bold"
                                     onClick={() => setMobileOpen(false)}
                                 >
-                                    Get Started
+                                    {isLoggedIn ? "Dashboard" : "Get Started"}
                                 </Link>
                             </div>
                         </motion.div>

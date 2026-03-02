@@ -3,6 +3,8 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Mail, Phone, Clock, MapPin, Building2, MessageSquare, Calendar } from 'lucide-react'
 import StarfieldBackground from '@/animations/StarfieldBackground'
 
+import api from '@/lib/api'
+
 const offices = [
     {
         city: 'Hyderabad',
@@ -49,13 +51,25 @@ const inquiryTypes = [
 
 export default function ContactPage() {
     const [form, setForm] = useState({
-        name: '', email: '', company: '', inquiry: '', message: '',
+        name: '', email: '', company: '', inquiry_type: '', message: '',
     })
     const [submitted, setSubmitted] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [error, setError] = useState('')
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        setSubmitted(true)
+        setIsSubmitting(true)
+        setError('')
+
+        try {
+            await api.post('/contact', form)
+            setSubmitted(true)
+        } catch (err) {
+            setError(err.response?.data?.message || 'Something went wrong. Please try again later.')
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     return (
@@ -143,80 +157,87 @@ export default function ContactPage() {
                                         </p>
                                     </div>
                                 ) : (
-                                    <form onSubmit={handleSubmit} className="space-y-6">
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                            {[
-                                                { label: 'Full Name *', key: 'name', type: 'text', ph: 'Emma Johnson' },
-                                                { label: 'Work Email *', key: 'email', type: 'email', ph: 'emma@company.com' },
-                                            ].map(f => (
-                                                <div key={f.key}>
-                                                    <label className="block text-xs font-semibold mb-2" style={{ color: '#A0A0B0' }}>{f.label}</label>
-                                                    <input
-                                                        type={f.type}
-                                                        required
-                                                        placeholder={f.ph}
-                                                        value={form[f.key]}
-                                                        onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                                                        className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200"
-                                                        style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                                        onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
-                                                        onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
-                                                    />
-                                                </div>
-                                            ))}
-                                        </div>
+                                    <>
+                                        {error && (
+                                            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold mb-6">
+                                                {error}
+                                            </div>
+                                        )}
+                                        <form onSubmit={handleSubmit} className="space-y-6">
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                                {[
+                                                    { label: 'Full Name *', key: 'name', type: 'text', ph: 'Emma Johnson' },
+                                                    { label: 'Work Email *', key: 'email', type: 'email', ph: 'emma@company.com' },
+                                                ].map(f => (
+                                                    <div key={f.key}>
+                                                        <label className="block text-xs font-semibold mb-2" style={{ color: '#A0A0B0' }}>{f.label}</label>
+                                                        <input
+                                                            type={f.type}
+                                                            required
+                                                            placeholder={f.ph}
+                                                            value={form[f.key]}
+                                                            onChange={e => setForm({ ...form, [f.key]: e.target.value })}
+                                                            className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200"
+                                                            style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
+                                                            onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
+                                                            onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
 
-                                        <div>
-                                            <label className="block text-xs font-semibold mb-2" style={{ color: '#A0A0B0' }}>Company</label>
-                                            <input
-                                                type="text"
-                                                placeholder="Acme Corp"
-                                                value={form.company}
-                                                onChange={e => setForm({ ...form, company: e.target.value })}
-                                                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                                                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                                onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
-                                                onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
-                                            />
-                                        </div>
+                                            <div>
+                                                <label className="block text-xs font-semibold mb-2" style={{ color: '#A0A0B0' }}>Company</label>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Acme Corp"
+                                                    value={form.company}
+                                                    onChange={e => setForm({ ...form, company: e.target.value })}
+                                                    className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                                                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
+                                                    onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
+                                                    onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
+                                                />
+                                            </div>
 
-                                        <div>
-                                            <label className="block text-xs font-semibold mb-2" style={{ color: '#A0A0B0' }}>Type of Inquiry *</label>
-                                            <select
-                                                required
-                                                value={form.inquiry}
-                                                onChange={e => setForm({ ...form, inquiry: e.target.value })}
-                                                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                                                style={{ background: '#0D2A4D', border: '1px solid rgba(255,255,255,0.08)', color: form.inquiry ? '#F0F0F5' : '#5A5A6A' }}
-                                            >
-                                                <option value="">Select inquiry type...</option>
-                                                {inquiryTypes.map(t => <option key={t}>{t}</option>)}
-                                            </select>
-                                        </div>
+                                            <div>
+                                                <label className="block text-xs font-semibold mb-2" style={{ color: '#A0A0B0' }}>Type of Inquiry *</label>
+                                                <select
+                                                    required
+                                                    value={form.inquiry_type}
+                                                    onChange={e => setForm({ ...form, inquiry_type: e.target.value })}
+                                                    className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                                                    style={{ background: '#0D2A4D', border: '1px solid rgba(255,255,255,0.08)', color: form.inquiry_type ? '#F0F0F5' : '#5A5A6A' }}
+                                                >
+                                                    <option value="">Select inquiry type...</option>
+                                                    {inquiryTypes.map(t => <option key={t}>{t}</option>)}
+                                                </select>
+                                            </div>
 
-                                        <div>
-                                            <label className="block text-xs font-semibold mb-2" style={{ color: '#A0A0B0' }}>Message *</label>
-                                            <textarea
-                                                required
-                                                rows={5}
-                                                placeholder="Tell us about your needs, project scope, or questions..."
-                                                value={form.message}
-                                                onChange={e => setForm({ ...form, message: e.target.value })}
-                                                className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none"
-                                                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
-                                                onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
-                                                onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
-                                            />
-                                        </div>
+                                            <div>
+                                                <label className="block text-xs font-semibold mb-2" style={{ color: '#A0A0B0' }}>Message *</label>
+                                                <textarea
+                                                    required
+                                                    rows={5}
+                                                    placeholder="Tell us about your needs, project scope, or questions..."
+                                                    value={form.message}
+                                                    onChange={e => setForm({ ...form, message: e.target.value })}
+                                                    className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none"
+                                                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#F0F0F5' }}
+                                                    onFocus={e => e.target.style.borderColor = 'rgba(47,128,237,0.4)'}
+                                                    onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
+                                                />
+                                            </div>
 
-                                        <button type="submit" className="btn-primary w-full justify-center py-4">
-                                            Send Message <ArrowRight size={15} />
-                                        </button>
+                                            <button type="submit" disabled={isSubmitting} className="btn-primary w-full justify-center py-4 disabled:opacity-50">
+                                                {isSubmitting ? 'Sending...' : 'Send Message'} <ArrowRight size={15} />
+                                            </button>
 
-                                        <p className="text-center text-xs" style={{ color: '#3A3A4E' }}>
-                                            We respect your privacy. No spam — ever.
-                                        </p>
-                                    </form>
+                                            <p className="text-center text-xs" style={{ color: '#3A3A4E' }}>
+                                                We respect your privacy. No spam — ever.
+                                            </p>
+                                        </form>
+                                    </>
                                 )}
                             </div>
                         </motion.div>

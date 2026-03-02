@@ -1,104 +1,50 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
     ArrowRight, Building2, Phone, Code2, Users,
-    CheckCircle2, TrendingUp, Clock, Globe, Shield, Zap
+    CheckCircle2, TrendingUp, Clock, Globe, Shield, Zap, Loader2
 } from 'lucide-react'
 import StarfieldBackground from '@/animations/StarfieldBackground'
+import api from '@/lib/api'
 
-const services = [
-    {
-        icon: Building2,
-        category: 'BPO',
-        title: 'Business Support Services',
-        image: '/amazon_ops.jpg',
-        description:
-            'End-to-end BPO services that integrate seamlessly with your core operations. From customer experience to back-office processing, we scale with your enterprise.',
-        features: [
-            'Customer Experience Management',
-            'Back-Office Operations',
-            'Data Entry & Verification',
-            'Finance & Accounting BPO',
-            'Quality Assurance Programs',
-            'SLA-Driven Performance',
-        ],
-        gradient: 'linear-gradient(135deg, #0B192E 0%, #030F1C 100%)',
-    },
-    {
-        icon: Phone,
-        category: 'Voice Ops',
-        title: 'Customer Support & Calling',
-        image: '/voice_ops.jpg',
-        description:
-            'Premium multilingual voice operations powered by AI-enhanced agent support. Inbound, outbound, and blended campaigns for global enterprises.',
-        features: [
-            'Multilingual Agent Teams',
-            'AI-Enhanced Call Assist',
-            '24/7/365 Operations',
-            'Real-Time Analytics Dashboard',
-            'Omnichannel Support',
-            'CSAT Optimization Programs',
-        ],
-        gradient: 'linear-gradient(135deg, #0D1B36 0%, #051226 100%)',
-    },
-    {
-        icon: Code2,
-        category: 'Web Dev',
-        title: 'Website & App Building',
-        image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200',
-        description:
-            'Full-stack, cloud-native application development. React frontends, Node.js microservices, and AWS infrastructure — from MVP to enterprise scale.',
-        features: [
-            'React / Next.js / TypeScript',
-            'Node.js / Python Backend',
-            'AWS / GCP / Azure Cloud',
-            'Microservices Architecture',
-            'DevOps & CI/CD Pipelines',
-            'UI/UX Design & Prototyping',
-        ],
-        gradient: 'linear-gradient(135deg, #0B192E 0%, #030F1C 100%)',
-    },
-    {
-        icon: Users,
-        category: 'HRMS SaaS',
-        title: 'HR Management Software',
-        image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200',
-        description:
-            'Enterprise-grade HRMS SaaS platform unifying workforce management — payroll, attendance, performance, and recruitment in one integrated solution.',
-        features: [
-            'Automated Payroll Engine',
-            'Geo-Fenced Attendance',
-            'Performance Management',
-            'AI-Powered Recruitment',
-            'Analytics & Reporting',
-            'Multi-Tenant SaaS Architecture',
-        ],
-        gradient: 'linear-gradient(135deg, #0D1B36 0%, #051226 100%)',
-    },
-]
-
-const caseStudies = [
-    {
-        category: 'BPO',
-        title: 'Telecom Giant Reduces CX Cost by 34%',
-        result: '34% cost reduction with 98.5% CSAT maintained across 2,500 agents.',
-        tags: ['BPO', 'CX', 'Cost Optimization'],
-    },
-    {
-        category: 'Voice Ops',
-        title: 'Healthcare Network — 500K Monthly Calls',
-        result: '60% reduction in wait times with 12-language AI-enhanced agent network.',
-        tags: ['Voice', 'Healthcare', 'AI'],
-    },
-    {
-        category: 'Web Dev',
-        title: '$50M GMV E-Commerce Platform',
-        result: 'Full React rebuild delivering sub-1s load times and 22% conversion uplift.',
-        tags: ['React', 'E-Commerce', 'Performance'],
-    },
-]
+// Helper to map icon string to Lucide component
+const iconMap = {
+    Building2, Phone, Code2, Users,
+}
 
 export default function ServicesPage() {
+    const [services, setServices] = useState([])
+    const [caseStudies, setCaseStudies] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [svcRes, caseRes] = await Promise.all([
+                    api.get('/services'),
+                    api.get('/case-studies')
+                ])
+                setServices(svcRes.data)
+                setCaseStudies(caseRes.data)
+            } catch (err) {
+                console.error('Failed to fetch services/cases', err)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchData()
+    }, [])
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-[#03142A] flex flex-col items-center justify-center gap-6">
+                <Loader2 className="animate-spin text-[#2F80ED]" size={50} />
+                <span className="text-sm font-bold uppercase tracking-[0.3em] text-[#5A5A6A]">Loading OPMW Solutions...</span>
+            </div>
+        )
+    }
+
     return (
         <main className="pt-16">
             {/* Hero */}
@@ -179,7 +125,6 @@ export default function ServicesPage() {
                 <div className="container-opmw">
                     <div className="space-y-16">
                         {services.map((svc, i) => {
-                            const Icon = svc.icon
                             const isEven = i % 2 === 0
                             return (
                                 <motion.article
@@ -197,7 +142,10 @@ export default function ServicesPage() {
                                                 className="w-14 h-14 rounded-2xl flex items-center justify-center"
                                                 style={{ background: 'rgba(47,128,237,0.1)', border: '1px solid rgba(47,128,237,0.2)' }}
                                             >
-                                                <Icon size={28} style={{ color: '#2F80ED' }} />
+                                                {(() => {
+                                                    const IconComp = iconMap[svc.icon] || Building2
+                                                    return <IconComp size={28} style={{ color: '#2F80ED' }} />
+                                                })()}
                                             </div>
                                             <div>
                                                 <div className="section-label mb-1" style={{ fontSize: '10px' }}>{svc.category}</div>

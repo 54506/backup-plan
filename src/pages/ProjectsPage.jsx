@@ -1,94 +1,37 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ExternalLink, ChevronDown } from 'lucide-react'
+import { ArrowRight, ExternalLink, ChevronDown, Loader2 } from 'lucide-react'
 import StarfieldBackground from '@/animations/StarfieldBackground'
-
-const caseStudies = [
-    {
-        id: 'telecom-bpo',
-        category: 'BPO',
-        title: 'Global Telecom BPO Transformation',
-        client: 'Fortune 500 Telecom',
-        industry: 'Telecommunications',
-        duration: '18 months',
-        region: 'Asia Pacific, EMEA',
-        challenge:
-            'The client needed to scale customer support operations from 200 to 2,500 agents across three continents while maintaining CSAT above 97% — with a 30% cost reduction mandate.',
-        solution:
-            'OPMW designed a blended BPO model with dedicated quality assurance programs, AI-assisted agent workflows, and a unified reporting dashboard spanning all geographies.',
-        results: [
-            { label: 'Agents Deployed', val: '2,500+' },
-            { label: 'CSAT Score', val: '98.5%' },
-            { label: 'Cost Reduction', val: '34%' },
-            { label: 'AHT Improvement', val: '-22%' },
-        ],
-        tags: ['BPO', 'CX', 'Global Operations', 'QA'],
-    },
-    {
-        id: 'fintech-hrms',
-        category: 'HRMS',
-        title: 'FinTech Workforce Platform',
-        client: 'Series D FinTech Unicorn',
-        industry: 'Financial Technology',
-        duration: '6 months',
-        region: 'India, UAE',
-        challenge:
-            'Rapid headcount growth from 800 to 8,000+ employees created payroll chaos, compliance gaps, and HR data fragmentation across multiple disconnected tools.',
-        solution:
-            'OPMW deployed its HRMS SaaS with custom payroll engine configuration, integrated biometric attendance, automated compliance reporting, and a full data migration from legacy systems.',
-        results: [
-            { label: 'Employees Onboarded', val: '8,000+' },
-            { label: 'Payroll Processing Time', val: '-70%' },
-            { label: 'Compliance Issues', val: '0' },
-            { label: 'HR Team Size', val: '-40%' },
-        ],
-        tags: ['HRMS', 'Payroll', 'Compliance', 'FinTech'],
-    },
-    {
-        id: 'ecomm-webdev',
-        category: 'Web Dev',
-        title: 'E-Commerce Platform Rebuild',
-        client: 'Leading Retail Enterprise',
-        industry: 'E-Commerce / Retail',
-        duration: '9 months',
-        region: 'India, SEA',
-        challenge:
-            'A legacy PHP monolith handling $12M GMV needed to be rebuilt to support $50M+ GMV, with sub-second performance on mobile and a 99.99% uptime SLA.',
-        solution:
-            'OPMW engineered a React / Next.js frontend, Node.js microservices backend, and AWS infrastructure with CDN + edge caching — with zero-downtime migration.',
-        results: [
-            { label: 'GMV Supported', val: '$50M+' },
-            { label: 'Page Load Speed', val: '<1s' },
-            { label: 'Conversion Rate', val: '+22%' },
-            { label: 'Uptime', val: '99.97%' },
-        ],
-        tags: ['React', 'Next.js', 'AWS', 'E-Commerce'],
-    },
-    {
-        id: 'healthcare-voice',
-        category: 'Voice Ops',
-        title: 'Healthcare Patient Support Center',
-        client: 'Pan-India Hospital Network',
-        industry: 'Healthcare',
-        duration: '12 months',
-        region: 'India (pan-India)',
-        challenge:
-            'A hospital network with 50+ facilities needed a centralized, multilingual patient support center operating 24/7 — with AI routing and regulatory compliance.',
-        solution:
-            'OPMW launched a 350-seat voice operations center with 12-language support, AI-enhanced call routing, CRM integration, and real-time CSAT measurement.',
-        results: [
-            { label: 'Monthly Calls', val: '500K+' },
-            { label: 'Languages Supported', val: '12' },
-            { label: 'Wait Time Reduction', val: '60%' },
-            { label: 'Patient CSAT', val: '97.3%' },
-        ],
-        tags: ['Voice Ops', 'Healthcare', 'AI', 'Multilingual'],
-    },
-]
+import api from '@/lib/api'
 
 export default function ProjectsPage() {
+    const [caseStudies, setCaseStudies] = useState([])
+    const [loading, setLoading] = useState(true)
     const [expanded, setExpanded] = useState(null)
+
+    useEffect(() => {
+        const fetchCases = async () => {
+            try {
+                const res = await api.get('/case-studies')
+                setCaseStudies(res.data)
+            } catch (err) {
+                console.error('Failed to fetch case studies', err)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchCases()
+    }, [])
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-[#03142A] flex flex-col items-center justify-center gap-6">
+                <Loader2 className="animate-spin text-[#2F80ED]" size={50} />
+                <span className="text-sm font-bold uppercase tracking-[0.3em] text-[#5A5A6A]">Loading Case Studies...</span>
+            </div>
+        )
+    }
 
     return (
         <main className="pt-16">

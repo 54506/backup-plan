@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Twitter, Linkedin, Github, ArrowRight, Mail, Phone, MapPin, Globe, Shield } from 'lucide-react'
+import { Twitter, Linkedin, Github, ArrowRight, Mail, Phone, MapPin, Globe, Shield, Loader2, CheckCircle2 } from 'lucide-react'
 import { motion } from 'framer-motion'
+import api from '@/lib/api'
 
 const footerLinks = {
     Company: [
@@ -37,6 +39,24 @@ const offices = [
 ]
 
 export default function Footer() {
+    const [email, setEmail] = useState('')
+    const [status, setStatus] = useState('idle') // idle, loading, success, error
+    const [message, setMessage] = useState('')
+
+    const handleSubscribe = async (e) => {
+        e.preventDefault()
+        setStatus('loading')
+        try {
+            await api.post('/newsletter/subscribe', { email })
+            setStatus('success')
+            setMessage('Thank you for subscribing!')
+            setEmail('')
+        } catch (err) {
+            setStatus('error')
+            setMessage(err.response?.data?.message || 'Something went wrong. Please try again.')
+        }
+    }
+
     return (
         <footer
             role="contentinfo"
@@ -167,10 +187,13 @@ export default function Footer() {
                                 <p className="text-xs text-[#9FB3D1]/60 leading-relaxed mb-6">
                                     Get our monthly newsletter for business news and tips.
                                 </p>
-                                <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
+                                <form className="space-y-3" onSubmit={handleSubscribe}>
                                     <div className="relative group">
                                         <input
                                             type="email"
+                                            required
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
                                             placeholder="your@email.com"
                                             className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-xs text-[#E6EDF7] focus:outline-none focus:border-[#2F80ED]/50 transition-all placeholder:text-[#9FB3D1]/30"
                                         />
@@ -178,10 +201,21 @@ export default function Footer() {
                                     </div>
                                     <button
                                         type="submit"
-                                        className="w-full bg-[#2F80ED] hover:bg-[#2F80ED]/90 text-white font-bold py-3 rounded-lg text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-blue-500/10"
+                                        disabled={status === 'loading'}
+                                        className="w-full bg-[#2F80ED] hover:bg-[#2F80ED]/90 text-white font-bold py-3 rounded-lg text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-blue-500/10 disabled:opacity-50"
                                     >
-                                        Sign Up
+                                        {status === 'loading' ? 'Signing Up...' : 'Sign Up'}
                                     </button>
+                                    {status === 'success' && (
+                                        <div className="flex items-center gap-2 text-[10px] text-green-400 font-bold uppercase tracking-wider mt-2">
+                                            <CheckCircle2 size={12} /> {message}
+                                        </div>
+                                    )}
+                                    {status === 'error' && (
+                                        <div className="text-[10px] text-red-400 font-bold uppercase tracking-wider mt-2">
+                                            {message}
+                                        </div>
+                                    )}
                                 </form>
                             </div>
                         </div>

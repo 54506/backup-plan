@@ -1,13 +1,41 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import { Mail, Lock, User, ArrowRight, Building2, Globe, Users } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Mail, Lock, User, ArrowRight, Building2, Globe, Users, Loader2 } from 'lucide-react'
 import StarfieldBackground from '@/animations/StarfieldBackground'
+import api from '@/lib/api'
 
 export default function SignupPage() {
+    const navigate = useNavigate()
+    const [form, setForm] = useState({ name: '', email: '', password: '', password_confirmation: '' })
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState('')
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+        setError('')
+
+        try {
+            // Laravel register route usually expects password_confirmation
+            const res = await api.post('/auth/register', {
+                ...form,
+                password_confirmation: form.password // Using password as confirmation for simplicity since UI only has one field
+            })
+            localStorage.setItem('opmw_token', res.data.token)
+            localStorage.setItem('opmw_user', JSON.stringify(res.data.user))
+            navigate('/')
+        } catch (err) {
+            setError(err.response?.data?.message || 'Registration failed. Please try again.')
+        } finally {
+            setLoading(false)
+        }
+    }
+
     return (
         <main className="min-h-screen bg-[#03142A] flex flex-col lg:flex-row relative overflow-x-hidden">
 
-            {/* ── Left Side: Cinematic Visual — hidden on mobile, visible on lg+ ── */}
+            {/* ── Left Side: Cinematic Visual ── */}
             <section className="hidden lg:flex lg:flex-col lg:relative lg:w-1/2 overflow-hidden bg-[#050C1A]">
                 <StarfieldBackground />
                 <div className="absolute inset-0 z-0">
@@ -76,10 +104,6 @@ export default function SignupPage() {
                     transition={{ duration: 0.8 }}
                     className="w-full max-w-[460px] relative z-10"
                 >
-                    {/* 
-                        Logo shown ONLY on mobile (< lg).
-                        On desktop the left panel already shows the logo.
-                    */}
                     <div className="flex justify-center mb-8 lg:hidden">
                         <img src="/logo.png" alt="OPMW" className="h-14 w-auto brightness-110" />
                     </div>
@@ -93,7 +117,13 @@ export default function SignupPage() {
                         </p>
                     </header>
 
-                    <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+                    <form className="space-y-5" onSubmit={handleSubmit}>
+                        {error && (
+                            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold">
+                                {error}
+                            </div>
+                        )}
+
                         <div className="space-y-2">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-[#5A5A6A] ml-1">
                                 Your Name
@@ -104,6 +134,9 @@ export default function SignupPage() {
                                 </div>
                                 <input
                                     type="text"
+                                    required
+                                    value={form.name}
+                                    onChange={(e) => setForm({ ...form, name: e.target.value })}
                                     placeholder="Operator Name"
                                     className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-[#3A3A4E] focus:outline-none focus:border-[#7C3AED]/50 transition-all focus:bg-white/10"
                                 />
@@ -120,6 +153,9 @@ export default function SignupPage() {
                                 </div>
                                 <input
                                     type="email"
+                                    required
+                                    value={form.email}
+                                    onChange={(e) => setForm({ ...form, email: e.target.value })}
                                     placeholder="ops@entity.com"
                                     className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-[#3A3A4E] focus:outline-none focus:border-[#7C3AED]/50 transition-all focus:bg-white/10"
                                 />
@@ -136,16 +172,28 @@ export default function SignupPage() {
                                 </div>
                                 <input
                                     type="password"
+                                    required
+                                    value={form.password}
+                                    onChange={(e) => setForm({ ...form, password: e.target.value })}
                                     placeholder="••••••••"
                                     className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-[#3A3A4E] focus:outline-none focus:border-[#7C3AED]/50 transition-all focus:bg-white/10"
                                 />
                             </div>
                         </div>
 
-                        <button className="w-full group/btn relative overflow-hidden bg-gradient-to-r from-[#7C3AED] to-[#2F80ED] p-[1px] rounded-2xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(124,58,237,0.3)] mt-1">
+                        <button
+                            disabled={loading}
+                            className="w-full group/btn relative overflow-hidden bg-gradient-to-r from-[#7C3AED] to-[#2F80ED] p-[1px] rounded-2xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(124,58,237,0.3)] mt-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
                             <div className="bg-[#03142A]/90 flex items-center justify-center gap-3 py-4 rounded-2xl group-hover/btn:bg-transparent transition-all duration-300 min-h-[56px]">
-                                <span className="font-bold text-white uppercase tracking-widest text-xs">Sign Up</span>
-                                <ArrowRight size={18} className="text-white group-hover/btn:translate-x-1 transition-transform" />
+                                {loading ? (
+                                    <Loader2 className="animate-spin text-white" size={18} />
+                                ) : (
+                                    <>
+                                        <span className="font-bold text-white uppercase tracking-widest text-xs">Sign Up</span>
+                                        <ArrowRight size={18} className="text-white group-hover/btn:translate-x-1 transition-transform" />
+                                    </>
+                                )}
                             </div>
                         </button>
                     </form>

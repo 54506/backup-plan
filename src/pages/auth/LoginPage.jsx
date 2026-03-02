@@ -1,9 +1,33 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import { Mail, Lock, ArrowRight, Github, Chrome, ShieldCheck, Globe, Zap } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Mail, Lock, ArrowRight, Github, Chrome, ShieldCheck, Globe, Zap, Loader2 } from 'lucide-react'
 import StarfieldBackground from '@/animations/StarfieldBackground'
+import api from '@/lib/api'
 
 export default function LoginPage() {
+    const navigate = useNavigate()
+    const [form, setForm] = useState({ email: '', password: '' })
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState('')
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+        setError('')
+
+        try {
+            const res = await api.post('/auth/login', form)
+            localStorage.setItem('opmw_token', res.data.token)
+            localStorage.setItem('opmw_user', JSON.stringify(res.data.user))
+            navigate('/')
+        } catch (err) {
+            setError(err.response?.data?.message || 'Login failed. Please check your credentials.')
+        } finally {
+            setLoading(false)
+        }
+    }
+
     return (
         <main className="min-h-screen bg-[#03142A] flex flex-col lg:flex-row relative overflow-x-hidden">
 
@@ -91,7 +115,13 @@ export default function LoginPage() {
                         </p>
                     </header>
 
-                    <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                        {error && (
+                            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold">
+                                {error}
+                            </div>
+                        )}
+
                         <div className="space-y-2">
                             <label
                                 className="text-[10px] font-bold uppercase tracking-widest text-[#5A5A6A] ml-1"
@@ -106,6 +136,9 @@ export default function LoginPage() {
                                 <input
                                     id="email"
                                     type="email"
+                                    required
+                                    value={form.email}
+                                    onChange={(e) => setForm({ ...form, email: e.target.value })}
                                     placeholder="uid@enterprise.com"
                                     className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-[#3A3A4E] focus:outline-none focus:border-[#2F80ED]/50 transition-all focus:bg-white/10"
                                 />
@@ -134,16 +167,28 @@ export default function LoginPage() {
                                 <input
                                     id="password"
                                     type="password"
+                                    required
+                                    value={form.password}
+                                    onChange={(e) => setForm({ ...form, password: e.target.value })}
                                     placeholder="••••••••"
                                     className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-[#3A3A4E] focus:outline-none focus:border-[#2F80ED]/50 transition-all focus:bg-white/10"
                                 />
                             </div>
                         </div>
 
-                        <button className="w-full group/btn relative overflow-hidden bg-gradient-to-r from-[#2F80ED] to-[#7C3AED] p-[1px] rounded-2xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)]">
+                        <button
+                            disabled={loading}
+                            className="w-full group/btn relative overflow-hidden bg-gradient-to-r from-[#2F80ED] to-[#7C3AED] p-[1px] rounded-2xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
                             <div className="bg-[#03142A]/90 flex items-center justify-center gap-3 py-4 rounded-2xl group-hover/btn:bg-transparent transition-all duration-300 min-h-[56px]">
-                                <span className="font-bold text-white uppercase tracking-widest text-xs">Sign In</span>
-                                <ArrowRight size={18} className="text-white group-hover/btn:translate-x-1 transition-transform" />
+                                {loading ? (
+                                    <Loader2 className="animate-spin text-white" size={18} />
+                                ) : (
+                                    <>
+                                        <span className="font-bold text-white uppercase tracking-widest text-xs">Sign In</span>
+                                        <ArrowRight size={18} className="text-white group-hover/btn:translate-x-1 transition-transform" />
+                                    </>
+                                )}
                             </div>
                         </button>
                     </form>
@@ -181,6 +226,6 @@ export default function LoginPage() {
                     </footer>
                 </motion.div>
             </section>
-        </main>
+        </main >
     )
 }

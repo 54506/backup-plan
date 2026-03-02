@@ -1,43 +1,35 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ArrowRight, MapPin, Clock, ChevronDown, Briefcase, Search } from 'lucide-react'
+import { ArrowRight, MapPin, Clock, ChevronDown, Briefcase, Search, Loader2 } from 'lucide-react'
 import StarfieldBackground from '@/animations/StarfieldBackground'
-
-const allRoles = [
-    { id: 1, title: 'Senior React Engineer', dept: 'Engineering', city: 'Hyderabad', type: 'Full-time', remote: false },
-    { id: 2, title: 'BPO Operations Manager', dept: 'Operations', city: 'Hyderabad', type: 'Full-time', remote: false },
-    { id: 3, title: 'Voice Process Lead', dept: 'Voice Ops', city: 'Dubai', type: 'Full-time', remote: false },
-    { id: 4, title: 'Node.js Backend Engineer', dept: 'Engineering', city: 'Hyderabad', type: 'Full-time', remote: true },
-    { id: 5, title: 'HRMS Product Manager', dept: 'Product', city: 'Hyderabad', type: 'Full-time', remote: true },
-    { id: 6, title: 'Enterprise Sales Executive', dept: 'Sales', city: 'London', type: 'Full-time', remote: false },
-    { id: 7, title: 'UI/UX Designer', dept: 'Design', city: 'Hyderabad', type: 'Full-time', remote: true },
-    { id: 8, title: 'DevOps / Cloud Engineer', dept: 'Engineering', city: 'Hyderabad', type: 'Full-time', remote: true },
-    { id: 9, title: 'Quality Assurance Analyst', dept: 'Operations', city: 'Dubai', type: 'Full-time', remote: false },
-    { id: 10, title: 'Customer Success Manager', dept: 'Success', city: 'Singapore', type: 'Full-time', remote: false },
-    { id: 11, title: 'HR Business Partner', dept: 'HR', city: 'Hyderabad', type: 'Full-time', remote: false },
-    { id: 12, title: 'Data Analyst — Workforce Intelligence', dept: 'Analytics', city: 'Hyderabad', type: 'Full-time', remote: true },
-]
-
-const cities = ['All Cities', 'Hyderabad', 'Dubai', 'London', 'Singapore']
-const depts = ['All Departments', 'Engineering', 'Operations', 'Voice Ops', 'Product', 'Sales', 'Design', 'HR', 'Success', 'Analytics']
-
-const perks = [
-    { emoji: '🌍', title: 'Global Opportunities', desc: 'Work across 12 offices worldwide' },
-    { emoji: '📈', title: 'Fast Growth', desc: 'Promote from within — always' },
-    { emoji: '🎓', title: 'L&D Budget', desc: '₹50K/year for learning & certifications' },
-    { emoji: '🏥', title: 'Health Benefits', desc: 'Complete health & mental wellness coverage' },
-    { emoji: '🏠', title: 'Flexible Work', desc: 'Hybrid & remote options for eligible roles' },
-    { emoji: '✈️', title: 'Travel Perks', desc: 'Team offsites and global meetups' },
-]
+import api from '@/lib/api'
 
 export default function CareersPage() {
+    const [allRoles, setAllRoles] = useState([])
+    const [loading, setLoading] = useState(true)
     const [selectedCity, setSelectedCity] = useState('All Cities')
     const [selectedDept, setSelectedDept] = useState('All Departments')
     const [searchQuery, setSearchQuery] = useState('')
     const [selectedRole, setSelectedRole] = useState(null)
     const [appForm, setAppForm] = useState({ name: '', email: '', linkedin: '', resume: '', message: '' })
     const [appSubmitted, setAppSubmitted] = useState(false)
+    const [submitting, setSubmitting] = useState(false)
+    const [error, setError] = useState('')
+
+    useEffect(() => {
+        const fetchRoles = async () => {
+            try {
+                const res = await api.get('/job-roles')
+                setAllRoles(res.data)
+            } catch (err) {
+                console.error('Failed to fetch roles', err)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchRoles()
+    }, [])
 
     const filtered = allRoles.filter(r => {
         const matchCity = selectedCity === 'All Cities' || r.city === selectedCity
@@ -47,9 +39,21 @@ export default function CareersPage() {
         return matchCity && matchDept && matchSearch
     })
 
-    const handleApply = (e) => {
+    const handleApply = async (e) => {
         e.preventDefault()
-        setAppSubmitted(true)
+        setSubmitting(true)
+        setError('')
+        try {
+            await api.post('/careers/apply', {
+                ...appForm,
+                job_role_id: selectedRole.id
+            })
+            setAppSubmitted(true)
+        } catch (err) {
+            setError(err.response?.data?.message || 'Failed to submit application.')
+        } finally {
+            setSubmitting(false)
+        }
     }
 
     return (
@@ -194,7 +198,12 @@ export default function CareersPage() {
 
                     {/* Role List */}
                     <div id="roles" className="space-y-3">
-                        {filtered.length === 0 ? (
+                        {loading ? (
+                            <div className="flex flex-col items-center justify-center py-20 gap-4">
+                                <Loader2 className="animate-spin text-[#2F80ED]" size={40} />
+                                <span className="text-xs uppercase tracking-widest text-[#5A5A6A] font-bold">Fetching latest roles...</span>
+                            </div>
+                        ) : filtered.length === 0 ? (
                             <div className="text-center py-16" style={{ color: '#5A5A6A' }}>
                                 No roles match your filters. <button onClick={() => { setSelectedCity('All Cities'); setSelectedDept('All Departments'); setSearchQuery('') }} style={{ color: '#2F80ED' }} className="underline ml-1">Clear filters</button>
                             </div>
@@ -235,7 +244,7 @@ export default function CareersPage() {
                                     </div>
                                     <button
                                         className="btn-primary text-xs py-2 px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0"
-                                        onClick={(e) => { e.stopPropagation(); setSelectedRole(role); setAppSubmitted(false) }}
+                                        onClick={(e) => { e.stopPropagation(); setSelectedRole(role); setAppSubmitted(false); setError(''); }}
                                     >
                                         Apply <ArrowRight size={12} />
                                     </button>
@@ -287,6 +296,11 @@ export default function CareersPage() {
                                 <p className="text-sm mb-6" style={{ color: '#5A5A6A' }}>{selectedRole.city} · {selectedRole.type}</p>
 
                                 <form onSubmit={handleApply} className="space-y-4">
+                                    {error && (
+                                        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold">
+                                            {error}
+                                        </div>
+                                    )}
                                     {[
                                         { label: 'Full Name', key: 'name', type: 'text', ph: 'Your full name' },
                                         { label: 'Email Address', key: 'email', type: 'email', ph: 'you@email.com' },
@@ -321,8 +335,8 @@ export default function CareersPage() {
                                             onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
                                         />
                                     </div>
-                                    <button type="submit" className="btn-primary w-full justify-center">
-                                        Submit Application <ArrowRight size={14} />
+                                    <button type="submit" disabled={submitting} className="btn-primary w-full justify-center disabled:opacity-50">
+                                        {submitting ? 'Submitting...' : 'Submit Application'} <ArrowRight size={14} />
                                     </button>
                                 </form>
                             </>
