@@ -1,0 +1,21 @@
+{
+    "name": "OPMW",
+    "short_name": "OPMW",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#03142A",
+    "theme_color": "#2F80ED",
+    "icons": [
+        {
+            "src": "/logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

@@ -125,7 +125,7 @@ export default function LoginPage() {
                         className="absolute w-20 h-20 rounded-2xl flex items-center justify-center"
                         style={{ background: 'rgba(8,20,40,0.9)', border: '1px solid rgba(47,128,237,0.4)', zIndex: 3 }}
                     >
-                        <img src="/logo.png" alt="OPMW" className="w-12 h-12 object-contain" />
+                        <img src="/logo (2).png" alt="OPMW" className="w-12 h-12 object-contain" />
                     </motion.div>
                 </div>
 
@@ -170,7 +170,7 @@ export default function LoginPage() {
                     {/* Mobile logo - Enlarged, no text */}
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-2 mb-10 lg:hidden">
                         <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'rgba(47,128,237,0.12)', border: '1px solid rgba(47,128,237,0.25)' }}>
-                            <img src="/logo.png" alt="" className="w-8 h-8 object-contain" />
+                            <img src="/logo (2).png" alt="" className="w-8 h-8 object-contain" />
                         </div>
                     </motion.div>
 

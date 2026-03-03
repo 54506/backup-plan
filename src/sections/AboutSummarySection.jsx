@@ -11,7 +11,7 @@ const features = [
 
 export default function AboutSummarySection() {
     return (
-        <section className="section-pad relative overflow-hidden bg-[#03142A]" id="about-summary">
+        <section className="pb-24 pt-12 md:pb-32 md:pt-16 relative overflow-hidden bg-[#03142A]" id="about-summary">
             {/* Background elements */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2F80ED]/5 blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2" />
 

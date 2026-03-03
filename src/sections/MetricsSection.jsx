@@ -56,7 +56,7 @@ function MetricCard({ metric, index }) {
             <div
                 className="font-display font-bold leading-none tracking-tight relative z-10"
                 style={{
-                    fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+                    fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
                     color: '#E6EDF7',
                 }}
             >

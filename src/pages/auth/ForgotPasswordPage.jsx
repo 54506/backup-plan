@@ -29,7 +29,7 @@ export default function ForgotPasswordPage() {
                     <header className="text-center mb-10">
                         <figure className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white/5 border border-white/10 mb-8 group hover:scale-110 transition-transform duration-500 overflow-hidden relative m-0">
                             <div className="absolute inset-0 bg-gradient-to-br from-[#7C3AED]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                            <img src="/logo.png" alt="OPMW Logo" className="w-12 h-12 object-contain relative z-10 brightness-110" />
+                            <img src="/logo (2).png" alt="OPMW Logo" className="w-12 h-12 object-contain relative z-10 brightness-110" />
                         </figure>
                         <h1 className="text-3xl font-display font-bold text-white mb-3">Reset Password</h1>
                         <p className="text-[#9FB3D1] text-sm leading-relaxed">Enter your email and we will send you a link to reset your password.</p>

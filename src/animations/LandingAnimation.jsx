@@ -121,7 +121,7 @@ export default function LandingAnimation() {
                                     />
                                     {/* THE LOGO — huge, pure transparent PNG, no background box */}
                                     <motion.img
-                                        src="/logo.png"
+                                        src="/logo (2).png"
                                         alt="OPMW"
                                         animate={{
                                             filter: [
@@ -132,9 +132,10 @@ export default function LandingAnimation() {
                                             scale: [1, 1.05, 1],
                                         }}
                                         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                                        className="logo-cutout"
                                         style={{
-                                            width: 'clamp(120px, 45vw, 250px)',
-                                            height: 'clamp(120px, 45vw, 250px)',
+                                            width: 'clamp(150px, 55vw, 320px)',
+                                            height: 'clamp(150px, 55vw, 320px)',
                                             objectFit: 'contain',
                                             position: 'relative',
                                             zIndex: 2,

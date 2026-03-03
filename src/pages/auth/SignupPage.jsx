@@ -120,7 +120,7 @@ export default function SignupPage() {
                                     <div className="text-lg font-display font-bold text-white">This week</div>
                                 </div>
                                 <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: 'rgba(47,128,237,0.15)', border: '1px solid rgba(47,128,237,0.25)' }}>
-                                    <img src="/logo.png" alt="" className="w-5 h-5 object-contain" />
+                                    <img src="/logo (2).png" alt="" className="w-5 h-5 object-contain" />
                                 </div>
                             </div>
                             {/* Mini bar chart */}
@@ -201,7 +201,7 @@ export default function SignupPage() {
                     {/* Mobile logo - Enlarged, no text */}
                     <div className="flex items-center gap-2 mb-10 lg:hidden focus:outline-none">
                         <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'rgba(124,58,237,0.12)', border: '1px solid rgba(124,58,237,0.25)' }}>
-                            <img src="/logo.png" alt="" className="w-8 h-8 object-contain" />
+                            <img src="/logo (2).png" alt="" className="w-8 h-8 object-contain" />
                         </div>
                     </div>
 

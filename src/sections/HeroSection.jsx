@@ -27,53 +27,9 @@ const capabilities = [
 ]
 
 export default function HeroSection() {
-    const containerRef = useRef(null)
-
-    // Mouse tracking for Parallax and Glow
-    const mouseX = useMotionValue(0)
-    const mouseY = useMotionValue(0)
-
-    // Smooth springs for fluid motion
-    const springX = useSpring(mouseX, { stiffness: 60, damping: 25 })
-    const springY = useSpring(mouseY, { stiffness: 60, damping: 25 })
-
-    // Parallax transforms with diverse depths for "Floating Modules"
-    const depth1X = useTransform(springX, (v) => v * 35) // Deep layer
-    const depth1Y = useTransform(springY, (v) => v * 35)
-
-    const depth2X = useTransform(springX, (v) => v * 20) // Mid layer
-    const depth2Y = useTransform(springY, (v) => v * 20)
-
-    const depth3X = useTransform(springX, (v) => v * 10) // Shallow layer
-    const depth3Y = useTransform(springY, (v) => v * 10)
-
-    const gridX = useTransform(springX, (v) => v * -12)
-    const gridY = useTransform(springY, (v) => v * -12)
-
-    // Glow position relative to mouse
-    const glowX = useSpring(mouseX, { stiffness: 40, damping: 20 })
-    const glowY = useSpring(mouseY, { stiffness: 40, damping: 20 })
-
-    const handleMouseMove = (e) => {
-        if (!containerRef.current) return
-        const rect = containerRef.current.getBoundingClientRect()
-        const x = (e.clientX - rect.left) / rect.width - 0.5
-        const y = (e.clientY - rect.top) / rect.height - 0.5
-        mouseX.set(x)
-        mouseY.set(y)
-    }
-
-    const handleMouseLeave = () => {
-        mouseX.set(0)
-        mouseY.set(0)
-    }
-
     return (
         <section
-            ref={containerRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            className="relative flex flex-col justify-center overflow-x-hidden"
+            className="relative flex flex-col justify-center overflow-hidden min-h-screen"
             aria-label="Enterprise Operating Platform"
         >
             {/* ── Background Video Section ── */}
@@ -102,39 +58,19 @@ export default function HeroSection() {
                 />
             </div>
 
-            {/* Mouse-Follow Glow Light */}
-            <motion.div
-                className="absolute hidden lg:block pointer-events-none z-1 w-[600px] h-[600px] rounded-full"
-                style={{
-                    left: '50%',
-                    top: '50%',
-                    x: useTransform(glowX, (v) => `${(v + 0.5) * 100}%`),
-                    y: useTransform(glowY, (v) => `${(v + 0.5) * 100}%`),
-                    translateX: '-50%',
-                    translateY: '-50%',
-                    background: 'radial-gradient(circle, rgba(47,128,237,0.1) 0%, transparent 70%)',
-                    filter: 'blur(80px)',
-                }}
-            />
-
             {/* ── Dynamic Grid System ── */}
-            <motion.div
-                className="absolute inset-0 z-[1] pointer-events-none opacity-25"
+            <div
+                className="absolute inset-0 z-[1] pointer-events-none opacity-15"
                 style={{
-                    x: gridX, y: gridY,
                     backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0)',
                     backgroundSize: '40px 40px'
                 }}
-                animate={{
-                    opacity: [0.15, 0.25, 0.15]
-                }}
-                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
             />
 
             {/* Top Noise Overlay */}
             <div className="noise-overlay z-1" />
 
-            <div className="container-opmw relative z-20 pt-24 pb-6">
+            <div className="container-opmw relative z-20 pt-32 pb-12">
                 <div className="grid lg:grid-cols-12 gap-12 items-center">
 
                     {/* Left & Main Content: Integrated Statistics */}
@@ -221,20 +157,13 @@ export default function HeroSection() {
                         </motion.div>
 
                         {/* Integrated Capabilities Grid (The "Strategic Pillars") */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 1, delay: 0.5 }}
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pt-10 border-t border-white/5 w-full mt-auto"
-                        >
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pt-10 border-t border-white/5 w-full mt-auto">
                             {capabilities.map((cap, idx) => (
                                 <motion.div
                                     key={idx}
-                                    style={{
-                                        // Varied subtle parallax shifts
-                                        translateY: useTransform(springY, (v) => v * (12 + idx * 4)),
-                                        translateX: useTransform(springX, (v) => v * (12 + idx * 4))
-                                    }}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.6 + idx * 0.1 }}
                                     className="flex flex-col group cursor-default"
                                 >
                                     <div className="flex items-center gap-3 mb-3">
@@ -250,7 +179,7 @@ export default function HeroSection() {
                                     </div>
                                 </motion.div>
                             ))}
-                        </motion.div>
+                        </div>
                     </div>
 
                     {/* Right Side: Intentionally Empty for Minimalist Balance */}
@@ -261,3 +190,4 @@ export default function HeroSection() {
         </section>
     )
 }
+

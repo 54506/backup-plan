@@ -50,21 +50,21 @@ export default function Navbar() {
                 className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
                 style={{
                     height: scrolled ? '72px' : '88px',
-                    background: scrolled ? 'rgba(8, 30, 58, 0.98)' : 'rgba(8, 30, 58, 0.92)',
-                    backdropFilter: 'blur(16px)',
-                    boxShadow: scrolled ? '0 10px 30px rgba(3,20,42,0.8)' : 'none',
-                    borderBottom: '1px solid rgba(255,255,255,0.05)',
+                    background: scrolled ? 'rgba(7, 12, 20, 0.98)' : 'rgba(7, 12, 20, 0.92)',
+                    backdropFilter: 'blur(24px)',
+                    boxShadow: scrolled ? '0 10px 40px rgba(0,0,0,0.4)' : 'none',
+                    borderBottom: '1px solid rgba(255,255,255,0.06)',
                 }}
             >
                 <nav className="container-opmw flex items-center justify-between h-full">
 
                     {/* Logo Segment - enlarged logo, no text */}
                     <Link to="/" className="flex items-center group" aria-label="OPMW Home">
-                        <div className="relative flex items-center justify-center w-20 h-20 md:w-28 md:h-28 overflow-hidden">
+                        <div className="relative flex items-center justify-center w-28 h-28 md:w-40 md:h-40 overflow-hidden">
                             <img
-                                src="/logo.png"
+                                src="/logo (2).png"
                                 alt="OPMW Logo"
-                                className="w-full h-full object-contain"
+                                className="w-full h-full object-contain logo-cutout"
                             />
                         </div>
                     </Link>
@@ -138,31 +138,44 @@ export default function Navbar() {
                         ))}
                     </div>
 
-                    {/* Desktop Actions - Minimalist */}
-                    <div className="hidden lg:flex items-center gap-6">
+                    {/* Desktop Actions - Hyper-Premium */}
+                    <div className="hidden lg:flex items-center gap-4">
                         {isLoggedIn ? (
-                            <button
-                                onClick={handleLogout}
-                                className="flex items-center gap-2 text-base font-bold text-[#9FB3D1] hover:text-white transition-colors duration-200"
-                            >
-                                <LogOut size={18} />
-                                Logout
-                            </button>
+                            <div className="flex items-center gap-3">
+                                <Link
+                                    to="/hrms"
+                                    className="px-6 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs font-bold text-white hover:bg-[#388BFD]/10 hover:border-[#388BFD]/30 transition-all duration-500 backdrop-blur-md shadow-lg group"
+                                >
+                                    Dashboard
+                                </Link>
+                                <button
+                                    onClick={handleLogout}
+                                    className="p-2.5 rounded-xl bg-red-500/5 border border-red-500/10 text-[#9FB3D1] hover:text-white hover:bg-red-500/20 hover:border-red-500/30 transition-all duration-300 group"
+                                    title="Logout"
+                                >
+                                    <LogOut size={16} className="group-hover:scale-110 transition-transform" />
+                                </button>
+                            </div>
                         ) : (
                             <Link
                                 to="/login"
-                                className="text-base font-bold text-[#9FB3D1] hover:text-white transition-colors duration-200"
+                                className="relative group p-[1px] rounded-xl overflow-hidden transition-all duration-500 hover:scale-[1.02] active:scale-[0.98]"
                             >
-                                Log In
+                                {/* Hyper-Premium Rotating Gradient Border */}
+                                <div className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#388BFD_0%,#8B5CF6_25%,#06B6D4_50%,#388BFD_75%,#8B5CF6_100%)] opacity-30 group-hover:opacity-100 transition-opacity duration-500" />
+
+                                {/* Button Body */}
+                                <div className="relative px-8 py-3 rounded-[11px] bg-[#070C14] flex items-center gap-3 transition-colors duration-500 group-hover:bg-[#070C14]/80 backdrop-blur-sm">
+                                    <span className="text-[11px] font-bold text-white tracking-[0.2em] uppercase">Enter Hub</span>
+                                    <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-white transition-all duration-500 group-hover:bg-[#388BFD] group-hover:shadow-[0_0_15px_#388BFD]">
+                                        <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+                                    </div>
+                                </div>
+
+                                {/* Outer Glow Effect */}
+                                <div className="absolute inset-0 rounded-xl blur-xl bg-gradient-to-r from-[#388BFD] to-[#8B5CF6] opacity-0 group-hover:opacity-40 transition-opacity duration-500 -z-10" />
                             </Link>
                         )}
-
-                        <Link
-                            to={isLoggedIn ? "/hrms" : "/contact"}
-                            className="px-7 py-3 rounded-lg bg-[#2F80ED] text-base font-bold text-white shadow-lg hover:bg-[#1E5FAF] hover:shadow-[#2F80ED]/20 transition-all duration-300"
-                        >
-                            {isLoggedIn ? "Dashboard" : "Start Today"}
-                        </Link>
                     </div>
 
                     {/* Mobile Toggle */}
@@ -221,28 +234,34 @@ export default function Navbar() {
                             </nav>
                             <div className="p-6 border-t border-white/5 space-y-4">
                                 {isLoggedIn ? (
-                                    <button
-                                        onClick={handleLogout}
-                                        className="w-full flex justify-center items-center py-4 rounded-xl font-bold text-[#FF4D4D] border border-red-500/10 hover:bg-red-500/5 transition-all"
-                                    >
-                                        <LogOut size={20} className="mr-2" /> Logout
-                                    </button>
+                                    <div className="flex flex-col gap-3">
+                                        <Link
+                                            to="/hrms"
+                                            className="w-full flex justify-center items-center py-4 rounded-xl font-bold bg-[#388BFD] text-white shadow-lg shadow-[#388BFD]/20"
+                                            onClick={() => setMobileOpen(false)}
+                                        >
+                                            Explore Dashboard
+                                        </Link>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="w-full flex justify-center items-center py-4 rounded-xl font-bold text-[#F87171] bg-red-900/10 border border-red-500/10 active:bg-red-500/20 transition-all"
+                                        >
+                                            <LogOut size={20} className="mr-2" /> Sign Out
+                                        </button>
+                                    </div>
                                 ) : (
                                     <Link
                                         to="/login"
-                                        className="w-full flex justify-center items-center py-4 rounded-xl font-bold text-[#9FB3D1] border border-white/10 hover:bg-white/5"
+                                        className="relative group w-full flex justify-center items-center py-5 rounded-2xl overflow-hidden shadow-2xl"
                                         onClick={() => setMobileOpen(false)}
                                     >
-                                        Log In
+                                        <div className="absolute inset-0 bg-gradient-to-r from-[#388BFD] to-[#8B5CF6]" />
+                                        <div className="absolute inset-0 bg-white/5 opacity-0 active:opacity-100 transition-opacity" />
+                                        <span className="relative text-sm font-bold text-white uppercase tracking-[0.2em] flex items-center gap-3">
+                                            Log In <ArrowRight size={18} />
+                                        </span>
                                     </Link>
                                 )}
-                                <Link
-                                    to={isLoggedIn ? "/hrms" : "/contact"}
-                                    className="btn-soft-diffusion w-full flex justify-center items-center py-4 rounded-xl font-bold"
-                                    onClick={() => setMobileOpen(false)}
-                                >
-                                    {isLoggedIn ? "Dashboard" : "Get Started"}
-                                </Link>
                             </div>
                         </motion.div>
                     </>

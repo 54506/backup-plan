@@ -211,17 +211,44 @@ export default function AboutPage() {
                                 <div className="absolute inset-0 rounded-full blur-[80px]"
                                     style={{ background: 'radial-gradient(circle, rgba(56,139,253,0.12) 0%, rgba(139,92,246,0.08) 50%, transparent 70%)' }} />
 
-                                {/* Card */}
-                                <div className="relative p-12 md:p-16 rounded-[2rem] text-center"
-                                    style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                    <div className="flex flex-col items-center gap-6">
-                                        <div className="w-40 h-40 bg-white/5 rounded-[2.5rem] border border-white/10 flex items-center justify-center p-8">
-                                            <img src="/logo.png" alt="OPMW" className="w-full h-full object-contain" />
+                                {/* Image Card */}
+                                <div className="relative overflow-hidden rounded-[2rem] group"
+                                    style={{
+                                        background: 'rgba(255,255,255,0.02)',
+                                        border: '1px solid rgba(255,255,255,0.06)',
+                                        width: '100%',
+                                        maxWidth: '500px'
+                                    }}>
+
+                                    {/* Image container */}
+                                    <div className="aspect-[4/3] w-full overflow-hidden relative">
+                                        <img
+                                            src="/voice_ops.jpg"
+                                            alt="OPMW Global Operations"
+                                            className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-[2s] ease-out"
+                                        />
+
+                                        {/* Premium Overlay Gradients */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#03142A] via-[#03142A]/20 to-transparent opacity-90" />
+
+                                        {/* Floating Branding Mark */}
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            {/* <div className="w-24 h-24 rounded-3xl backdrop-blur-md bg-white/5 border border-white/10 flex items-center justify-center p-5 shadow-2xl transform group-hover:scale-110 transition-transform duration-700">
+                                                <img src="/logo (2).png" alt="OPMW" className="w-full h-full object-contain" />
+                                            </div> */}
                                         </div>
                                     </div>
-                                    <p className="text-xs mt-6 uppercase tracking-[0.3em] font-bold" style={{ color: '#3D4F6A' }}>
-                                        Est. 2018 · Hyderabad, India
-                                    </p>
+
+                                    {/* Info Overlay */}
+                                    <div className="absolute bottom-8 left-0 right-0 text-center px-4">
+                                        <p className="text-[10px] uppercase tracking-[0.5em] font-bold text-white/40 mb-2">
+                                            Unified Global Execution
+                                        </p>
+                                        <div className="h-px w-8 bg-[#2F80ED] mx-auto mb-3 opacity-30" />
+                                        <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/60">
+                                            OPMW · Est. 2018
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>
@@ -362,9 +389,9 @@ export default function AboutPage() {
 
                         {/* Logo in CTA */}
                         <div className="flex justify-center mb-8">
-                            <div className="w-16 h-16 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center p-3">
-                                <img src="/logo.png" alt="" className="w-full h-full object-contain" />
-                            </div>
+                            {/* <div className="w-16 h-16 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center p-3">
+                                <img src="/logo (2).png" alt="" className="w-full h-full object-contain" />
+                            </div> */}
                         </div>
 
                         <p className="text-[10px] font-bold uppercase tracking-[0.4em] mb-4 relative z-10" style={{ color: '#388BFD' }}>

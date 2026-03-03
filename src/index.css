@@ -577,3 +577,6 @@ html {
     display: none !important;
   }
 }
+.logo-cutout {
+  mix-blend-mode: screen;
+}

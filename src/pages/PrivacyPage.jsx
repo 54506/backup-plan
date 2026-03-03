@@ -212,7 +212,7 @@ export default function PrivacyPage() {
                         <div className="relative z-10 text-center">
                             <div className="mb-8 flex justify-center">
                                 <div className="w-12 h-12 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center p-2">
-                                    <img src="/logo.png" alt="" className="w-full h-full object-contain" />
+                                    <img src="/logo (2).png" alt="" className="w-full h-full object-contain" />
                                 </div>
                             </div>
                             <h3 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">

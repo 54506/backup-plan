@@ -107,13 +107,13 @@ export default function Footer() {
                 <div className="container-opmw pt-8 pb-6">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-8">
                         {/* Brand Space */}
-                        <div className="lg:col-span-4 space-y-8">
-                            <div className="space-y-6">
-                                <Link to="/" className="inline-flex items-center gap-3 mb-6 group">
-                                    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
-                                        <img src="/logo.png" alt="" className="w-8 h-8 object-contain" />
+                        <div className="lg:col-span-4 space-y-4">
+                            <div className="space-y-4">
+                                <Link to="/" className="inline-flex items-center gap-3 mb-2 group">
+                                    <div>
+                                        <img src="/logo (2).png" alt="" className="w-30 h-30 object-contain logo-cutout" />
                                     </div>
-                                    <span className="font-display font-bold text-white tracking-widest text-xl">OPMW</span>
+                                    {/* <span className="font-display font-bold text-white tracking-widest text-xl">OPMW</span> */}
                                 </Link>
                                 <div className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#2F80ED] opacity-80">
                                     One Place. All Your Work.
